@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DittaSpedizioniApp", "WebApplication1\DittaSpedizioniApp.csproj", "{ED619BA2-8AAE-41A8-A6A8-C056074D687D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED619BA2-8AAE-41A8-A6A8-C056074D687D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED619BA2-8AAE-41A8-A6A8-C056074D687D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED619BA2-8AAE-41A8-A6A8-C056074D687D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED619BA2-8AAE-41A8-A6A8-C056074D687D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D828339-2FDF-47E4-9ED2-EBAD963616D5}
+	EndGlobalSection
+EndGlobal
