@@ -51,7 +51,7 @@ namespace DittaSpedizioniApp.Services
             return spedizioni;
         }
 
-        public Spedizione? GetSpedizioneById(int id)
+        public Spedizione GetSpedizioneById(int id)
         {
             Spedizione? spedizione = null;
 

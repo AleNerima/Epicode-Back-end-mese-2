@@ -2,60 +2,83 @@
 using DittaSpedizioniApp.Models;
 using DittaSpedizioniApp.Services;
 
-
 namespace DittaSpedizioniApp.Controllers
 {
-    public class ClienteController : ControllerBase
+    public class ClienteController : Controller
     {
-        private readonly ClienteService _clienteService;
+        private readonly IClienteService _clienteService;
 
-        public ClienteController(ClienteService clienteService)
+        public ClienteController(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }
 
-        [HttpGet]
-        public ActionResult<List<Cliente>> Get()
+        public IActionResult Index()
         {
             var clienti = _clienteService.GetClienti();
-            return Ok(clienti);
+            return View(clienti);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Cliente> GetById(int id)
+        public IActionResult Details(int id)
         {
             var cliente = _clienteService.GetClienteById(id);
             if (cliente == null)
             {
                 return NotFound();
             }
-            return Ok(cliente);
+            return View(cliente);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Post(Cliente cliente)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Cliente cliente)
         {
-            _clienteService.AggiungiCliente(cliente);
-            return CreatedAtAction(nameof(GetById), new { id = cliente.IdCliente }, cliente);
+            if (ModelState.IsValid)
+            {
+                _clienteService.AggiungiCliente(cliente);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, Cliente cliente)
+        public IActionResult Edit(int id)
+        {
+            var cliente = _clienteService.GetClienteById(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Cliente cliente)
         {
             if (id != cliente.IdCliente)
             {
                 return BadRequest();
             }
 
-            _clienteService.ModificaCliente(cliente);
-            return NoContent();
+            if (ModelState.IsValid)
+            {
+                _clienteService.ModificaCliente(cliente);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
         {
             _clienteService.EliminaCliente(id);
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

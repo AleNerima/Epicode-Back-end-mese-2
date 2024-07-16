@@ -5,7 +5,7 @@ using DittaSpedizioniApp.Services;
 
 namespace DittaSpedizioniApp.Controllers
 {
-    public class SpedizioneController : ControllerBase
+    public class SpedizioneController : Controller
     {
         private readonly SpedizioneService _spedizioneService;
 
@@ -14,48 +14,79 @@ namespace DittaSpedizioniApp.Controllers
             _spedizioneService = spedizioneService;
         }
 
-        [HttpGet]
-        public ActionResult<List<Spedizione>> Get()
+        public IActionResult Index()
         {
             var spedizioni = _spedizioneService.GetSpedizioni();
-            return Ok(spedizioni);
+            return View(spedizioni);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Spedizione> GetById(int id)
+        public IActionResult Details(int id)
         {
             var spedizione = _spedizioneService.GetSpedizioneById(id);
             if (spedizione == null)
             {
                 return NotFound();
             }
-            return Ok(spedizione);
+            return View(spedizione);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Post(Spedizione spedizione)
+        public IActionResult Create(Spedizione spedizione)
         {
-            _spedizioneService.AggiungiSpedizione(spedizione);
-            return CreatedAtAction(nameof(GetById), new { id = spedizione.IdSpedizione }, spedizione);
+            if (ModelState.IsValid)
+            {
+                _spedizioneService.AggiungiSpedizione(spedizione);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(spedizione);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, Spedizione spedizione)
+        public IActionResult Edit(int id)
+        {
+            var spedizione = _spedizioneService.GetSpedizioneById(id);
+            if (spedizione == null)
+            {
+                return NotFound();
+            }
+            return View(spedizione);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, Spedizione spedizione)
         {
             if (id != spedizione.IdSpedizione)
             {
                 return BadRequest();
             }
 
-            _spedizioneService.ModificaSpedizione(spedizione);
-            return NoContent();
+            if (ModelState.IsValid)
+            {
+                _spedizioneService.ModificaSpedizione(spedizione);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(spedizione);
         }
 
-        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var spedizione = _spedizioneService.GetSpedizioneById(id);
+            if (spedizione == null)
+            {
+                return NotFound();
+            }
+            return View(spedizione);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
             _spedizioneService.EliminaSpedizione(id);
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
