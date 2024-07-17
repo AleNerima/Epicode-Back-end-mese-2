@@ -1,0 +1,49 @@
+﻿@model DittaSpedizioni.Models.AggiornamentoSpedizione
+
+<h1>Nuovo Aggiornamento Spedizione</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Spedizione" />
+
+    <div class="form-group">
+        <label asp-for="Stato" class="control-label"></label>
+        <input asp-for="Stato" class="form-control" />
+        <span asp-validation-for="Stato" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Luogo" class="control-label"></label>
+        <input asp-for="Luogo" class="form-control" />
+        <span asp-validation-for="Luogo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descrizione" class="control-label"></label>
+        <input asp-for="Descrizione" class="form-control" />
+        <span asp-validation-for="Descrizione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataAggiornamento" class="control-label"></label>
+        <input asp-for="DataAggiornamento" class="form-control" />
+        <span asp-validation-for="DataAggiornamento" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Operatore" class="control-label"></label>
+        <input asp-for="Operatore" class="form-control" />
+        <span asp-validation-for="Operatore" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Salva" class="btn btn-primary" />
+        <a asp-action="Index" asp-route-spedizioneId="@Model.Spedizione" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

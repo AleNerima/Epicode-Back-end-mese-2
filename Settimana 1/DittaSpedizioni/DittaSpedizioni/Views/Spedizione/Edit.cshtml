@@ -1,0 +1,68 @@
+﻿@model DittaSpedizioni.Models.Spedizione
+
+<h1>Modifica Spedizione</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="IdSpedizione" />
+
+    <div class="form-group">
+        <label asp-for="Cliente" class="control-label">Cliente</label>
+        <input asp-for="Cliente" class="form-control" />
+        <span asp-validation-for="Cliente" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumeroIdentificativo" class="control-label">Numero Identificativo</label>
+        <input asp-for="NumeroIdentificativo" class="form-control" />
+        <span asp-validation-for="NumeroIdentificativo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataSpedizione" class="control-label">Data Spedizione</label>
+        <input asp-for="DataSpedizione" type="date" class="form-control" />
+        <span asp-validation-for="DataSpedizione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Peso" class="control-label">Peso</label>
+        <input asp-for="Peso" class="form-control" />
+        <span asp-validation-for="Peso" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CittaDestinataria" class="control-label">Città Destinataria</label>
+        <input asp-for="CittaDestinataria" class="form-control" />
+        <span asp-validation-for="CittaDestinataria" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IndirizzoDestinatario" class="control-label">Indirizzo Destinatario</label>
+        <input asp-for="IndirizzoDestinatario" class="form-control" />
+        <span asp-validation-for="IndirizzoDestinatario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NominativoDestinatario" class="control-label">Nominativo Destinatario</label>
+        <input asp-for="NominativoDestinatario" class="form-control" />
+        <span asp-validation-for="NominativoDestinatario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Costo" class="control-label">Costo</label>
+        <input asp-for="Costo" class="form-control" />
+        <span asp-validation-for="Costo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataConsegnaPrevista" class="control-label">Data Consegna Prevista</label>
+        <input asp-for="DataConsegnaPrevista" type="date" class="form-control" />
+        <span asp-validation-for="DataConsegnaPrevista" class="text-danger"></span>
+    </div>
+
+    
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Salva</button>
+        <a asp-action="Index" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>

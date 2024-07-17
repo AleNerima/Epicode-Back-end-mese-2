@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DittaSpedizioni.Models.AggiornamentoSpedizione>
+
+<h1>Elenco Aggiornamenti Spedizione</h1>
+
+<p>
+    <a asp-action="Create" asp-route-spedizioneId="@ViewData["SpedizioneId"]" class="btn btn-primary">Nuovo Aggiornamento</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Spedizione</th>
+            <th>Stato</th>
+            <th>Luogo</th>
+            <th>Descrizione</th>
+            <th>Data Aggiornamento</th>
+            <th>Operatore</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var aggiornamento in Model)
+        {
+            <tr>
+                <td>@aggiornamento.IdAggiornamento</td>
+                <td>@aggiornamento.Spedizione</td>
+                <td>@aggiornamento.Stato</td>
+                <td>@aggiornamento.Luogo</td>
+                <td>@aggiornamento.Descrizione</td>
+                <td>@aggiornamento.DataAggiornamento.ToShortDateString()</td>
+                <td>@aggiornamento.Operatore</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@aggiornamento.IdAggiornamento">Dettagli</a> |
+                    <a asp-action="Edit" asp-route-id="@aggiornamento.IdAggiornamento">Modifica</a> |
+                    <a asp-action="Delete" asp-route-id="@aggiornamento.IdAggiornamento">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DittaSpedizioni.Models.Spedizione>
+
+<h1>Elenco Spedizioni</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuova Spedizione</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Numero Identificativo</th>
+            <th>Data Spedizione</th>
+            <th>Peso</th>
+            <th>Città Destinataria</th>
+            <th>Indirizzo Destinatario</th>
+            <th>Nominativo Destinatario</th>
+            <th>Costo</th>
+            <th>Data Consegna Prevista</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spedizione in Model)
+        {
+            <tr>
+                <td>@spedizione.IdSpedizione</td>
+                <td>@spedizione.NumeroIdentificativo</td>
+                <td>@spedizione.DataSpedizione.ToShortDateString()</td>
+                <td>@spedizione.Peso</td>
+                <td>@spedizione.CittaDestinataria</td>
+                <td>@spedizione.IndirizzoDestinatario</td>
+                <td>@spedizione.NominativoDestinatario</td>
+                <td>@spedizione.Costo</td>
+                <td>@spedizione.DataConsegnaPrevista.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@spedizione.IdSpedizione">Dettagli</a> |
+                    <a asp-action="Edit" asp-route-id="@spedizione.IdSpedizione">Modifica</a> |
+                    <a asp-action="Delete" asp-route-id="@spedizione.IdSpedizione">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

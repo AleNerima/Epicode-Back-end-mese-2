@@ -1,5 +1,6 @@
 using DittaSpedizioni.Interfaces;
 using DittaSpedizioni.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,21 @@ builder.Services.AddSingleton<DatabaseConnection>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ISpedizioneService, SpedizioneService>();
 builder.Services.AddScoped<IAggiornamentoSpedizioneService, AggiornamentoSpedizioneService>();
+builder.Services.AddScoped<IUtenteService, UtenteService>();
 
+// Configurazione di autenticazione
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireLavoratoreRole", policy => policy.RequireRole("Lavoratore"));
+    options.AddPolicy("RequireClienteRole", policy => policy.RequireRole("Cliente"));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,11 +40,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication(); // Abilita l'autenticazione
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Cliente}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
