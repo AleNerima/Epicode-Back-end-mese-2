@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DittaSpedizioni.Interfaces;
 using DittaSpedizioni.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace DittaSpedizioni.Controllers
@@ -13,7 +14,7 @@ namespace DittaSpedizioni.Controllers
         {
             _clienteService = clienteService;
         }
-
+        [Authorize(Policy = "RequireLavoratoreRole")]
         public IActionResult Index()
         {
             var clienti = _clienteService.GetClienti();
