@@ -1,7 +1,6 @@
-﻿using System.Data.SqlClient;
-using DittaSpedizioni.Interfaces;
+﻿using DittaSpedizioni.Interfaces;
 using DittaSpedizioni.Models;
-
+using System.Data.SqlClient;
 
 namespace DittaSpedizioni.Services
 {
@@ -36,7 +35,7 @@ namespace DittaSpedizioni.Services
                         Luogo = reader["Luogo"].ToString(),
                         Descrizione = reader["Descrizione"].ToString(),
                         DataAggiornamento = (DateTime)reader["DataAggiornamento"],
-                        Operatore = (int)reader["Operatore"]
+                        Operatore = (int)reader["Operatore"]  
                     });
                 }
             }
@@ -66,7 +65,7 @@ namespace DittaSpedizioni.Services
                         Luogo = reader["Luogo"].ToString(),
                         Descrizione = reader["Descrizione"].ToString(),
                         DataAggiornamento = (DateTime)reader["DataAggiornamento"],
-                        Operatore = (int)reader["Operatore"]
+                        Operatore = (int)reader["Operatore"]  // Assicurati di leggere correttamente il campo Operatore
                     };
                 }
             }
@@ -85,7 +84,7 @@ namespace DittaSpedizioni.Services
                 cmd.Parameters.AddWithValue("@Luogo", aggiornamento.Luogo);
                 cmd.Parameters.AddWithValue("@Descrizione", aggiornamento.Descrizione);
                 cmd.Parameters.AddWithValue("@DataAggiornamento", aggiornamento.DataAggiornamento);
-                cmd.Parameters.AddWithValue("@Operatore", aggiornamento.Operatore);
+                cmd.Parameters.AddWithValue("@Operatore", aggiornamento.Operatore);  // Assicurati di includere il campo Operatore
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -102,7 +101,7 @@ namespace DittaSpedizioni.Services
                 cmd.Parameters.AddWithValue("@Luogo", aggiornamento.Luogo);
                 cmd.Parameters.AddWithValue("@Descrizione", aggiornamento.Descrizione);
                 cmd.Parameters.AddWithValue("@DataAggiornamento", aggiornamento.DataAggiornamento);
-                cmd.Parameters.AddWithValue("@Operatore", aggiornamento.Operatore);
+                cmd.Parameters.AddWithValue("@Operatore", aggiornamento.Operatore);  // Assicurati di includere il campo Operatore
                 cmd.Parameters.AddWithValue("@IdAggiornamento", aggiornamento.IdAggiornamento);
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -119,6 +118,35 @@ namespace DittaSpedizioni.Services
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+        public List<AggiornamentoSpedizione> GetAggiornamentiBySpedizioneId(int idSpedizione)
+        {
+            var aggiornamenti = new List<AggiornamentoSpedizione>();
+
+            using (var conn = _databaseConnection.GetConnection())
+            {
+                string query = "SELECT * FROM AggiornamentiSpedizioni WHERE Spedizione = @IdSpedizione";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@IdSpedizione", idSpedizione);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    aggiornamenti.Add(new AggiornamentoSpedizione
+                    {
+                        IdAggiornamento = (int)reader["IdAggiornamento"],
+                        Spedizione = (int)reader["Spedizione"],
+                        Stato = reader["Stato"].ToString(),
+                        Luogo = reader["Luogo"].ToString(),
+                        Descrizione = reader["Descrizione"].ToString(),
+                        DataAggiornamento = (DateTime)reader["DataAggiornamento"],
+                        Operatore = (int)reader["Operatore"]
+                    });
+                }
+            }
+
+            return aggiornamenti;
         }
     }
 }

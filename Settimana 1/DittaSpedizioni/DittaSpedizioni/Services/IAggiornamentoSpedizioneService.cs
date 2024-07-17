@@ -10,5 +10,6 @@ namespace DittaSpedizioni.Interfaces
         void AddAggiornamentoSpedizione(AggiornamentoSpedizione aggiornamento);
         void UpdateAggiornamentoSpedizione(AggiornamentoSpedizione aggiornamento);
         void DeleteAggiornamentoSpedizione(int id);
+        List<AggiornamentoSpedizione> GetAggiornamentiBySpedizioneId(int idSpedizione);
     }
 }

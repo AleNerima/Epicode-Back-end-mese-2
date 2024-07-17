@@ -1,0 +1,16 @@
+﻿@model DittaSpedizioni.Models.Cliente
+
+@{
+    ViewData["Title"] = "Elimina Cliente";
+}
+
+<h1>Elimina Cliente</h1>
+
+<h3>Sei sicuro di voler eliminare il cliente "@Model.Nome"?</h3>
+
+<form asp-action="Delete" asp-route-id="@Model.IdCliente">
+    <div class="form-group">
+        <input type="submit" value="Elimina" class="btn btn-danger" /> |
+        <a asp-action="Index">Annulla</a>
+    </div>
+</form>

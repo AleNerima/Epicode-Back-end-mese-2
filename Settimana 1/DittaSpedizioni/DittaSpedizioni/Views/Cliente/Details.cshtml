@@ -1,0 +1,19 @@
+﻿@model DittaSpedizioni.Models.Cliente
+
+@{
+    ViewData["Title"] = "Dettagli Cliente";
+}
+
+<h1>Dettagli Cliente</h1>
+
+<div>
+    <h4>Nome: @Model.Nome</h4>
+    <h4>Tipo: @Model.Tipo</h4>
+    <h4>Codice Fiscale / Partita IVA: @(Model.Tipo == "Privato" ? Model.CodiceFiscale : Model.PartitaIVA)</h4>
+  
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.IdCliente">Modifica</a> |
+    <a asp-action="Index">Torna all'elenco dei clienti</a>
+</p>

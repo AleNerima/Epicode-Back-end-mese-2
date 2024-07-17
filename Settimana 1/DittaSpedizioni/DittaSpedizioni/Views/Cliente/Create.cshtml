@@ -1,0 +1,63 @@
+﻿@model DittaSpedizioni.Models.Cliente
+
+@{
+    ViewData["Title"] = "Nuovo Cliente";
+}
+
+<h1>Nuovo Cliente</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Nome" class="control-label">Nome</label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tipo" class="control-label">Tipo</label>
+        <select asp-for="Tipo" class="form-control" id="Tipo">
+            <option value="Privato">Privato</option>
+            <option value="Azienda">Azienda</option>
+        </select>
+        <span asp-validation-for="Tipo" class="text-danger"></span>
+    </div>
+    <div class="form-group" id="divCodiceFiscale">
+        <label asp-for="CodiceFiscale" class="control-label">Codice Fiscale</label>
+        <input asp-for="CodiceFiscale" class="form-control" />
+        <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+    </div>
+    <div class="form-group" id="divPartitaIVA" style="display:none;">
+        <label asp-for="PartitaIVA" class="control-label">Partita IVA</label>
+        <input asp-for="PartitaIVA" class="form-control" />
+        <span asp-validation-for="PartitaIVA" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Tipo').change(function () {
+                var selectedValue = $(this).val();
+                if (selectedValue === 'Privato') {
+                    $('#divCodiceFiscale').show();
+                    $('#divPartitaIVA').hide();
+                } else if (selectedValue === 'Azienda') {
+                    $('#divCodiceFiscale').hide();
+                    $('#divPartitaIVA').show();
+                }
+            });
+
+            // Assicurati che lo stato iniziale corrisponda alla selezione iniziale della select
+            var initialTipoValue = $('#Tipo').val();
+            if (initialTipoValue === 'Privato') {
+                $('#divCodiceFiscale').show();
+                $('#divPartitaIVA').hide();
+            } else if (initialTipoValue === 'Azienda') {
+                $('#divCodiceFiscale').hide();
+                $('#divPartitaIVA').show();
+            }
+        });
+    </script>
+}
