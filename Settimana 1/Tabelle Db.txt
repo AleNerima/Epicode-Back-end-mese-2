@@ -1,0 +1,39 @@
+Tabelle Db
+
+
+CREATE TABLE Clienti (
+    IdCliente INT PRIMARY KEY IDENTITY,
+    Nome NVARCHAR(100),
+    Tipo NVARCHAR(50) NOT NULL CHECK (Tipo IN ('Privato', 'Azienda')),
+    CodiceFiscale NVARCHAR(16) NULL,
+    PartitaIVA NVARCHAR(11) NULL,
+    CONSTRAINT CK_Clienti_Codice CHECK (
+        (Tipo = 'Privato' AND CodiceFiscale IS NOT NULL AND PartitaIVA IS NULL) OR
+        (Tipo = 'Azienda' AND CodiceFiscale IS NULL AND PartitaIVA IS NOT NULL)
+    )
+);
+
+CREATE TABLE Spedizioni (
+    IdSpedizione INT PRIMARY KEY IDENTITY,
+    Cliente INT FOREIGN KEY REFERENCES Clienti(IdCliente),
+    NumeroIdentificativo NVARCHAR(50),
+    DataSpedizione DATETIME,
+    Peso DECIMAL(10, 2) NOT NULL,
+    CittaDestinataria NVARCHAR(100),
+    IndirizzoDestinatario NVARCHAR(200),
+    NominativoDestinatario NVARCHAR(100),
+    Costo DECIMAL(10, 2) NOT NULL,
+    DataConsegnaPrevista DATETIME,
+    CONSTRAINT CK_Spedizioni_Peso CHECK (Peso > 0),
+    CONSTRAINT CK_Spedizioni_Costo CHECK (Costo > 0)
+);
+
+CREATE TABLE AggiornamentiSpedizioni (
+    IdAggiornamento INT PRIMARY KEY IDENTITY,
+    Spedizione INT FOREIGN KEY REFERENCES Spedizioni(IdSpedizione),
+    Stato NVARCHAR(50),
+    Luogo NVARCHAR(100),
+    Descrizione NVARCHAR(500),
+    DataAggiornamento DATETIME,
+    Operatore INT -- Aggiungi campo per identificare l'operatore che ha effettuato l'aggiornamento
+);
