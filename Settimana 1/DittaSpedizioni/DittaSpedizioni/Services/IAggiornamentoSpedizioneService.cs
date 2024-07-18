@@ -1,5 +1,5 @@
 ﻿using DittaSpedizioni.Models;
-
+using System.Collections.Generic;
 
 namespace DittaSpedizioni.Interfaces
 {
@@ -11,5 +11,7 @@ namespace DittaSpedizioni.Interfaces
         void UpdateAggiornamentoSpedizione(AggiornamentoSpedizione aggiornamento);
         void DeleteAggiornamentoSpedizione(int id);
         List<AggiornamentoSpedizione> GetAggiornamentiBySpedizioneId(int idSpedizione);
+
+        List<AggiornamentoSpedizione> GetAllAggiornamentiSpedizione();
     }
 }

@@ -42,6 +42,34 @@ namespace DittaSpedizioni.Services
 
             return aggiornamenti;
         }
+        public List<AggiornamentoSpedizione> GetAllAggiornamentiSpedizione()
+        {
+            var aggiornamenti = new List<AggiornamentoSpedizione>();
+
+            using (var conn = _databaseConnection.GetConnection())
+            {
+                string query = "SELECT * FROM AggiornamentiSpedizioni";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    aggiornamenti.Add(new AggiornamentoSpedizione
+                    {
+                        IdAggiornamento = (int)reader["IdAggiornamento"],
+                        Spedizione = (int)reader["Spedizione"],
+                        Stato = reader["Stato"].ToString(),
+                        Luogo = reader["Luogo"].ToString(),
+                        Descrizione = reader["Descrizione"].ToString(),
+                        DataAggiornamento = (DateTime)reader["DataAggiornamento"],
+                        Operatore = (int)reader["Operatore"]
+                    });
+                }
+            }
+
+            return aggiornamenti;
+        }
 
         public AggiornamentoSpedizione GetAggiornamentoById(int id)
         {
