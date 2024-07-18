@@ -4,17 +4,17 @@
     ViewData["Title"] = "Login";
 }
 
-<form asp-controller="Account" asp-action="Login" method="post">
+<form asp-controller="Account" asp-action="Login" method="post" class="mt-4">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Email"></label>
+        <label asp-for="Email" class="fw-bold">Email</label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
+        <label asp-for="Password" class="fw-bold">Password</label>
         <input asp-for="Password" type="password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary mt-5">Accedi</button>
 </form>

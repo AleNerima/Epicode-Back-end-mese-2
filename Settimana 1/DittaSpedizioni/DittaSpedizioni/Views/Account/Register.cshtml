@@ -1,42 +1,42 @@
 ﻿@model DittaSpedizioni.Models.RegistrazioneUtente
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrazione";
 }
 
-<form asp-controller="Account" asp-action="Register" method="post">
+<form asp-controller="Account" asp-action="Register" method="post" class="mt-4">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Nome"></label>
+        <label asp-for="Nome" class="fw-bold">Nome</label>
         <input asp-for="Nome" class="form-control" />
         <span asp-validation-for="Nome" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Cognome"></label>
+        <label asp-for="Cognome" class="fw-bold">Cognome</label>
         <input asp-for="Cognome" class="form-control" />
         <span asp-validation-for="Cognome" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
+        <label asp-for="Email" class="fw-bold">Email</label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
+        <label asp-for="Password" class="fw-bold">Password</label>
         <input asp-for="Password" type="password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ConfermaPassword"></label>
+        <label asp-for="ConfermaPassword" class="fw-bold">Conferma Password</label>
         <input asp-for="ConfermaPassword" type="password" class="form-control" />
         <span asp-validation-for="ConfermaPassword" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="Ruolo">Ruolo</label>
+        <label for="Ruolo" class="fw-bold">Ruolo</label>
         <select asp-for="Ruolo" class="form-control">
             <option value="Cliente">Cliente</option>
             <option value="Lavoratore">Lavoratore</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary mt-5">Registrati</button>
 </form>

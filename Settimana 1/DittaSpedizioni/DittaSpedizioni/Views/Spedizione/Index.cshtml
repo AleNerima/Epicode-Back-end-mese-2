@@ -6,43 +6,43 @@
     <a asp-action="Create" class="btn btn-primary">Nuova Spedizione</a>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Numero Identificativo</th>
-            <th>Data Spedizione</th>
-            <th>Peso</th>
-            <th>Città Destinataria</th>
-            <th>Indirizzo Destinatario</th>
-            <th>Nominativo Destinatario</th>
-            <th>Costo</th>
-            <th>Data Consegna Prevista</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var spedizione in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
-                <td>@spedizione.IdSpedizione</td>
-                <td>@spedizione.NumeroIdentificativo</td>
-                <td>@spedizione.DataSpedizione.ToShortDateString()</td>
-                <td>@spedizione.Peso</td>
-                <td>@spedizione.CittaDestinataria</td>
-                <td>@spedizione.IndirizzoDestinatario</td>
-                <td>@spedizione.NominativoDestinatario</td>
-                <td>@spedizione.Costo</td>
-                <td>@spedizione.DataConsegnaPrevista.ToShortDateString()</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@spedizione.IdSpedizione">Dettagli</a> |
-                    <a asp-action="Edit" asp-route-id="@spedizione.IdSpedizione">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@spedizione.IdSpedizione">Elimina</a> |
-
-                    <!-- Aggiungi il link per la creazione di un nuovo aggiornamento -->
-                    <a asp-action="Create" asp-controller="AggiornamentoSpedizione" asp-route-spedizioneId="@spedizione.IdSpedizione">Aggiorna</a>
-                </td>
+                <th scope="col">ID</th>
+                <th scope="col">Numero Identificativo</th>
+                <th scope="col">Data Spedizione</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Città Destinataria</th>
+                <th scope="col">Indirizzo Destinatario</th>
+                <th scope="col">Nominativo Destinatario</th>
+                <th scope="col">Costo</th>
+                <th scope="col">Data Consegna Prevista</th>
+                <th scope="col">Azioni</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var spedizione in Model)
+            {
+                <tr>
+                    <td>@spedizione.IdSpedizione</td>
+                    <td>@spedizione.NumeroIdentificativo</td>
+                    <td>@spedizione.DataSpedizione.ToShortDateString()</td>
+                    <td>@spedizione.Peso</td>
+                    <td>@spedizione.CittaDestinataria</td>
+                    <td>@spedizione.IndirizzoDestinatario</td>
+                    <td>@spedizione.NominativoDestinatario</td>
+                    <td>@spedizione.Costo</td>
+                    <td>@spedizione.DataConsegnaPrevista.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@spedizione.IdSpedizione" class="btn btn-info btn-sm">Dettagli</a>
+                        <a asp-action="Edit" asp-route-id="@spedizione.IdSpedizione" class="btn btn-primary btn-sm">Modifica</a>
+                        <a asp-action="Delete" asp-route-id="@spedizione.IdSpedizione" class="btn btn-danger btn-sm">Elimina</a>
+                        <a asp-action="Create" asp-controller="AggiornamentoSpedizione" asp-route-spedizioneId="@spedizione.IdSpedizione" class="btn btn-secondary btn-sm">Aggiorna</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
