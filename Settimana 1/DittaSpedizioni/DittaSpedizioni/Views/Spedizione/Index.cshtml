@@ -37,7 +37,10 @@
                 <td>
                     <a asp-action="Details" asp-route-id="@spedizione.IdSpedizione">Dettagli</a> |
                     <a asp-action="Edit" asp-route-id="@spedizione.IdSpedizione">Modifica</a> |
-                    <a asp-action="Delete" asp-route-id="@spedizione.IdSpedizione">Elimina</a>
+                    <a asp-action="Delete" asp-route-id="@spedizione.IdSpedizione">Elimina</a> |
+
+                    <!-- Aggiungi il link per la creazione di un nuovo aggiornamento -->
+                    <a asp-action="Create" asp-controller="AggiornamentoSpedizione" asp-route-spedizioneId="@spedizione.IdSpedizione">Aggiorna</a>
                 </td>
             </tr>
         }
