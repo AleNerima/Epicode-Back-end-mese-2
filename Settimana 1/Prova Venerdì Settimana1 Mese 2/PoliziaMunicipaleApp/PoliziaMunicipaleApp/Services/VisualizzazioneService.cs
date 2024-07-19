@@ -50,30 +50,47 @@ namespace PoliziaMunicipaleApp.Services
         {
             var result = new List<TrasgressorePuntiTotali>();
 
-            using (var connection = _databaseConnectionService.CreateConnection())
+            try
             {
-                await connection.OpenAsync();
-
-                using (var command = new SqlCommand(@"
-                    SELECT a.idanagrafica, a.cognome, a.nome, SUM(v.decurtamentoPunti) AS TotalePunti
-                    FROM anagrafica a
-                    LEFT JOIN verbale v ON a.idanagrafica = v.idanagrafica
-                    GROUP BY a.idanagrafica, a.cognome, a.nome", connection))
+                using (var connection = _databaseConnectionService.CreateConnection())
                 {
-                    using (var reader = await command.ExecuteReaderAsync())
+                    await connection.OpenAsync();
+
+                    using (var command = new SqlCommand(@"
+                SELECT a.idanagrafica, a.cognome, a.nome, COALESCE(SUM(v.decurtamentoPunti), 0) AS TotalePunti
+                FROM anagrafica a
+                LEFT JOIN verbale v ON a.idanagrafica = v.idanagrafica
+                GROUP BY a.idanagrafica, a.cognome, a.nome", connection))
                     {
-                        while (await reader.ReadAsync())
+                        using (var reader = await command.ExecuteReaderAsync())
                         {
-                            result.Add(new TrasgressorePuntiTotali
+                            while (await reader.ReadAsync())
                             {
-                                Idanagrafica = reader.GetInt32(reader.GetOrdinal("idanagrafica")),
-                                Cognome = reader.GetString(reader.GetOrdinal("cognome")),
-                                Nome = reader.GetString(reader.GetOrdinal("nome")),
-                                TotalePunti = reader.GetInt32(reader.GetOrdinal("TotalePunti"))
-                            });
+                                result.Add(new TrasgressorePuntiTotali
+                                {
+                                    Idanagrafica = reader.GetInt32(reader.GetOrdinal("idanagrafica")),
+                                    Cognome = reader.GetString(reader.GetOrdinal("cognome")),
+                                    Nome = reader.GetString(reader.GetOrdinal("nome")),
+                                    TotalePunti = reader.GetInt32(reader.GetOrdinal("TotalePunti"))
+                                });
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                
+                Console.WriteLine($"Database error: {ex.Message}");
+                
+                throw;
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                
+                throw;
             }
 
             return result;

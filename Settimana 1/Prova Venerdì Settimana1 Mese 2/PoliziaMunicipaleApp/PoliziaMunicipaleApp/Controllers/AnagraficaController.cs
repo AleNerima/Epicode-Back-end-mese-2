@@ -22,7 +22,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
             catch (Exception ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati.";
                 return View("Error");
             }
@@ -41,7 +41,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
             catch (Exception ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dettagli.";
                 return View("Error");
             }
@@ -65,7 +65,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log dell'eccezione (potresti usare un logger qui)
+                    
                     ViewBag.ErrorMessage = "Si è verificato un errore durante l'inserimento dei dati.";
                     return View("Error");
                 }
@@ -86,7 +86,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
             catch (Exception ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati per la modifica.";
                 return View("Error");
             }
@@ -110,7 +110,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log dell'eccezione (potresti usare un logger qui)
+                    
                     ViewBag.ErrorMessage = "Si è verificato un errore durante l'aggiornamento dei dati.";
                     return View("Error");
                 }
@@ -131,7 +131,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
             catch (Exception ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati per l'eliminazione.";
                 return View("Error");
             }
@@ -148,7 +148,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
             catch (Exception ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 ViewBag.ErrorMessage = "Si è verificato un errore durante l'eliminazione dei dati.";
                 return View("Error");
             }

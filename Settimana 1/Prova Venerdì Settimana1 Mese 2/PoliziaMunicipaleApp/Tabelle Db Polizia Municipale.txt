@@ -1,0 +1,34 @@
+Tabelle Db Polizia Municipale
+-------------------------------------------------------------------------
+CREATE TABLE [dbo].[ANAGRAFICA] (
+    [idanagrafica]  INT            IDENTITY (1, 1) NOT NULL,
+    [Cognome]       NVARCHAR (50)  NOT NULL,
+    [Nome]          NVARCHAR (50)  NOT NULL,
+    [Indirizzo]     NVARCHAR (100) NULL,
+    [Citta]         NVARCHAR (50)  NULL,
+    [CAP]           NVARCHAR (10)  NULL,
+    [CodiceFiscale] NVARCHAR (16)  NULL,
+    PRIMARY KEY CLUSTERED ([idanagrafica] ASC)
+);
+----------------------------------------------------------------------
+CREATE TABLE [dbo].[TIPO_VIOLAZIONE] (
+    [idviolazione] INT            IDENTITY (1, 1) NOT NULL,
+    [descrizione]  NVARCHAR (100) NULL,
+    PRIMARY KEY CLUSTERED ([idviolazione] ASC)
+);
+
+----------------------------------------------------------------
+CREATE TABLE [dbo].[VERBALE] (
+    [idverbale]               INT             IDENTITY (1, 1) NOT NULL,
+    [DataViolazione]          DATE            NULL,
+    [IndirizzoViolazione]     NVARCHAR (100)  NULL,
+    [nominativoAgente]        NVARCHAR (50)   NULL,
+    [DataTrascrizioneVerbale] DATE            NULL,
+    [Importo]                 DECIMAL (10, 2) NULL,
+    [DecurtamentoPunti]       INT             NULL,
+    [idanagrafica]            INT             NULL,
+    [idviolazione]            INT             NULL,
+    PRIMARY KEY CLUSTERED ([idverbale] ASC),
+    FOREIGN KEY ([idanagrafica]) REFERENCES [dbo].[ANAGRAFICA] ([idanagrafica]),
+    FOREIGN KEY ([idviolazione]) REFERENCES [dbo].[TIPO_VIOLAZIONE] ([idviolazione])
+);

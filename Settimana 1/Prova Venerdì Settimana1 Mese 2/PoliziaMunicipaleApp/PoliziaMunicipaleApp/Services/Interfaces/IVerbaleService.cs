@@ -7,7 +7,6 @@ namespace PoliziaMunicipaleApp.Services.Interfaces
         Task<IEnumerable<Verbale>> GetAllAsync();
         Task<Verbale?> GetByIdAsync(int id);
         Task AddAsync(Verbale verbale);
-        Task UpdateAsync(Verbale verbale);
         Task DeleteAsync(int id);
     }
 }

@@ -18,14 +18,14 @@ namespace PoliziaMunicipaleApp.Controllers
             _tipoViolazioneService = tipoViolazioneService;
         }
 
-        // GET: Verbale
+        
         public async Task<IActionResult> IndexVerbale()
         {
             var verbali = await _verbaleService.GetAllAsync();
             return View("IndexVerbale", verbali);
         }
 
-        // GET: Verbale/Details/5
+        
         public async Task<IActionResult> Details(int id)
         {
             var verbale = await _verbaleService.GetByIdAsync(id);
@@ -36,7 +36,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(verbale);
         }
 
-        // GET: Verbale/Create
+        
         public async Task<IActionResult> CreateVerbale()
         {
             var anagrafiche = await _anagraficaService.GetAllAsync();
@@ -54,7 +54,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View();
         }
 
-        // POST: Verbale/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Idverbale,DataViolazione,IndirizzoViolazione,NominativoAgente,DataTrascrizioneVerbale,Importo,DecurtamentoPunti,Idanagrafica,Idviolazione")] Verbale verbale)
@@ -82,64 +82,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(verbale);
         }
 
-        // GET: Verbale/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var verbale = await _verbaleService.GetByIdAsync(id);
-            if (verbale == null)
-            {
-                return NotFound();
-            }
-
-            var anagrafiche = await _anagraficaService.GetAllAsync();
-            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
-
-            if (anagrafiche == null || tipiViolazione == null)
-            {
-                // Gestisce il caso in cui i dati non siano disponibili
-                return NotFound();
-            }
-
-            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "CodiceFiscale", verbale.Idanagrafica);
-            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione", verbale.Idviolazione);
-
-            return View(verbale);
-        }
-
-        // POST: Verbale/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Idverbale,DataViolazione,IndirizzoViolazione,NominativoAgente,DataTrascrizioneVerbale,Importo,DecurtamentoPunti,Idanagrafica,Idviolazione")] Verbale verbale)
-        {
-            if (id != verbale.Idverbale)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _verbaleService.UpdateAsync(verbale);
-                    return RedirectToAction(nameof(IndexVerbale));
-                }
-                catch (Exception ex) // Generico, per eventuali errori
-                {
-                    // Logga o gestisci l'eccezione
-                    ModelState.AddModelError(string.Empty, "Si è verificato un errore. Per favore riprova.");
-                }
-            }
-
-            // Ricarica le liste per la vista in caso di errore
-            var anagrafiche = await _anagraficaService.GetAllAsync();
-            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
-            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "Nome", verbale.Idanagrafica);
-            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione", verbale.Idviolazione);
-
-            return View(verbale);
-        }
-
-        // GET: Verbale/Delete/5
+        
         public async Task<IActionResult> Delete(int id)
         {
             var verbale = await _verbaleService.GetByIdAsync(id);
@@ -150,8 +93,8 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(verbale);
         }
 
-        // POST: Verbale/Delete/5
-        [HttpPost, ActionName("Delete")]
+        
+        [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

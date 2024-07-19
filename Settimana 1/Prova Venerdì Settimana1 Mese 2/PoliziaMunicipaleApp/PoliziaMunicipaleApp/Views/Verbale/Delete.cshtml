@@ -1,0 +1,73 @@
+﻿@model PoliziaMunicipaleApp.Models.Verbale
+
+@{
+    ViewData["Title"] = "Conferma Eliminazione";
+}
+
+<h1>Conferma Eliminazione</h1>
+
+<h3>Sei sicuro di voler eliminare questo verbale?</h3>
+
+<div>
+    <h4>Verbale</h4>
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Data Violazione
+            </dt>
+            <dd class="col-sm-10">
+                @Model.DataViolazione?.ToString("d")
+            </dd>
+            <dt class="col-sm-2">
+                Indirizzo Violazione
+            </dt>
+            <dd class="col-sm-10">
+                @Model.IndirizzoViolazione
+            </dd>
+            <dt class="col-sm-2">
+                Nominativo Agente
+            </dt>
+            <dd class="col-sm-10">
+                @Model.NominativoAgente
+            </dd>
+            <dt class="col-sm-2">
+                Data Trascrizione Verbale
+            </dt>
+            <dd class="col-sm-10">
+                @Model.DataTrascrizioneVerbale?.ToString("d")
+            </dd>
+            <dt class="col-sm-2">
+                Importo
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Importo
+            </dd>
+            <dt class="col-sm-2">
+                Decurtamento Punti
+            </dt>
+            <dd class="col-sm-10">
+                @Model.DecurtamentoPunti
+            </dd>
+            <dt class="col-sm-2">
+                Anagrafica
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Anagrafica?.Nome
+            </dd>
+            <dt class="col-sm-2">
+                Tipo Violazione
+            </dt>
+            <dd class="col-sm-10">
+                @Model.TipoViolazione?.Descrizione
+            </dd>
+        </dl>
+    </div>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Idverbale" />
+        <div class="form-group">
+            <input type="submit" value="Elimina" class="btn btn-danger" />
+            <a href="@Url.Action("IndexVerbale")" class="btn btn-secondary">Annulla</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Visualizzazione Aggregata";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    Benvenuti nella sezione di visualizzazione aggregata. Selezionate una delle seguenti opzioni per visualizzare i dati aggregati:
+</p>
+
+<ul>
+    <li><a href="@Url.Action("TotaleVerbaliPerTrasgressore")">Totale Verbali per Trasgressore</a></li>
+    <li><a href="@Url.Action("TotalePuntiDecurtatiPerTrasgressore")">Totale Punti Decurtati per Trasgressore</a></li>
+    <li><a href="@Url.Action("ViolazioniConPuntiMaggioreDi10")">Violazioni con Punti Maggiore di 10</a></li>
+    <li><a href="@Url.Action("ViolazioniConImportoMaggioreDi400")">Violazioni con Importo Maggiore di 400</a></li>
+</ul>

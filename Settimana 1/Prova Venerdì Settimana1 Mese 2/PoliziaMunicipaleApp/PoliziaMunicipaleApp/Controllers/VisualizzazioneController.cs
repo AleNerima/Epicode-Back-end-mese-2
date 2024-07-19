@@ -12,32 +12,82 @@ namespace PoliziaMunicipaleApp.Controllers
             _visualizzazioneService = visualizzazioneService;
         }
 
-        // GET: Visualizzazione/TotaleVerbaliPerTrasgressore
+        
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+    
         public async Task<IActionResult> TotaleVerbaliPerTrasgressore()
         {
-            var result = await _visualizzazioneService.GetTotaleVerbaliPerTrasgressoreAsync();
-            return View(result);
+            try
+            {
+                var result = await _visualizzazioneService.GetTotaleVerbaliPerTrasgressoreAsync();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                
+                ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati.";
+                return View("Error");
+            }
         }
 
-        // GET: Visualizzazione/TotalePuntiDecurtatiPerTrasgressore
+        
         public async Task<IActionResult> TotalePuntiDecurtatiPerTrasgressore()
         {
-            var result = await _visualizzazioneService.GetTotalePuntiDecurtatiPerTrasgressoreAsync();
-            return View(result);
+            try
+            {
+                var result = await _visualizzazioneService.GetTotalePuntiDecurtatiPerTrasgressoreAsync();
+                // Verifica che il risultato non sia null prima di passarne il valore alla vista
+                if (result == null)
+                {
+                    
+                    ViewBag.ErrorMessage = "Nessun dato disponibile.";
+                    return View("Error");
+                }
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                
+                ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati.";
+                return View("Error");
+            }
         }
 
-        // GET: Visualizzazione/ViolazioniConPuntiMaggioreDi10
+
+        
         public async Task<IActionResult> ViolazioniConPuntiMaggioreDi10()
         {
-            var result = await _visualizzazioneService.GetViolazioniConPuntiMaggioreDi10Async();
-            return View(result);
+            try
+            {
+                var result = await _visualizzazioneService.GetViolazioniConPuntiMaggioreDi10Async();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                
+                ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati.";
+                return View("Error");
+            }
         }
 
-        // GET: Visualizzazione/ViolazioniConImportoMaggioreDi400
+        
         public async Task<IActionResult> ViolazioniConImportoMaggioreDi400()
         {
-            var result = await _visualizzazioneService.GetViolazioniConImportoMaggioreDi400Async();
-            return View(result);
+            try
+            {
+                var result = await _visualizzazioneService.GetViolazioniConImportoMaggioreDi400Async();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                
+                ViewBag.ErrorMessage = "Si è verificato un errore durante il recupero dei dati.";
+                return View("Error");
+            }
         }
     }
 }

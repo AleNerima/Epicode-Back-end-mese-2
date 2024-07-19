@@ -20,7 +20,7 @@
             <th>@Html.DisplayNameFor(model => model.Importo)</th>
             <th>@Html.DisplayNameFor(model => model.DecurtamentoPunti)</th>
             <th>@Html.DisplayNameFor(model => model.Anagrafica.Nome) </th>
-            <th>@Html.DisplayNameFor(model => model.Anagrafica.CodiceFiscale) </th>
+            <th>@Html.DisplayNameFor(model => model.Anagrafica.CodiceFiscale) Colpevole </th>
             <th>@Html.DisplayNameFor(model => model.TipoViolazione.Descrizione)</th>
             <th>Azioni</th>
         </tr>
@@ -39,8 +39,7 @@
                 <td>@item.Anagrafica?.CodiceFiscale</td>
                 <td>@item.TipoViolazione?.Descrizione</td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = item.Idverbale })" class="btn btn-warning">Modifica</a>
-                    <a href="@Url.Action("Delete", new { id = item.Idverbale })" class="btn btn-danger">Elimina</a>
+                   <a href="@Url.Action("Delete", new { id = item.Idverbale })" class="btn btn-danger">Elimina</a>
                 </td>
             </tr>
         }

@@ -27,7 +27,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
                 <td>
-                    <a href="@Url.Action("DetailsAnagrafica", new { id = item.Idanagrafica })" class="btn btn-warning">Dettagli</a>
+                    <a href="@Url.Action("DetailsAnagrafica", new { id = item.Idanagrafica })" class="btn btn-success">Dettagli</a>
                     <a href="@Url.Action("EditAnagrafica", new { id = item.Idanagrafica })" class="btn btn-warning">Modifica</a>
                     <a href="@Url.Action("DeleteAnagrafica", new { id = item.Idanagrafica })" class="btn btn-danger">Elimina</a>
                 </td>

@@ -13,14 +13,14 @@ namespace PoliziaMunicipaleApp.Controllers
             _tipoViolazioneService = tipoViolazioneService;
         }
 
-        // GET: TipoViolazione
+        
         public async Task<IActionResult> IndexTipoViolazione()
         {
             var tipoViolazioni = await _tipoViolazioneService.GetAllAsync();
             return View("IndexTipoViolazione",tipoViolazioni);
         }
 
-        // GET: TipoViolazione/Details/5
+        
         public async Task<IActionResult> Details(int id)
         {
             var tipoViolazione = await _tipoViolazioneService.GetByIdAsync(id);
@@ -31,13 +31,13 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(tipoViolazione);
         }
 
-        // GET: TipoViolazione/Create
+        
         public IActionResult CreateTipoViolazione()
         {
             return View();
         }
 
-        // POST: TipoViolazione/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Idviolazione,Descrizione")] TipoViolazione tipoViolazione)
@@ -50,7 +50,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(tipoViolazione);
         }
 
-        // GET: TipoViolazione/Edit/5
+        
         public async Task<IActionResult> EditTipoViolazione(int id)
         {
             var tipoViolazione = await _tipoViolazioneService.GetByIdAsync(id);
@@ -61,7 +61,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View("EditTipoViolazione",tipoViolazione);
         }
 
-        // POST: TipoViolazione/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditTipoViolazione(int id, [Bind("Idviolazione,Descrizione")] TipoViolazione tipoViolazione)
@@ -88,7 +88,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(tipoViolazione);
         }
 
-        // GET: TipoViolazione/Delete/5
+        
         public async Task<IActionResult> DeleteTipoViolazione(int id)
         {
             var tipoViolazione = await _tipoViolazioneService.GetByIdAsync(id);
@@ -99,7 +99,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View("DeleteTipoViolazione",tipoViolazione);
         }
 
-        // POST: TipoViolazione/Delete/5
+        
         [HttpPost, ActionName("DeleteTipoViolazione")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

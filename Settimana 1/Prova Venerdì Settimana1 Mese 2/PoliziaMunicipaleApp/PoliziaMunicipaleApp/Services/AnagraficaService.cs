@@ -46,7 +46,7 @@ namespace PoliziaMunicipaleApp.Services
             }
             catch (SqlException ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 throw new Exception("Si è verificato un errore durante il recupero dei dati.", ex);
             }
 
@@ -88,7 +88,7 @@ namespace PoliziaMunicipaleApp.Services
             }
             catch (SqlException ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 throw new Exception("Si è verificato un errore durante il recupero dei dati.", ex);
             }
 
@@ -118,7 +118,7 @@ namespace PoliziaMunicipaleApp.Services
             }
             catch (SqlException ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 throw new Exception("Si è verificato un errore durante l'inserimento dei dati.", ex);
             }
         }
@@ -147,7 +147,7 @@ namespace PoliziaMunicipaleApp.Services
             }
             catch (SqlException ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+               
                 throw new Exception("Si è verificato un errore durante l'aggiornamento dei dati.", ex);
             }
         }
@@ -169,7 +169,7 @@ namespace PoliziaMunicipaleApp.Services
             }
             catch (SqlException ex)
             {
-                // Log dell'eccezione (potresti usare un logger qui)
+                
                 throw new Exception("Si è verificato un errore durante l'eliminazione dei dati.", ex);
             }
         }

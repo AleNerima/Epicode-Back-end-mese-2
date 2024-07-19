@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PoliziaMunicipaleApp.Models.TrasgressoreTotale>
+
+@{
+    ViewData["Title"] = "Totale Verbali per Trasgressore";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Trasgressore</th>
+            <th>Cognome</th>
+            <th>Nome</th>
+            <th>Numero di Verbali</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Idanagrafica</td>
+                <td>@item.Cognome</td>
+                <td>@item.Nome</td>
+                <td>@item.TotaleVerbali</td>
+            </tr>
+        }
+    </tbody>
+</table>

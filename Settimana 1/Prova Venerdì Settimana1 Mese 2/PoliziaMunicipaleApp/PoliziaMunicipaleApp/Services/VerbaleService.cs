@@ -131,28 +131,6 @@ namespace PoliziaMunicipaleApp.Services
             }
         }
 
-        public async Task UpdateAsync(Verbale verbale)
-        {
-            using (var connection = _databaseConnectionService.CreateConnection())
-            {
-                await connection.OpenAsync();
-
-                using (var command = new SqlCommand(
-                    "UPDATE VERBALE SET DataViolazione = @DataViolazione, IndirizzoViolazione = @IndirizzoViolazione, NominativoAgente = @NominativoAgente, DataTrascrizioneVerbale = @DataTrascrizioneVerbale, Importo = @Importo, DecurtamentoPunti = @DecurtamentoPunti, idanagrafica = @Idanagrafica, idviolazione = @Idviolazione WHERE idverbale = @Id", connection))
-                {
-                    command.Parameters.AddWithValue("@Id", verbale.Idverbale);
-                    command.Parameters.AddWithValue("@DataViolazione", verbale.DataViolazione ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@IndirizzoViolazione", verbale.IndirizzoViolazione ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@NominativoAgente", verbale.NominativoAgente ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@DataTrascrizioneVerbale", verbale.DataTrascrizioneVerbale ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@Importo", verbale.Importo ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@DecurtamentoPunti", verbale.DecurtamentoPunti ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@Idanagrafica", verbale.Idanagrafica ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@Idviolazione", verbale.Idviolazione ?? (object)DBNull.Value);
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
-        }
 
         public async Task DeleteAsync(int id)
         {
