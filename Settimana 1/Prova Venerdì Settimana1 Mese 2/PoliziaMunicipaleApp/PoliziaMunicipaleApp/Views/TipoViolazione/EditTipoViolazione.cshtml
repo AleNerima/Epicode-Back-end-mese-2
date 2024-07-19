@@ -1,0 +1,21 @@
+﻿@model PoliziaMunicipaleApp.Models.TipoViolazione
+
+@{
+    ViewData["Title"] = "Modifica Tipo Violazione";
+}
+
+<h1>Modifica Tipo Violazione</h1>
+
+<h4>Tipo Violazione</h4>
+<hr />
+<form asp-action="EditTipoViolazione">
+    <input asp-for="Idviolazione" type="hidden" />
+    <div class="form-group">
+        <label asp-for="Descrizione" class="control-label"></label>
+        <input asp-for="Descrizione" class="form-control" />
+        <span asp-validation-for="Descrizione" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salva" class="btn btn-primary" />
+    </div>
+</form>

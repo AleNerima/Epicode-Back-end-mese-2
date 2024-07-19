@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PoliziaMunicipaleApp.Models.TipoViolazione>
+
+@{
+    ViewData["Title"] = "Tipo Violazione Index";
+}
+
+<h1>Tipo Violazione</h1>
+
+<p>
+    <a href="@Url.Action("CreateTipoViolazione")" class="btn btn-primary">Aggiungi Nuovo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Descrizione)/Tipo violazione</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
+                <td>
+                    <a href="@Url.Action("EditTipoViolazione", new { id = item.Idviolazione })" class="btn btn-warning">Modifica</a>
+                    <a href="@Url.Action("DeleteTipoViolazione", new { id = item.Idviolazione })" class="btn btn-danger">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

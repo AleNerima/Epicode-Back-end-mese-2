@@ -1,0 +1,24 @@
+﻿@model PoliziaMunicipaleApp.Models.TipoViolazione
+
+@{
+    ViewData["Title"] = "Elimina Tipo Violazione";
+}
+
+<h1>Elimina Tipo Violazione</h1>
+
+<h4>Sei sicuro di voler eliminare questo record?</h4>
+<hr />
+<div>
+    <h4>Tipo Violazione</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Descrizione</dt>
+        <dd class="col-sm-9">@Model.Descrizione</dd>
+    </dl>
+</div>
+<form asp-action="DeleteTipoViolazione">
+    <input type="hidden" asp-for="Idviolazione" />
+    <div class="form-group">
+        <input type="submit" value="Elimina" class="btn btn-danger" />
+        <a href="@Url.Action("IndexTipoViolazione")" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>
