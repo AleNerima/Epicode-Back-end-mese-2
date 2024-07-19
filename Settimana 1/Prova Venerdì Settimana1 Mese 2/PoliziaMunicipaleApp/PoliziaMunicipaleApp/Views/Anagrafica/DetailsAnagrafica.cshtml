@@ -1,0 +1,35 @@
+﻿@model PoliziaMunicipaleApp.Models.Anagrafica
+
+@{
+    ViewData["Title"] = "Dettagli Anagrafica";
+}
+
+<h1>Dettagli Anagrafica</h1>
+
+<div>
+    <h4>Anagrafica</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Cognome</dt>
+        <dd class="col-sm-9">@Model.Cognome</dd>
+
+        <dt class="col-sm-3">Nome</dt>
+        <dd class="col-sm-9">@Model.Nome</dd>
+
+        <dt class="col-sm-3">Indirizzo</dt>
+        <dd class="col-sm-9">@Model.Indirizzo</dd>
+
+        <dt class="col-sm-3">Città</dt>
+        <dd class="col-sm-9">@Model.Citta</dd>
+
+        <dt class="col-sm-3">CAP</dt>
+        <dd class="col-sm-9">@Model.CAP</dd>
+
+        <dt class="col-sm-3">Codice Fiscale</dt>
+        <dd class="col-sm-9">@Model.CodiceFiscale</dd>
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Edit", new { id = Model.Idanagrafica })" class="btn btn-warning">Modifica</a>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Indietro</a>
+</p>

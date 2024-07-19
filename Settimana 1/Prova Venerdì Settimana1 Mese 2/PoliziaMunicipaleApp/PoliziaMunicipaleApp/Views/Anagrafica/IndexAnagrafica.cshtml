@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PoliziaMunicipaleApp.Models.Anagrafica>
+
+@{
+    ViewData["Title"] = "Anagrafica Index";
+}
+
+<h1>Dati Anagrafici Trasgressori</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Aggiungi Nuovo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Cognome)</th>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Indirizzo)</th>
+            <th>@Html.DisplayNameFor(model => model.Citta)</th>
+            <th>@Html.DisplayNameFor(model => model.CAP)</th>
+            <th>@Html.DisplayNameFor(model => model.CodiceFiscale)</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Cognome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Indirizzo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Citta)</td>
+                <td>@Html.DisplayFor(modelItem => item.CAP)</td>
+                <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
+                <td>
+                    <a href="@Url.Action("DetailsAnagrafica", new { id = item.Idanagrafica })" class="btn btn-warning">Modifica</a>
+                    <a href="@Url.Action("Edit", new { id = item.Idanagrafica })" class="btn btn-warning">Modifica</a>
+                    <a href="@Url.Action("Delete", new { id = item.Idanagrafica })" class="btn btn-danger">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
