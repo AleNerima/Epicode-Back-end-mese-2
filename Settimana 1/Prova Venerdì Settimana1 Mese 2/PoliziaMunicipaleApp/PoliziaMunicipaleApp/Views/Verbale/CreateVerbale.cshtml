@@ -44,8 +44,9 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Idanagrafica" class="control-label">Codice Fiscale Anagrafica</label>
-        <input type="text" id="searchAnagrafica" class="form-control" placeholder="Cerca codice fiscale..." />
+        <!--Faccio la ricerca tramite codice fiscale per risalire al Trasgressore e al suo idanagrafica-->
+        <label asp-for="Idanagrafica" class="control-label">Codice Fiscale Trasgressore</label>
+        <input type="text" id="searchAnagrafica" class="form-control" placeholder="Cerca codice fiscale (dato in Anagrafica)" />
         <select asp-for="Idanagrafica" id="anagraficaSelect" class="form-control">
             <option value="">Seleziona Anagrafica</option>
             @foreach (var anagrafica in (SelectList)ViewData["AnagraficaList"])
