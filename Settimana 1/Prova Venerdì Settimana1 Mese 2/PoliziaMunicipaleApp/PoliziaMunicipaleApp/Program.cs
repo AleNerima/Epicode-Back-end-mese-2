@@ -34,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=TipoViolazione}/{action=IndexTipoViolazione}/{id?}");
+    pattern: "{controller=Verbale}/{action=IndexVerbale}/{id?}");
 
 app.Run();

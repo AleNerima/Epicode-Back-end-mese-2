@@ -1,0 +1,48 @@
+﻿@model IEnumerable<PoliziaMunicipaleApp.Models.Verbale>
+
+@{
+    ViewData["Title"] = "Verbali Index";
+}
+
+<h1>Verbali</h1>
+
+<p>
+    <a href="@Url.Action("CreateVerbale")" class="btn btn-primary">Aggiungi Nuovo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.DataViolazione)</th>
+            <th>@Html.DisplayNameFor(model => model.IndirizzoViolazione)</th>
+            <th>@Html.DisplayNameFor(model => model.NominativoAgente)</th>
+            <th>@Html.DisplayNameFor(model => model.DataTrascrizioneVerbale)</th>
+            <th>@Html.DisplayNameFor(model => model.Importo)</th>
+            <th>@Html.DisplayNameFor(model => model.DecurtamentoPunti)</th>
+            <th>@Html.DisplayNameFor(model => model.Anagrafica.Nome) </th>
+            <th>@Html.DisplayNameFor(model => model.Anagrafica.CodiceFiscale) </th>
+            <th>@Html.DisplayNameFor(model => model.TipoViolazione.Descrizione)</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DataViolazione?.ToShortDateString()</td>
+                <td>@item.IndirizzoViolazione</td>
+                <td>@item.NominativoAgente</td>
+                <td>@item.DataTrascrizioneVerbale?.ToShortDateString()</td>
+                <td>@item.Importo?.ToString("C")</td>
+                <td>@item.DecurtamentoPunti</td>
+                <td>@item.Anagrafica?.Nome</td>
+                <td>@item.Anagrafica?.CodiceFiscale</td>
+                <td>@item.TipoViolazione?.Descrizione</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Idverbale })" class="btn btn-warning">Modifica</a>
+                    <a href="@Url.Action("Delete", new { id = item.Idverbale })" class="btn btn-danger">Elimina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

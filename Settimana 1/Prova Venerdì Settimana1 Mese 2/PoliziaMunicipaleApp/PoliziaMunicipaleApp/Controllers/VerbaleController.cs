@@ -19,10 +19,10 @@ namespace PoliziaMunicipaleApp.Controllers
         }
 
         // GET: Verbale
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexVerbale()
         {
             var verbali = await _verbaleService.GetAllAsync();
-            return View(verbali);
+            return View("IndexVerbale", verbali);
         }
 
         // GET: Verbale/Details/5
@@ -37,10 +37,20 @@ namespace PoliziaMunicipaleApp.Controllers
         }
 
         // GET: Verbale/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateVerbale()
         {
-            ViewData["AnagraficaList"] = new SelectList(await _anagraficaService.GetAllAsync(), "Idanagrafica", "Nome");
-            ViewData["TipoViolazioneList"] = new SelectList(await _tipoViolazioneService.GetAllAsync(), "Idviolazione", "Descrizione");
+            var anagrafiche = await _anagraficaService.GetAllAsync();
+            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
+
+            if (anagrafiche == null || tipiViolazione == null)
+            {
+                // Gestisci il caso in cui i dati non siano disponibili
+                return NotFound();
+            }
+
+            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "CodiceFiscale");
+            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione");
+
             return View();
         }
 
@@ -54,7 +64,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 try
                 {
                     await _verbaleService.AddAsync(verbale);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(IndexVerbale));
                 }
                 catch (Exception ex) // Generico, per eventuali errori
                 {
@@ -63,8 +73,12 @@ namespace PoliziaMunicipaleApp.Controllers
                 }
             }
 
-            ViewData["AnagraficaList"] = new SelectList(await _anagraficaService.GetAllAsync(), "Idanagrafica", "Nome", verbale.Idanagrafica);
-            ViewData["TipoViolazioneList"] = new SelectList(await _tipoViolazioneService.GetAllAsync(), "Idviolazione", "Descrizione", verbale.Idviolazione);
+            // Ricarica le liste per la vista in caso di errore
+            var anagrafiche = await _anagraficaService.GetAllAsync();
+            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
+            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "Nome", verbale.Idanagrafica);
+            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione", verbale.Idviolazione);
+
             return View(verbale);
         }
 
@@ -76,8 +90,19 @@ namespace PoliziaMunicipaleApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["AnagraficaList"] = new SelectList(await _anagraficaService.GetAllAsync(), "Idanagrafica", "Nome", verbale.Idanagrafica);
-            ViewData["TipoViolazioneList"] = new SelectList(await _tipoViolazioneService.GetAllAsync(), "Idviolazione", "Descrizione", verbale.Idviolazione);
+
+            var anagrafiche = await _anagraficaService.GetAllAsync();
+            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
+
+            if (anagrafiche == null || tipiViolazione == null)
+            {
+                // Gestisce il caso in cui i dati non siano disponibili
+                return NotFound();
+            }
+
+            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "CodiceFiscale", verbale.Idanagrafica);
+            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione", verbale.Idviolazione);
+
             return View(verbale);
         }
 
@@ -96,7 +121,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 try
                 {
                     await _verbaleService.UpdateAsync(verbale);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(IndexVerbale));
                 }
                 catch (Exception ex) // Generico, per eventuali errori
                 {
@@ -105,8 +130,12 @@ namespace PoliziaMunicipaleApp.Controllers
                 }
             }
 
-            ViewData["AnagraficaList"] = new SelectList(await _anagraficaService.GetAllAsync(), "Idanagrafica", "Nome", verbale.Idanagrafica);
-            ViewData["TipoViolazioneList"] = new SelectList(await _tipoViolazioneService.GetAllAsync(), "Idviolazione", "Descrizione", verbale.Idviolazione);
+            // Ricarica le liste per la vista in caso di errore
+            var anagrafiche = await _anagraficaService.GetAllAsync();
+            var tipiViolazione = await _tipoViolazioneService.GetAllAsync();
+            ViewData["AnagraficaList"] = new SelectList(anagrafiche, "Idanagrafica", "Nome", verbale.Idanagrafica);
+            ViewData["TipoViolazioneList"] = new SelectList(tipiViolazione, "Idviolazione", "Descrizione", verbale.Idviolazione);
+
             return View(verbale);
         }
 
@@ -127,7 +156,7 @@ namespace PoliziaMunicipaleApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _verbaleService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexVerbale));
         }
     }
 }

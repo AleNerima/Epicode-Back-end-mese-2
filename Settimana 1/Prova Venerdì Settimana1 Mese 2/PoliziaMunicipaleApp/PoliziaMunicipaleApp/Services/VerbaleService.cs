@@ -7,10 +7,14 @@ namespace PoliziaMunicipaleApp.Services
     public class VerbaleService : IVerbaleService
     {
         private readonly IDatabaseConnectionService _databaseConnectionService;
+        private readonly IAnagraficaService _anagraficaService;
+        private readonly ITipoViolazioneService _tipoViolazioneService;
 
-        public VerbaleService(IDatabaseConnectionService databaseConnectionService)
+        public VerbaleService(IDatabaseConnectionService databaseConnectionService, IAnagraficaService anagraficaService, ITipoViolazioneService tipoViolazioneService)
         {
             _databaseConnectionService = databaseConnectionService;
+            _anagraficaService = anagraficaService;
+            _tipoViolazioneService = tipoViolazioneService;
         }
 
         public async Task<IEnumerable<Verbale>> GetAllAsync()
@@ -27,7 +31,7 @@ namespace PoliziaMunicipaleApp.Services
                     {
                         while (await reader.ReadAsync())
                         {
-                            result.Add(new Verbale
+                            var verbale = new Verbale
                             {
                                 Idverbale = reader.GetInt32(reader.GetOrdinal("idverbale")),
                                 DataViolazione = reader.IsDBNull(reader.GetOrdinal("DataViolazione")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataViolazione")),
@@ -38,7 +42,19 @@ namespace PoliziaMunicipaleApp.Services
                                 DecurtamentoPunti = reader.IsDBNull(reader.GetOrdinal("DecurtamentoPunti")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("DecurtamentoPunti")),
                                 Idanagrafica = reader.IsDBNull(reader.GetOrdinal("idanagrafica")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("idanagrafica")),
                                 Idviolazione = reader.IsDBNull(reader.GetOrdinal("idviolazione")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("idviolazione"))
-                            });
+                            };
+
+                            // Recupera Anagrafica e TipoViolazione separatamente
+                            if (verbale.Idanagrafica.HasValue)
+                            {
+                                verbale.Anagrafica = await _anagraficaService.GetByIdAsync(verbale.Idanagrafica.Value);
+                            }
+                            if (verbale.Idviolazione.HasValue)
+                            {
+                                verbale.TipoViolazione = await _tipoViolazioneService.GetByIdAsync(verbale.Idviolazione.Value);
+                            }
+
+                            result.Add(verbale);
                         }
                     }
                 }
@@ -75,6 +91,16 @@ namespace PoliziaMunicipaleApp.Services
                                 Idanagrafica = reader.IsDBNull(reader.GetOrdinal("idanagrafica")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("idanagrafica")),
                                 Idviolazione = reader.IsDBNull(reader.GetOrdinal("idviolazione")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("idviolazione"))
                             };
+
+                            // Recupera Anagrafica e TipoViolazione separatamente
+                            if (verbale.Idanagrafica.HasValue)
+                            {
+                                verbale.Anagrafica = await _anagraficaService.GetByIdAsync(verbale.Idanagrafica.Value);
+                            }
+                            if (verbale.Idviolazione.HasValue)
+                            {
+                                verbale.TipoViolazione = await _tipoViolazioneService.GetByIdAsync(verbale.Idviolazione.Value);
+                            }
                         }
                     }
                 }

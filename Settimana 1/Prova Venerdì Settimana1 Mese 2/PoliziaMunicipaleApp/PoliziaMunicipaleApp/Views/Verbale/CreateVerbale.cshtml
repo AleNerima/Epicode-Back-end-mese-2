@@ -1,0 +1,99 @@
+﻿@model PoliziaMunicipaleApp.Models.Verbale
+
+@{
+    ViewData["Title"] = "Aggiungi Nuovo Verbale";
+}
+
+<h1>Aggiungi Nuovo Verbale</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="DataViolazione" class="control-label"></label>
+        <input asp-for="DataViolazione" class="form-control" type="date" />
+        <span asp-validation-for="DataViolazione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IndirizzoViolazione" class="control-label"></label>
+        <input asp-for="IndirizzoViolazione" class="form-control" />
+        <span asp-validation-for="IndirizzoViolazione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NominativoAgente" class="control-label"></label>
+        <input asp-for="NominativoAgente" class="form-control" />
+        <span asp-validation-for="NominativoAgente" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataTrascrizioneVerbale" class="control-label"></label>
+        <input asp-for="DataTrascrizioneVerbale" class="form-control" type="date" />
+        <span asp-validation-for="DataTrascrizioneVerbale" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Importo" class="control-label"></label>
+        <input asp-for="Importo" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Importo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DecurtamentoPunti" class="control-label"></label>
+        <input asp-for="DecurtamentoPunti" class="form-control" type="number" />
+        <span asp-validation-for="DecurtamentoPunti" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Idanagrafica" class="control-label">Codice Fiscale Anagrafica</label>
+        <input type="text" id="searchAnagrafica" class="form-control" placeholder="Cerca codice fiscale..." />
+        <select asp-for="Idanagrafica" id="anagraficaSelect" class="form-control">
+            <option value="">Seleziona Anagrafica</option>
+            @foreach (var anagrafica in (SelectList)ViewData["AnagraficaList"])
+            {
+                <option value="@anagrafica.Value">@anagrafica.Text</option>
+            }
+        </select>
+        <span asp-validation-for="Idanagrafica" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Idviolazione" class="control-label"></label>
+        <select asp-for="Idviolazione" class="form-control">
+            <option value="">Seleziona Tipo Violazione</option>
+            @foreach (var tipoViolazione in (SelectList)ViewData["TipoViolazioneList"])
+            {
+                <option value="@tipoViolazione.Value">@tipoViolazione.Text</option>
+            }
+        </select>
+        <span asp-validation-for="Idviolazione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Aggiungi" class="btn btn-primary" />
+    </div>
+</form>
+
+<a asp-action="IndexVerbale">Indietro</a>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchAnagrafica');
+            const select = document.getElementById('anagraficaSelect');
+            const options = Array.from(select.options);
+            const originalOptions = [...options]; // Store original options
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                select.innerHTML = ''; // Clear current options
+
+                const filteredOptions = originalOptions.filter(option =>
+                    option.text.toLowerCase().includes(searchTerm)
+                );
+
+                // Add filtered options back to select
+                filteredOptions.forEach(option => select.appendChild(option));
+            });
+        });
+    </script>
+}
