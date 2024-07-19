@@ -47,7 +47,7 @@ namespace PoliziaMunicipaleApp.Controllers
             }
         }
 
-        public IActionResult Create()
+        public IActionResult CreateAnagrafica()
         {
             return View();
         }
@@ -61,7 +61,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 try
                 {
                     await _anagraficaService.AddAsync(anagrafica);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(IndexAnagrafica));
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +73,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(anagrafica);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> EditAnagrafica(int id)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 {
                     return NotFound();
                 }
-                return View(anagrafica);
+                return View("EditAnagrafica",anagrafica);
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace PoliziaMunicipaleApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Idanagrafica,Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale")] Anagrafica anagrafica)
+        public async Task<IActionResult> EditAnagrafica(int id, [Bind("Idanagrafica,Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale")] Anagrafica anagrafica)
         {
             if (id != anagrafica.Idanagrafica)
             {
@@ -106,7 +106,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 try
                 {
                     await _anagraficaService.UpdateAsync(anagrafica);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(IndexAnagrafica));
                 }
                 catch (Exception ex)
                 {
@@ -118,7 +118,7 @@ namespace PoliziaMunicipaleApp.Controllers
             return View(anagrafica);
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAnagrafica(int id)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace PoliziaMunicipaleApp.Controllers
                 {
                     return NotFound();
                 }
-                return View(anagrafica);
+                return View("DeleteAnagrafica",anagrafica);
             }
             catch (Exception ex)
             {
@@ -137,14 +137,14 @@ namespace PoliziaMunicipaleApp.Controllers
             }
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteAnagrafica")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
                 await _anagraficaService.DeleteAsync(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexAnagrafica));
             }
             catch (Exception ex)
             {
