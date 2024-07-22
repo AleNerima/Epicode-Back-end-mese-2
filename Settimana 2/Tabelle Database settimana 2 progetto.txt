@@ -1,0 +1,70 @@
+-------- Tabella dei Dipendenti: per la gestione del login ----------------
+
+CREATE TABLE Dipendenti (
+    idDipendente INT IDENTITY(1,1) PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    passwordHash VARCHAR(255) NOT NULL,
+    nome VARCHAR(50),
+    cognome VARCHAR(50)
+);
+
+----------------------- Tabella dei Clienti: utilizza il codice fiscale come chiave primaria --------------------
+CREATE TABLE Clienti (
+    codiceFiscale VARCHAR(16) PRIMARY KEY,
+    cognome VARCHAR(50),
+    nome VARCHAR(50),
+    citta VARCHAR(50),
+    provincia VARCHAR(50),
+    email VARCHAR(100),
+    telefono VARCHAR(20),
+    cellulare VARCHAR(20)
+);
+
+------------------- Tabella delle Camere: la chiave primaria è il numero della camera che deve essere univoco --------------
+
+CREATE TABLE Camere (
+    numero INT PRIMARY KEY,
+    descrizione TEXT,
+    tipologia VARCHAR(20) CHECK (tipologia IN ('singola', 'doppia'))
+);
+
+--------------- Tabella delle Prenotazioni: chiavi esterne per Clienti (relazione uno a molti) e Camere (relazione 1 a 1) ------------
+
+CREATE TABLE Prenotazioni (
+    idPrenotazione INT IDENTITY(1,1) PRIMARY KEY,
+    codiceFiscale VARCHAR(16),
+    numeroCamera INT,
+    dataPrenotazione DATE,
+    numeroProgressivo INT,
+    anno INT,
+    periodoSoggiornoDal DATE,
+    periodoSoggiornoAl DATE,
+    caparraConfirmatoria DECIMAL(10, 2),
+    tariffa DECIMAL(10, 2),
+    tipoSoggiorno VARCHAR(50) CHECK (tipoSoggiorno IN ('mezza pensione', 'pensione completa', 'pernottamento con prima colazione')),
+    stato VARCHAR(20) CHECK (stato IN ('confermata', 'cancellata', 'completata')),
+    FOREIGN KEY (codiceFiscale) REFERENCES Clienti(codiceFiscale),
+    FOREIGN KEY (numeroCamera) REFERENCES Camere(numero)
+);
+
+---------------------- Tabella dei Servizi -----------------------
+
+CREATE TABLE Servizi (
+    idServizio INT IDENTITY(1,1) PRIMARY KEY,
+    nomeServizio VARCHAR(100),
+    prezzo DECIMAL(10, 2)
+);
+
+----------------------------- Tabella Servizi Prenotazioni: relazione tra Prenotazioni e Servizi -----------------
+
+CREATE TABLE ServiziPrenotazione (
+    idServiziPrenotazione INT IDENTITY(1,1) PRIMARY KEY,
+    idPrenotazione INT,
+    idServizio INT,
+    dataServizio DATE,
+    quantita INT,
+    prezzoUnitario DECIMAL(10, 2),
+    prezzoTotale DECIMAL(10, 2),
+    FOREIGN KEY (idPrenotazione) REFERENCES Prenotazioni(idPrenotazione),
+    FOREIGN KEY (idServizio) REFERENCES Servizi(idServizio)
+);
