@@ -8,9 +8,10 @@ CREATE TABLE Dipendenti (
     cognome VARCHAR(50)
 );
 
------------------------ Tabella dei Clienti: utilizza il codice fiscale come chiave primaria --------------------
+----------------------- Tabella dei Clienti: utilizza una chiave primaria numerica --------------------
 CREATE TABLE Clienti (
-    codiceFiscale VARCHAR(16) PRIMARY KEY,
+    idCliente INT IDENTITY(1,1) PRIMARY KEY,
+    codiceFiscale VARCHAR(16) UNIQUE NOT NULL,
     cognome VARCHAR(50),
     nome VARCHAR(50),
     citta VARCHAR(50),
@@ -20,10 +21,11 @@ CREATE TABLE Clienti (
     cellulare VARCHAR(20)
 );
 
-------------------- Tabella delle Camere: la chiave primaria è il numero della camera che deve essere univoco --------------
+------------------- Tabella delle Camere: la chiave primaria è un identificatore numerico univoco --------------
 
 CREATE TABLE Camere (
-    numero INT PRIMARY KEY,
+    idCamera INT IDENTITY(1,1) PRIMARY KEY,
+    numero INT UNIQUE NOT NULL,
     descrizione TEXT,
     tipologia VARCHAR(20) CHECK (tipologia IN ('singola', 'doppia'))
 );
@@ -32,8 +34,8 @@ CREATE TABLE Camere (
 
 CREATE TABLE Prenotazioni (
     idPrenotazione INT IDENTITY(1,1) PRIMARY KEY,
-    codiceFiscale VARCHAR(16),
-    numeroCamera INT,
+    idCliente INT,
+    idCamera INT,
     dataPrenotazione DATE,
     numeroProgressivo INT,
     anno INT,
@@ -43,8 +45,8 @@ CREATE TABLE Prenotazioni (
     tariffa DECIMAL(10, 2),
     tipoSoggiorno VARCHAR(50) CHECK (tipoSoggiorno IN ('mezza pensione', 'pensione completa', 'pernottamento con prima colazione')),
     stato VARCHAR(20) CHECK (stato IN ('confermata', 'cancellata', 'completata')),
-    FOREIGN KEY (codiceFiscale) REFERENCES Clienti(codiceFiscale),
-    FOREIGN KEY (numeroCamera) REFERENCES Camere(numero)
+    FOREIGN KEY (idCliente) REFERENCES Clienti(idCliente),
+    FOREIGN KEY (idCamera) REFERENCES Camere(idCamera)
 );
 
 ---------------------- Tabella dei Servizi -----------------------
