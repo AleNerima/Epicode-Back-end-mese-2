@@ -193,7 +193,7 @@ namespace AlbergoApp.Services
         }
 
         // Metodo per aggiungere un servizio a una prenotazione
-        public async Task<bool> AddServizioToPrenotazioneAsync(int idPrenotazione, int idServizio, DateTime dataServizio, int quantita, decimal prezzoUnitario, decimal prezzoTotale)
+        public async Task<bool> AddServizioToPrenotazioneAsync(int idPrenotazione, int idServizio, DateTime dataServizio, int quantita, decimal prezzoUnitario)
         {
             try
             {
@@ -201,14 +201,14 @@ namespace AlbergoApp.Services
                 {
                     await connection.OpenAsync();
                     var command = new SqlCommand(
-                        "INSERT INTO ServiziPrenotazione (IdPrenotazione, IdServizio, DataServizio, Quantita, PrezzoUnitario, PrezzoTotale) VALUES (@IdPrenotazione, @IdServizio, @DataServizio, @Quantita, @PrezzoUnitario, @PrezzoTotale)",
+                        "INSERT INTO ServiziPrenotazione (IdPrenotazione, IdServizio, DataServizio, Quantita, PrezzoUnitario) VALUES (@IdPrenotazione, @IdServizio, @DataServizio, @Quantita, @PrezzoUnitario)",
                         connection);
                     command.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
                     command.Parameters.AddWithValue("@IdServizio", idServizio);
                     command.Parameters.AddWithValue("@DataServizio", dataServizio);
                     command.Parameters.AddWithValue("@Quantita", quantita);
                     command.Parameters.AddWithValue("@PrezzoUnitario", prezzoUnitario);
-                    command.Parameters.AddWithValue("@PrezzoTotale", prezzoTotale);
+                    
 
                     var rowsAffected = await command.ExecuteNonQueryAsync();
                     return rowsAffected > 0;

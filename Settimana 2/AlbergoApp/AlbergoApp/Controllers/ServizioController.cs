@@ -145,8 +145,8 @@ namespace AlbergoApp.Controllers
                     model.IdServizio,
                     model.DataServizio,
                     model.Quantita,
-                    model.PrezzoUnitario,
-                    model.PrezzoTotale);
+                    model.PrezzoUnitario
+                   );
 
                 if (added)
                 {

@@ -13,7 +13,7 @@ namespace AlbergoApp.Services.Interfaces
 
         // Metodi per ServiziPrenotazione
         Task<IEnumerable<Servizio>> GetServiziByPrenotazioneIdAsync(int idPrenotazione);
-        Task<bool> AddServizioToPrenotazioneAsync(int idPrenotazione, int idServizio, DateTime dataServizio, int quantita, decimal prezzoUnitario, decimal prezzoTotale);
+        Task<bool> AddServizioToPrenotazioneAsync(int idPrenotazione, int idServizio, DateTime dataServizio, int quantita, decimal prezzoUnitario);
         Task<bool> RemoveServizioFromPrenotazioneAsync(int idPrenotazione, int idServizio);
     }
 }
