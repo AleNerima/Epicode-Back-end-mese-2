@@ -2,8 +2,7 @@
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace AlbergoApp.Controllers
 {
@@ -41,10 +40,7 @@ namespace AlbergoApp.Controllers
         // GET: Prenotazione/Create
         public async Task<IActionResult> Create()
         {
-            // Popola i dropdown con ViewBag
-            ViewBag.Clienti = new SelectList(await _clienteService.GetAllClientiAsync(), "IdCliente", "CodiceFiscale");
-            ViewBag.Camere = new SelectList(await _cameraService.GetAllCamereAsync(), "IdCamera", "Numero");
-
+            await PopulateDropdownsAsync(new Prenotazione());
             return View("CreatePrenotazione");
         }
 
@@ -53,6 +49,16 @@ namespace AlbergoApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdCliente,IdCamera,DataPrenotazione,NumeroProgressivo,Anno,PeriodoSoggiornoDal,PeriodoSoggiornoAl,CaparraConfirmatoria,Tariffa,TipoSoggiorno,Stato")] Prenotazione prenotazione)
         {
+            // Validazione dei vincoli
+            if (!IsValidTipoSoggiorno(prenotazione.TipoSoggiorno))
+            {
+                ModelState.AddModelError("TipoSoggiorno", "Il tipo di soggiorno non è valido.");
+            }
+            if (!IsValidStato(prenotazione.Stato))
+            {
+                ModelState.AddModelError("Stato", "Lo stato non è valido.");
+            }
+
             if (ModelState.IsValid)
             {
                 await _prenotazioneService.CreatePrenotazioneAsync(prenotazione);
@@ -60,9 +66,7 @@ namespace AlbergoApp.Controllers
             }
 
             // Ricarica i dropdown in caso di errore
-            ViewBag.Clienti = new SelectList(await _clienteService.GetAllClientiAsync(), "IdCliente", "CodiceFiscale", prenotazione.IdCliente);
-            ViewBag.Camere = new SelectList(await _cameraService.GetAllCamereAsync(), "IdCamera", "Numero", prenotazione.IdCamera);
-
+            await PopulateDropdownsAsync(prenotazione);
             return View("CreatePrenotazione", prenotazione);
         }
 
@@ -74,11 +78,7 @@ namespace AlbergoApp.Controllers
             {
                 return NotFound();
             }
-
-            // Popola i dropdown
-            ViewBag.Clienti = new SelectList(await _clienteService.GetAllClientiAsync(), "IdCliente", "CodiceFiscale", prenotazione.IdCliente);
-            ViewBag.Camere = new SelectList(await _cameraService.GetAllCamereAsync(), "IdCamera", "Numero", prenotazione.IdCamera);
-
+            await PopulateDropdownsAsync(prenotazione);
             return View("EditPrenotazione", prenotazione);
         }
 
@@ -92,6 +92,16 @@ namespace AlbergoApp.Controllers
                 return NotFound();
             }
 
+            // Validazione dei vincoli
+            if (!IsValidTipoSoggiorno(prenotazione.TipoSoggiorno))
+            {
+                ModelState.AddModelError("TipoSoggiorno", "Il tipo di soggiorno non è valido.");
+            }
+            if (!IsValidStato(prenotazione.Stato))
+            {
+                ModelState.AddModelError("Stato", "Lo stato non è valido.");
+            }
+
             if (ModelState.IsValid)
             {
                 var updated = await _prenotazioneService.UpdatePrenotazioneAsync(prenotazione);
@@ -103,9 +113,7 @@ namespace AlbergoApp.Controllers
             }
 
             // Ricarica i dropdown in caso di errore
-            ViewBag.Clienti = new SelectList(await _clienteService.GetAllClientiAsync(), "IdCliente", "CodiceFiscale", prenotazione.IdCliente);
-            ViewBag.Camere = new SelectList(await _cameraService.GetAllCamereAsync(), "IdCamera", "Numero", prenotazione.IdCamera);
-
+            await PopulateDropdownsAsync(prenotazione);
             return View("EditPrenotazione", prenotazione);
         }
 
@@ -127,6 +135,40 @@ namespace AlbergoApp.Controllers
         {
             await _prenotazioneService.DeletePrenotazioneAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        // Metodo per validare TipoSoggiorno
+        private bool IsValidTipoSoggiorno(string tipoSoggiorno)
+        {
+            var validTipoSoggiorni = new[] { "pernottamento con prima colazione", "pensione completa", "mezza pensione" };
+            return validTipoSoggiorni.Contains(tipoSoggiorno);
+        }
+
+        // Metodo per validare Stato
+        private bool IsValidStato(string stato)
+        {
+            var validStati = new[] { "completata", "cancellata", "confermata" };
+            return validStati.Contains(stato);
+        }
+
+        // Metodo per popolare i dropdown
+        private async Task PopulateDropdownsAsync(Prenotazione prenotazione)
+        {
+            ViewBag.Clienti = new SelectList(await _clienteService.GetAllClientiAsync(), "IdCliente", "CodiceFiscale", prenotazione.IdCliente);
+            ViewBag.Camere = new SelectList(await _cameraService.GetAllCamereAsync(), "IdCamera", "Numero", prenotazione.IdCamera);
+
+            // Popola i dropdown per TipoSoggiorno e Stato
+            ViewBag.TipoSoggiorno = new SelectList(new[] {
+                "pernottamento con prima colazione",
+                "pensione completa",
+                "mezza pensione"
+            }, prenotazione.TipoSoggiorno);
+
+            ViewBag.Stato = new SelectList(new[] {
+                "completata",
+                "cancellata",
+                "confermata"
+            }, prenotazione.Stato);
         }
     }
 }

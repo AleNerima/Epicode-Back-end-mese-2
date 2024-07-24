@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AlbergoApp.Models.Cliente>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clienti</title>
+</head>
+<body>
+    <h1>Elenco Clienti</h1>
+    <p>
+        <a href="@Url.Action("Create", "Cliente")">Crea Nuovo Cliente</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Codice Fiscale</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.CodiceFiscale</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Cognome</td>
+                    <td>@cliente.Email</td>
+                    <td>@cliente.Telefono</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Cliente", new { id = cliente.IdCliente })">Dettagli</a> |
+                        <a href="@Url.Action("Edit", "Cliente", new { id = cliente.IdCliente })">Modifica</a> |
+                        <a href="@Url.Action("Delete", "Cliente", new { id = cliente.IdCliente })">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

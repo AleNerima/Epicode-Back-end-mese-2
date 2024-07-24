@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AlbergoApp.Models.Servizio>
+
+@{
+    ViewData["Title"] = "Servizi";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Aggiungi Nuovo Servizio</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome Servizio</th>
+            <th>Prezzo</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var servizio in Model)
+        {
+            <tr>
+                <td>@servizio.NomeServizio</td>
+                <td>@servizio.Prezzo.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@servizio.IdServizio" class="btn btn-info">Dettagli</a>
+                    <a asp-action="Edit" asp-route-id="@servizio.IdServizio" class="btn btn-warning">Modifica</a>
+                    <a asp-action="Delete" asp-route-id="@servizio.IdServizio" class="btn btn-danger">Elimina</a>
+                    <a asp-action="AddToPrenotazione" asp-route-id="@servizio.IdServizio" class="btn btn-secondary">Aggiungi a Prenotazione</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

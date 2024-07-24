@@ -1,0 +1,27 @@
+﻿@model AlbergoApp.Models.Camera
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elimina Camera</title>
+</head>
+<body>
+    <h1>Elimina Camera</h1>
+    <h3>Sei sicuro di voler eliminare questa camera?</h3>
+    <div>
+        <dl>
+            <dt>Numero:</dt>
+            <dd>@Model.Numero</dd>
+            <dt>Tipologia:</dt>
+            <dd>@Model.Tipologia</dd>
+            <dt>Descrizione:</dt>
+            <dd>@Model.Descrizione</dd>
+        </dl>
+    </div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdCamera" />
+        <button type="submit">Elimina</button>
+        <a href="@Url.Action("Index", "Camera")">Annulla</a>
+    </form>
+</body>
+</html>

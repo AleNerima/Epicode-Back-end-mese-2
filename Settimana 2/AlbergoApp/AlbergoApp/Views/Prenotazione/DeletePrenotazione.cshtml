@@ -1,0 +1,30 @@
+﻿@model AlbergoApp.Models.Prenotazione
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elimina Prenotazione</title>
+</head>
+<body>
+    <h1>Elimina Prenotazione</h1>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdPrenotazione" />
+        <div>
+            <h3>Sei sicuro di voler eliminare questa prenotazione?</h3>
+            <p>
+                <strong>ID:</strong> @Model.IdPrenotazione <br />
+                <strong>Cliente:</strong> @Model.Cliente?.CodiceFiscale <br />
+                <strong>Camera:</strong> @Model.Camera?.Numero <br />
+                <strong>Data Prenotazione:</strong> @Model.DataPrenotazione.ToShortDateString() <br />
+                <strong>Periodo Soggiorno:</strong> @Model.PeriodoSoggiornoDal.ToShortDateString() - @Model.PeriodoSoggiornoAl.ToShortDateString() <br />
+                <strong>Caparra:</strong> @Model.CaparraConfirmatoria.ToString("C") <br />
+                <strong>Tariffa:</strong> @Model.Tariffa.ToString("C") <br />
+                <strong>Tipo Soggiorno:</strong> @Model.TipoSoggiorno <br />
+                <strong>Stato:</strong> @Model.Stato
+            </p>
+            <button type="submit">Elimina</button>
+            <a href="@Url.Action("Index", "Prenotazione")">Annulla</a>
+        </div>
+    </form>
+</body>
+</html>

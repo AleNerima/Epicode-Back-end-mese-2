@@ -1,0 +1,40 @@
+﻿@model AlbergoApp.Models.Cliente
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dettagli Cliente</title>
+</head>
+<body>
+    <h1>Dettagli Cliente</h1>
+    <dl>
+        <dt>Codice Fiscale</dt>
+        <dd>@Model.CodiceFiscale</dd>
+
+        <dt>Nome</dt>
+        <dd>@Model.Nome</dd>
+
+        <dt>Cognome</dt>
+        <dd>@Model.Cognome</dd>
+
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Telefono</dt>
+        <dd>@Model.Telefono</dd>
+
+        <dt>Cellulare</dt>
+        <dd>@Model.Cellulare</dd>
+
+        <dt>Città</dt>
+        <dd>@Model.Citta</dd>
+
+        <dt>Provincia</dt>
+        <dd>@Model.Provincia</dd>
+    </dl>
+    <p>
+        <a href="@Url.Action("Edit", "Cliente", new { id = Model.IdCliente })">Modifica</a> |
+        <a href="@Url.Action("Index", "Cliente")">Indietro</a>
+    </p>
+</body>
+</html>

@@ -13,14 +13,12 @@ namespace AlbergoApp.Controllers
             _clienteService = clienteService;
         }
 
-        
         public async Task<IActionResult> Index()
         {
             var clienti = await _clienteService.GetAllClientiAsync();
             return View("IndexCliente", clienti);
         }
 
-        
         public async Task<IActionResult> Details(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);
@@ -31,16 +29,14 @@ namespace AlbergoApp.Controllers
             return View("DetailsCliente", cliente);
         }
 
-        
         public IActionResult Create()
         {
             return View("CreateCliente");
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome, Cognome, Email, Telefono")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("CodiceFiscale, Nome, Cognome, Email, Telefono, Cellulare, Citta, Provincia")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +46,6 @@ namespace AlbergoApp.Controllers
             return View("CreateCliente", cliente);
         }
 
-        
         public async Task<IActionResult> Edit(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);
@@ -61,10 +56,9 @@ namespace AlbergoApp.Controllers
             return View("EditCliente", cliente);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCliente, Nome, Cognome, Email, Telefono")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCliente, CodiceFiscale, Nome, Cognome, Email, Telefono, Cellulare, Citta, Provincia")] Cliente cliente)
         {
             if (id != cliente.IdCliente)
             {
@@ -83,7 +77,6 @@ namespace AlbergoApp.Controllers
             return View("EditCliente", cliente);
         }
 
-        
         public async Task<IActionResult> Delete(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);
@@ -94,7 +87,6 @@ namespace AlbergoApp.Controllers
             return View("DeleteCliente", cliente);
         }
 
-        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

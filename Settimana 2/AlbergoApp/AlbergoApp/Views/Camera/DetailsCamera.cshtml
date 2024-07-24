@@ -1,0 +1,23 @@
+﻿@model AlbergoApp.Models.Camera
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dettagli Camera</title>
+</head>
+<body>
+    <h1>Dettagli Camera</h1>
+    <dl>
+        <dt>Numero:</dt>
+        <dd>@Model.Numero</dd>
+        <dt>Tipologia:</dt>
+        <dd>@Model.Tipologia</dd>
+        <dt>Descrizione:</dt>
+        <dd>@Model.Descrizione</dd>
+    </dl>
+    <p>
+        <a href="@Url.Action("Edit", "Camera", new { id = Model.IdCamera })">Modifica</a> |
+        <a href="@Url.Action("Index", "Camera")">Indietro</a>
+    </p>
+</body>
+</html>

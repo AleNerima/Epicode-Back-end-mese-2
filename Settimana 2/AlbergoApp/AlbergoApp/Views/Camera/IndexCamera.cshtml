@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AlbergoApp.Models.Camera>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camere</title>
+</head>
+<body>
+    <h1>Camere</h1>
+    <p>
+        <a href="@Url.Action("Create", "Camera")">Aggiungi Nuova Camera</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Tipologia</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var camera in Model)
+            {
+                <tr>
+                    <td>@camera.Numero</td>
+                    <td>@camera.Tipologia</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Camera", new { id = camera.IdCamera })">Dettagli</a> |
+                        <a href="@Url.Action("Edit", "Camera", new { id = camera.IdCamera })">Modifica</a> |
+                        <a href="@Url.Action("Delete", "Camera", new { id = camera.IdCamera })">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

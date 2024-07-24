@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AlbergoApp.Models.Prenotazione>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elenco Prenotazioni</title>
+</head>
+<body>
+    <h1>Elenco Prenotazioni</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Camera</th>
+                <th>Data Prenotazione</th>
+                <th>Periodo Soggiorno</th>
+                <th>Caparra</th>
+                <th>Tariffa</th>
+                <th>Tipo Soggiorno</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prenotazione in Model)
+            {
+                <tr>
+                    <td>@prenotazione.IdPrenotazione</td>
+                    <td>@prenotazione.Cliente?.CodiceFiscale</td>
+                    <td>@prenotazione.Camera?.Numero</td>
+                    <td>@prenotazione.DataPrenotazione.ToShortDateString()</td>
+                    <td>@prenotazione.PeriodoSoggiornoDal.ToShortDateString() - @prenotazione.PeriodoSoggiornoAl.ToShortDateString()</td>
+                    <td>@prenotazione.CaparraConfirmatoria.ToString("C")</td>
+                    <td>@prenotazione.Tariffa.ToString("C")</td>
+                    <td>@prenotazione.TipoSoggiorno</td>
+                    <td>@prenotazione.Stato</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> |
+                        <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> |
+                        <a href="@Url.Action("Delete", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("Create", "Prenotazione")">Aggiungi Prenotazione</a>
+</body>
+</html>

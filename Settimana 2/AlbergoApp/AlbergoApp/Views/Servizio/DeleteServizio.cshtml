@@ -1,0 +1,27 @@
+﻿@model AlbergoApp.Models.Servizio
+
+@{
+    ViewData["Title"] = "Elimina Servizio";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Sei sicuro di voler eliminare questo servizio?</h3>
+
+<div>
+    <h4>@Model.NomeServizio</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Nome Servizio</dt>
+        <dd class="col-sm-10">@Model.NomeServizio</dd>
+        <dt class="col-sm-2">Prezzo</dt>
+        <dd class="col-sm-10">@Model.Prezzo.ToString("C")</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdServizio" />
+    <div class="form-group">
+        <input type="submit" value="Elimina" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>

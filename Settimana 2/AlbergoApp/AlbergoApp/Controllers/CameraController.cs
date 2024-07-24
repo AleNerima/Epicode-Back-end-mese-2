@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
-
+using System.Threading.Tasks;
 
 namespace AlbergoApp.Controllers
 {
@@ -14,14 +14,14 @@ namespace AlbergoApp.Controllers
             _cameraService = cameraService;
         }
 
-      
+        // GET: Camera
         public async Task<IActionResult> Index()
         {
             var camere = await _cameraService.GetAllCamereAsync();
             return View("IndexCamera", camere);
         }
 
-        
+        // GET: Camera/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
@@ -32,16 +32,23 @@ namespace AlbergoApp.Controllers
             return View("DetailsCamera", camera);
         }
 
+        // GET: Camera/Create
         public IActionResult Create()
         {
             return View("CreateCamera");
         }
 
-        
+        // POST: Camera/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Numero, Tipo, Prezzo")] Camera camera)
+        public async Task<IActionResult> Create([Bind("Numero, Tipologia, Descrizione")] Camera camera)
         {
+            // Validazione per il campo Tipologia
+            if (camera.Tipologia != "doppia" && camera.Tipologia != "singola")
+            {
+                ModelState.AddModelError("Tipologia", "La tipologia deve essere 'doppia' o 'singola'.");
+            }
+
             if (ModelState.IsValid)
             {
                 await _cameraService.CreateCameraAsync(camera);
@@ -50,7 +57,7 @@ namespace AlbergoApp.Controllers
             return View("CreateCamera", camera);
         }
 
-        
+        // GET: Camera/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
@@ -61,14 +68,20 @@ namespace AlbergoApp.Controllers
             return View("EditCamera", camera);
         }
 
-        
+        // POST: Camera/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCamera, Numero, Tipo, Prezzo")] Camera camera)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCamera, Numero, Tipologia, Descrizione")] Camera camera)
         {
             if (id != camera.IdCamera)
             {
                 return NotFound();
+            }
+
+            // Validazione per il campo Tipologia
+            if (camera.Tipologia != "doppia" && camera.Tipologia != "singola")
+            {
+                ModelState.AddModelError("Tipologia", "La tipologia deve essere 'doppia' o 'singola'.");
             }
 
             if (ModelState.IsValid)
@@ -83,7 +96,7 @@ namespace AlbergoApp.Controllers
             return View("EditCamera", camera);
         }
 
-        
+        // GET: Camera/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
@@ -94,7 +107,7 @@ namespace AlbergoApp.Controllers
             return View("DeleteCamera", camera);
         }
 
-        
+        // POST: Camera/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

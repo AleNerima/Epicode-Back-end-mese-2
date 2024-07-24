@@ -1,0 +1,56 @@
+﻿@model AlbergoApp.Models.ServiziPrenotazione
+
+@{
+    ViewData["Title"] = "Aggiungi Servizio alla Prenotazione";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="AddToPrenotazione" method="post">
+    <input type="hidden" name="IdServizio" value="@Model.IdServizio" />
+
+    <div class="form-group">
+        <label asp-for="Servizio.NomeServizio" class="control-label"></label>
+        <input asp-for="Servizio.NomeServizio" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="IdPrenotazione">Seleziona Prenotazione</label>
+        <select asp-for="IdPrenotazione" class="form-control">
+            @foreach (var prenotazione in ViewBag.Prenotazioni as IEnumerable<AlbergoApp.Models.Prenotazione>)
+            {
+                <option value="@prenotazione.IdPrenotazione">@prenotazione.NumeroProgressivo</option>
+            }
+        </select>
+        <span asp-validation-for="IdPrenotazione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataServizio" class="control-label"></label>
+        <input asp-for="DataServizio" type="date" class="form-control" />
+        <span asp-validation-for="DataServizio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantita" class="control-label"></label>
+        <input asp-for="Quantita" type="number" class="form-control" min="1" />
+        <span asp-validation-for="Quantita" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PrezzoUnitario" class="control-label"></label>
+        <input asp-for="PrezzoUnitario" type="text" class="form-control" readonly />
+        <span asp-validation-for="PrezzoUnitario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PrezzoTotale" class="control-label"></label>
+        <input asp-for="PrezzoTotale" type="text" class="form-control" readonly />
+        <span asp-validation-for="PrezzoTotale" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Aggiungi" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Annulla</a>
+    </div>
+</form>
