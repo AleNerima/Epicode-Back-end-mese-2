@@ -23,6 +23,12 @@ namespace AlbergoApp.Controllers
         public async Task<IActionResult> Index()
         {
             var prenotazioni = await _prenotazioneService.GetAllPrenotazioniAsync();
+            foreach (var prenotazione in prenotazioni)
+            {
+                // Recupera e aggiungi il CodiceFiscale e Numero
+                prenotazione.Cliente = await _clienteService.GetClienteByIdAsync(prenotazione.IdCliente);
+                prenotazione.Camera = await _cameraService.GetCameraByIdAsync(prenotazione.IdCamera);
+            }
             return View("IndexPrenotazione", prenotazioni);
         }
 
@@ -34,8 +40,14 @@ namespace AlbergoApp.Controllers
             {
                 return NotFound();
             }
+
+            // Recupera e aggiungi il CodiceFiscale e Numero
+            prenotazione.Cliente = await _clienteService.GetClienteByIdAsync(prenotazione.IdCliente);
+            prenotazione.Camera = await _cameraService.GetCameraByIdAsync(prenotazione.IdCamera);
+
             return View("DetailsPrenotazione", prenotazione);
         }
+        
 
         // GET: Prenotazione/Create
         public async Task<IActionResult> Create()
