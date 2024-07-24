@@ -26,7 +26,6 @@ namespace AlbergoApp.Controllers
             {
                 if (_accountService.ValidateUser(model.Username, model.Password))
                 {
-                    // Autenticazione riuscita
                     // Configura il cookie di autenticazione e reindirizza l'utente
                     return RedirectToAction("Index", "Home");
                 }
