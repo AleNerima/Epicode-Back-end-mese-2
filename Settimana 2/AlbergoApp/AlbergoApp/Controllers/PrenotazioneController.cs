@@ -3,7 +3,9 @@ using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AlbergoApp.Controllers
 {
@@ -33,6 +35,26 @@ namespace AlbergoApp.Controllers
             }
             return View("IndexPrenotazione", prenotazioni);
         }
+
+        // Azione per la ricerca delle prenotazioni
+        [HttpGet]
+        public async Task<IActionResult> Search(string query)
+        {
+            var results = await _prenotazioneService.SearchPrenotazioniAsync(query);
+            return Json(results.Select(prenotazione => new
+            {
+                idPrenotazione = prenotazione.IdPrenotazione,
+                codiceFiscaleCliente = prenotazione.Cliente?.CodiceFiscale,
+                numeroCamera = prenotazione.Camera?.Numero,
+                dataPrenotazione = prenotazione.DataPrenotazione.ToShortDateString(),
+                periodoSoggiorno = prenotazione.PeriodoSoggiornoDal.ToShortDateString() + " - " + prenotazione.PeriodoSoggiornoAl.ToShortDateString(),
+                caparraConfirmatoria = prenotazione.CaparraConfirmatoria.ToString("C"),
+                tariffa = prenotazione.Tariffa.ToString("C"),
+                tipoSoggiorno = prenotazione.TipoSoggiorno,
+                stato = prenotazione.Stato
+            }));
+        }
+
 
         [Authorize]
         public async Task<IActionResult> Details(int id)
@@ -195,5 +217,6 @@ namespace AlbergoApp.Controllers
 
             return View("DettagliServiziPrenotazione", model);
         }
+
     }
 }

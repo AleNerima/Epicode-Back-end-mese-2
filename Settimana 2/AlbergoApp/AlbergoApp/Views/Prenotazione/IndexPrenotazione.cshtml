@@ -4,10 +4,16 @@
 <html>
 <head>
     <title>Elenco Prenotazioni</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <h1>Elenco Prenotazioni</h1>
-    <table>
+
+    <!-- Campo di ricerca -->
+    <input type="text" id="searchQuery" placeholder="Cerca per codice fiscale, camera, data..." />
+    <button onclick="search()">Cerca</button>
+
+    <table id="prenotazioniTable">
         <thead>
             <tr>
                 <th>ID</th>
@@ -38,7 +44,6 @@
                     <td>
                         <a href="@Url.Action("DettagliServizi", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Visualizza Servizi</a>
                     </td>
-
                     <td>
                         <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> |
                         <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> |
@@ -48,6 +53,37 @@
             }
         </tbody>
     </table>
+
     <a href="@Url.Action("Create", "Prenotazione")">Aggiungi Prenotazione</a>
+
+    <script>
+        function search() {
+            var query = $('#searchQuery').val();
+
+            $.ajax({
+                url: '@Url.Action("Search", "Prenotazione")',
+                data: { query: query },
+                success: function (data) {
+                    var rows = '';
+                    $.each(data, function (i, prenotazione) {
+                        rows += '<tr>';
+                        rows += '<td>' + prenotazione.idPrenotazione + '</td>';
+                        rows += '<td>' + prenotazione.codiceFiscaleCliente + '</td>';
+                        rows += '<td>' + prenotazione.numeroCamera + '</td>';
+                        rows += '<td>' + prenotazione.dataPrenotazione + '</td>';
+                        rows += '<td>' + prenotazione.periodoSoggiorno + '</td>';
+                        rows += '<td>' + prenotazione.caparraConfirmatoria + '</td>';
+                        rows += '<td>' + prenotazione.tariffa + '</td>';
+                        rows += '<td>' + prenotazione.tipoSoggiorno + '</td>';
+                        rows += '<td>' + prenotazione.stato + '</td>';
+                        rows += '<td><a href="/Prenotazione/DettagliServizi/' + prenotazione.idPrenotazione + '">Visualizza Servizi</a></td>';
+                        rows += '<td><a href="/Prenotazione/Details/' + prenotazione.idPrenotazione + '">Dettagli</a> | <a href="/Prenotazione/Edit/' + prenotazione.idPrenotazione + '">Modifica</a> | <a href="/Prenotazione/Delete/' + prenotazione.idPrenotazione + '">Elimina</a></td>';
+                        rows += '</tr>';
+                    });
+                    $('#prenotazioniTable tbody').html(rows);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

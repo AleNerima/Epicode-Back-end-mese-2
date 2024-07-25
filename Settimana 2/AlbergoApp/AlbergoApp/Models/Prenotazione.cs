@@ -50,5 +50,6 @@ namespace AlbergoApp.Models
         [Required(ErrorMessage = "Lo stato della prenotazione è obbligatorio")]
         [StringLength(20, ErrorMessage = "Lo stato della prenotazione non può superare i 20 caratteri")]
         public string? Stato { get; set; }
+        
     }
 }

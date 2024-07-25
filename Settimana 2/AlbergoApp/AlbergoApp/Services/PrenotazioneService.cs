@@ -191,5 +191,54 @@ namespace AlbergoApp.Services
                 return (int)result;
             }
         }
+        public async Task<IEnumerable<Prenotazione>> SearchPrenotazioniAsync(string query)
+        {
+            var prenotazioni = new List<Prenotazione>();
+
+            using (var connection = _databaseService.GetConnection())
+            {
+                await connection.OpenAsync();
+                var command = new SqlCommand(
+                    "SELECT p.*, c.CodiceFiscale, c2.Numero FROM Prenotazioni p " +
+                    "JOIN Clienti c ON p.IdCliente = c.IdCliente " +
+                    "JOIN Camere c2 ON p.IdCamera = c2.IdCamera " +
+                    "WHERE c.CodiceFiscale LIKE @Query OR c2.Numero LIKE @Query OR CONVERT(VARCHAR, p.DataPrenotazione, 104) LIKE @Query",
+                    connection);
+
+                command.Parameters.AddWithValue("@Query", "%" + query + "%");
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        prenotazioni.Add(new Prenotazione
+                        {
+                            IdPrenotazione = reader.GetInt32(reader.GetOrdinal("IdPrenotazione")),
+                            IdCliente = reader.GetInt32(reader.GetOrdinal("IdCliente")),
+                            IdCamera = reader.GetInt32(reader.GetOrdinal("IdCamera")),
+                            DataPrenotazione = reader.GetDateTime(reader.GetOrdinal("DataPrenotazione")),
+                            NumeroProgressivo = reader.GetInt32(reader.GetOrdinal("NumeroProgressivo")),
+                            Anno = reader.GetInt32(reader.GetOrdinal("Anno")),
+                            PeriodoSoggiornoDal = reader.GetDateTime(reader.GetOrdinal("PeriodoSoggiornoDal")),
+                            PeriodoSoggiornoAl = reader.GetDateTime(reader.GetOrdinal("PeriodoSoggiornoAl")),
+                            CaparraConfirmatoria = reader.GetDecimal(reader.GetOrdinal("CaparraConfirmatoria")),
+                            Tariffa = reader.GetDecimal(reader.GetOrdinal("Tariffa")),
+                            TipoSoggiorno = reader.GetString(reader.GetOrdinal("TipoSoggiorno")),
+                            Stato = reader.GetString(reader.GetOrdinal("Stato")),
+                            Cliente = new Cliente { CodiceFiscale = reader.GetString(reader.GetOrdinal("CodiceFiscale")) },
+                            Camera = new Camera { Numero = reader.GetInt32(reader.GetOrdinal("Numero")) }
+                        });
+                    }
+                }
+            }
+
+            return prenotazioni;
+        }
+
+
+
+
+
+
     }
 }

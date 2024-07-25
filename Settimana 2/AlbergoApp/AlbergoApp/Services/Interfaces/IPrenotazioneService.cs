@@ -11,5 +11,6 @@ namespace AlbergoApp.Services.Interfaces
         Task<bool> DeletePrenotazioneAsync(int idPrenotazione);
         Task<IEnumerable<Prenotazione>> GetPrenotazioniByClienteIdAsync(int idCliente);
         Task<int> GetNumeroPrenotazioniPensioneCompletaAsync();
+        Task<IEnumerable<Prenotazione>> SearchPrenotazioniAsync(string query);
     }
 }
