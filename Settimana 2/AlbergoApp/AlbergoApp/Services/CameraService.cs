@@ -1,4 +1,8 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 
@@ -131,6 +135,59 @@ namespace AlbergoApp.Services
                 }
             }
             return null;
+        }
+
+        public async Task<IEnumerable<Camera>> GetAvailableCamereAsync(DateTime startDate, DateTime endDate)
+        {
+            var camereDisponibili = new List<Camera>();
+
+            using (var connection = _databaseService.GetConnection())
+            {
+                await connection.OpenAsync();
+
+                // Recupera tutte le stanze
+                var allCamereCommand = new SqlCommand("SELECT * FROM Camere", connection);
+                using (var reader = await allCamereCommand.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        camereDisponibili.Add(new Camera
+                        {
+                            IdCamera = (int)reader["IdCamera"],
+                            Numero = (int)reader["Numero"],
+                            Descrizione = reader["Descrizione"].ToString(),
+                            Tipologia = reader["Tipologia"].ToString()
+                        });
+                    }
+                }
+
+                // Recupera le stanze occupate per l'intervallo di date
+                var occupateCommand = new SqlCommand(
+                    @"SELECT DISTINCT c.IdCamera 
+                      FROM Prenotazioni p 
+                      INNER JOIN Camere c ON p.IdCamera = c.IdCamera 
+                      WHERE (p.PeriodoSoggiornoDal < @EndDate AND p.PeriodoSoggiornoAl > @StartDate)", connection);
+
+                occupateCommand.Parameters.AddWithValue("@StartDate", startDate);
+                occupateCommand.Parameters.AddWithValue("@EndDate", endDate);
+
+                var occupate = new HashSet<int>();
+
+                using (var reader = await occupateCommand.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        occupate.Add((int)reader["IdCamera"]);
+                    }
+                }
+
+                // Filtra le stanze disponibili
+                camereDisponibili = camereDisponibili
+                    .Where(camera => !occupate.Contains(camera.IdCamera))
+                    .ToList();
+            }
+
+            return camereDisponibili;
         }
     }
 }

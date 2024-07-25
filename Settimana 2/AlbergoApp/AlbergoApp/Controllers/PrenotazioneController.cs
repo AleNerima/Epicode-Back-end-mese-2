@@ -36,7 +36,6 @@ namespace AlbergoApp.Controllers
             return View("IndexPrenotazione", prenotazioni);
         }
 
-        // Azione per la ricerca delle prenotazioni
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Search(string query)
@@ -55,7 +54,6 @@ namespace AlbergoApp.Controllers
                 stato = prenotazione.Stato
             }));
         }
-
 
         [Authorize]
         public async Task<IActionResult> Details(int id)
@@ -90,6 +88,15 @@ namespace AlbergoApp.Controllers
             if (!IsValidStato(prenotazione.Stato))
             {
                 ModelState.AddModelError("Stato", "Lo stato non è valido.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var camereDisponibili = await _cameraService.GetAvailableCamereAsync(prenotazione.PeriodoSoggiornoDal, prenotazione.PeriodoSoggiornoAl);
+                if (!camereDisponibili.Any(c => c.IdCamera == prenotazione.IdCamera))
+                {
+                    ModelState.AddModelError("IdCamera", "La camera selezionata non è disponibile per il periodo specificato.");
+                }
             }
 
             if (ModelState.IsValid)
@@ -130,6 +137,15 @@ namespace AlbergoApp.Controllers
             if (!IsValidStato(prenotazione.Stato))
             {
                 ModelState.AddModelError("Stato", "Lo stato non è valido.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var camereDisponibili = await _cameraService.GetAvailableCamereAsync(prenotazione.PeriodoSoggiornoDal, prenotazione.PeriodoSoggiornoAl);
+                if (!camereDisponibili.Any(c => c.IdCamera == prenotazione.IdCamera))
+                {
+                    ModelState.AddModelError("IdCamera", "La camera selezionata non è disponibile per il periodo specificato.");
+                }
             }
 
             if (ModelState.IsValid)
@@ -219,5 +235,25 @@ namespace AlbergoApp.Controllers
             return View("DettagliServiziPrenotazione", model);
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAvailableCamere(DateTime startDate, DateTime endDate)
+        {
+            // Verifica che le date siano valide
+            if (startDate >= endDate)
+            {
+                return BadRequest("La data di inizio deve essere prima della data di fine.");
+            }
+
+            var camereDisponibili = await _cameraService.GetAvailableCamereAsync(startDate, endDate);
+
+            // Restituisce le stanze disponibili come JSON
+            return Json(camereDisponibili.Select(camera => new
+            {
+                idCamera = camera.IdCamera,
+                numero = camera.Numero,
+                descrizione = camera.Descrizione
+            }));
+        }
     }
 }

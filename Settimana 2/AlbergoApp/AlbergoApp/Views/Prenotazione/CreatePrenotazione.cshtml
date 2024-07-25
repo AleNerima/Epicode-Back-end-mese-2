@@ -41,12 +41,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="PeriodoSoggiornoDal" class="control-label"></label>
-                <input asp-for="PeriodoSoggiornoDal" class="form-control" type="date" />
+                <input asp-for="PeriodoSoggiornoDal" class="form-control" type="date" id="PeriodoSoggiornoDal" />
                 <span asp-validation-for="PeriodoSoggiornoDal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PeriodoSoggiornoAl" class="control-label"></label>
-                <input asp-for="PeriodoSoggiornoAl" class="form-control" type="date" />
+                <input asp-for="PeriodoSoggiornoAl" class="form-control" type="date" id="PeriodoSoggiornoAl" />
                 <span asp-validation-for="PeriodoSoggiornoAl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -73,5 +73,26 @@
             <a class="btn btn-secondary" href="@Url.Action("Index", "Prenotazione")">Annulla</a>
         </form>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#PeriodoSoggiornoDal, #PeriodoSoggiornoAl').change(function () {
+                var startDate = $('#PeriodoSoggiornoDal').val();
+                var endDate = $('#PeriodoSoggiornoAl').val();
+
+                if (startDate && endDate) {
+                    $.get('@Url.Action("GetAvailableCamere", "Prenotazione")', { startDate: startDate, endDate: endDate }, function (data) {
+                        var cameraSelect = $('#IdCamera');
+                        cameraSelect.empty();
+                        cameraSelect.append($('<option>').text('Seleziona Camera').attr('value', ''));
+
+                        $.each(data, function (index, camera) {
+                            cameraSelect.append($('<option>').val(camera.idCamera).text(camera.numero + ' - ' + camera.descrizione));
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
