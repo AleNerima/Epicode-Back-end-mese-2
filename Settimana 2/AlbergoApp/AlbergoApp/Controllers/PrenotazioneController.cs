@@ -38,6 +38,7 @@ namespace AlbergoApp.Controllers
 
         // Azione per la ricerca delle prenotazioni
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Search(string query)
         {
             var results = await _prenotazioneService.SearchPrenotazioniAsync(query);
