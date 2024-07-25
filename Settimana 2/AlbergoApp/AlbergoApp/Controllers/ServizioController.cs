@@ -3,6 +3,7 @@ using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
 {
@@ -17,14 +18,14 @@ namespace AlbergoApp.Controllers
             _prenotazioneService = prenotazioneService;
         }
 
-        // GET: Servizio
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var servizi = await _servizioService.GetAllServiziAsync();
             return View("IndexServizio", servizi);
         }
 
-        // GET: Servizio/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var servizio = await _servizioService.GetServizioByIdAsync(id);
@@ -35,13 +36,13 @@ namespace AlbergoApp.Controllers
             return View("DetailsServizio", servizio);
         }
 
-        // GET: Servizio/Create
+        [Authorize (Policy ="AdminOnly")]
         public IActionResult Create()
         {
             return View("CreateServizio");
         }
 
-        // POST: Servizio/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NomeServizio, Prezzo")] Servizio servizio)
@@ -54,7 +55,7 @@ namespace AlbergoApp.Controllers
             return View("CreateServizio", servizio);
         }
 
-        // GET: Servizio/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var servizio = await _servizioService.GetServizioByIdAsync(id);
@@ -65,7 +66,7 @@ namespace AlbergoApp.Controllers
             return View("EditServizio", servizio);
         }
 
-        // POST: Servizio/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdServizio, NomeServizio, Prezzo")] Servizio servizio)
@@ -87,7 +88,7 @@ namespace AlbergoApp.Controllers
             return View("EditServizio", servizio);
         }
 
-        // GET: Servizio/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var servizio = await _servizioService.GetServizioByIdAsync(id);
@@ -98,7 +99,7 @@ namespace AlbergoApp.Controllers
             return View("DeleteServizio", servizio);
         }
 
-        // POST: Servizio/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -107,7 +108,7 @@ namespace AlbergoApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Servizio/AddToPrenotazione/5
+        [Authorize]
         public async Task<IActionResult> AddToPrenotazione(int id)
         {
             var servizio = await _servizioService.GetServizioByIdAsync(id);
@@ -133,7 +134,7 @@ namespace AlbergoApp.Controllers
             return View("AddToPrenotazione", model);
         }
 
-        // POST: Servizio/AddToPrenotazione
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToPrenotazione(ServiziPrenotazione model)

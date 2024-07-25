@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
 {
@@ -20,13 +24,27 @@ namespace AlbergoApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (_accountService.ValidateUser(model.Username, model.Password))
+                // Ottieni il ruolo dell'utente dal servizio
+                if (_accountService.ValidateUser(model.Username, model.Password, out string role))
                 {
-                    // Configura il cookie di autenticazione e reindirizza l'utente
+                    // Crea i claims per l'utente
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, model.Username),
+                        new Claim(ClaimTypes.Role, role) // Usa il ruolo ottenuto dal servizio
+                    };
+
+                    // Crea l'identità e il principal
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    // Configura il cookie di autenticazione
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Username o password non validi.");
@@ -34,7 +52,15 @@ namespace AlbergoApp.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
+         
         public IActionResult Register()
         {
             return View();
@@ -45,7 +71,8 @@ namespace AlbergoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _accountService.RegisterUser(model.Username, model.Password, model.Nome, model.Cognome);
+                // Passa il ruolo al servizio di registrazione
+                _accountService.RegisterUser(model.Username, model.Password, model.Nome, model.Cognome, model.Ruolo);
                 return RedirectToAction("Login");
             }
             return View(model);

@@ -16,5 +16,7 @@ namespace AlbergoApp.Models
 
         [Required(ErrorMessage = "Il cognome è obbligatorio")]
         public string? Cognome { get; set; }
+
+        public string? Ruolo { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
 {
@@ -12,13 +13,13 @@ namespace AlbergoApp.Controllers
         {
             _clienteService = clienteService;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var clienti = await _clienteService.GetAllClientiAsync();
             return View("IndexCliente", clienti);
         }
-
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);
@@ -29,6 +30,7 @@ namespace AlbergoApp.Controllers
             return View("DetailsCliente", cliente);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View("CreateCliente");
@@ -46,6 +48,7 @@ namespace AlbergoApp.Controllers
             return View("CreateCliente", cliente);
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);
@@ -77,6 +80,8 @@ namespace AlbergoApp.Controllers
             return View("EditCliente", cliente);
         }
 
+
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var cliente = await _clienteService.GetClienteByIdAsync(id);

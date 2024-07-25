@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace AlbergoApp.Controllers
@@ -14,14 +15,14 @@ namespace AlbergoApp.Controllers
             _dipendenteService = dipendenteService;
         }
 
-        
+        [Authorize(Policy ="AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var dipendenti = await _dipendenteService.GetAllDipendentiAsync();
             return View("IndexDipendente", dipendenti);
         }
 
-        
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int id)
         {
             var dipendente = await _dipendenteService.GetDipendenteByIdAsync(id);
@@ -32,7 +33,7 @@ namespace AlbergoApp.Controllers
             return View("DetailsDipendente", dipendente);
         }
 
-        
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create()
         {
             return View("CreateDipendente");
@@ -51,7 +52,7 @@ namespace AlbergoApp.Controllers
             return View("CreateDipendente", dipendente);
         }
 
-        
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int id)
         {
             var dipendente = await _dipendenteService.GetDipendenteByIdAsync(id);
@@ -84,7 +85,7 @@ namespace AlbergoApp.Controllers
             return View("EditDipendente", dipendente);
         }
 
-        
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Delete(int id)
         {
             var dipendente = await _dipendenteService.GetDipendenteByIdAsync(id);

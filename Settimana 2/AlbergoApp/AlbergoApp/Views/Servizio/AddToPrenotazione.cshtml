@@ -33,18 +33,44 @@
 
     <div class="form-group">
         <label asp-for="Quantita" class="control-label"></label>
-        <input asp-for="Quantita" type="number" class="form-control" min="1" />
+        <input asp-for="Quantita" type="number" class="form-control" min="1" id="Quantita" />
         <span asp-validation-for="Quantita" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="PrezzoUnitario" class="control-label"></label>
-        <input asp-for="PrezzoUnitario" type="text" class="form-control" readonly />
+        <input asp-for="PrezzoUnitario" type="text" class="form-control" readonly id="PrezzoUnitario" />
         <span asp-validation-for="PrezzoUnitario" class="text-danger"></span>
     </div>
-   
+
+    <div class="form-group">
+        <label for="PrezzoTotale">Prezzo Totale</label>
+        <input type="text" id="PrezzoTotale" class="form-control" readonly />
+    </div>
+
     <div class="form-group">
         <input type="submit" value="Aggiungi" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Annulla</a>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const prezzoUnitario = parseFloat(document.getElementById('PrezzoUnitario').value);
+            const quantitaInput = document.getElementById('Quantita');
+            const prezzoTotaleInput = document.getElementById('PrezzoTotale');
+
+            function aggiornaPrezzoTotale() {
+                const quantita = parseInt(quantitaInput.value) || 1;
+                const prezzoTotale = prezzoUnitario * quantita;
+                prezzoTotaleInput.value = prezzoTotale.toFixed(2);
+            }
+
+            quantitaInput.addEventListener('input', aggiornaPrezzoTotale);
+
+            // Inizializza il prezzo totale al caricamento della pagina
+            aggiornaPrezzoTotale();
+        });
+    </script>
+}

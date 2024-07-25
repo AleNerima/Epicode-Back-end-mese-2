@@ -36,6 +36,10 @@
                     <td>@prenotazione.TipoSoggiorno</td>
                     <td>@prenotazione.Stato</td>
                     <td>
+                        <a href="@Url.Action("DettagliServizi", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Visualizza Servizi</a>
+                    </td>
+
+                    <td>
                         <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> |
                         <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> |
                         <a href="@Url.Action("Delete", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Elimina</a>

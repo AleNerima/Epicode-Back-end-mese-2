@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
@@ -155,10 +156,10 @@ namespace AlbergoApp.Services
             }
         }
 
-        // Metodo per ottenere tutti i servizi associati a una prenotazione
-        public async Task<IEnumerable<Servizio>> GetServiziByPrenotazioneIdAsync(int idPrenotazione)
+        // Metodo per ottenere tutti i servizi prenotati associati a una prenotazione
+        public async Task<IEnumerable<ServiziPrenotazione>> GetServiziPrenotatiByPrenotazioneIdAsync(int prenotazioneId)
         {
-            var servizi = new List<Servizio>();
+            var serviziPrenotati = new List<ServiziPrenotazione>();
 
             try
             {
@@ -166,19 +167,28 @@ namespace AlbergoApp.Services
                 {
                     await connection.OpenAsync();
                     var command = new SqlCommand(
-                        "SELECT s.* FROM Servizi s JOIN ServiziPrenotazione sp ON s.IdServizio = sp.IdServizio WHERE sp.IdPrenotazione = @IdPrenotazione",
+                        @"SELECT sp.*, s.NomeServizio
+                  FROM ServiziPrenotazione sp
+                  INNER JOIN Servizi s ON sp.IdServizio = s.IdServizio
+                  WHERE sp.IdPrenotazione = @IdPrenotazione",
                         connection);
-                    command.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
+                    command.Parameters.AddWithValue("@IdPrenotazione", prenotazioneId);
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
                         {
-                            servizi.Add(new Servizio
+                            serviziPrenotati.Add(new ServiziPrenotazione
                             {
+                                IdPrenotazione = (int)reader["IdPrenotazione"],
                                 IdServizio = (int)reader["IdServizio"],
-                                NomeServizio = reader["NomeServizio"].ToString(),
-                                Prezzo = (decimal)reader["Prezzo"]
+                                DataServizio = (DateTime)reader["DataServizio"],
+                                Quantita = (int)reader["Quantita"],
+                                PrezzoUnitario = (decimal)reader["PrezzoUnitario"],
+                                Servizio = new Servizio
+                                {
+                                    NomeServizio = reader["NomeServizio"].ToString()
+                                }
                             });
                         }
                     }
@@ -187,10 +197,12 @@ namespace AlbergoApp.Services
             catch (SqlException ex)
             {
                 // Log error
-                throw new ApplicationException("Database error occurred while retrieving services for the reservation.", ex);
+                throw new ApplicationException("Database error occurred while retrieving booked services for the reservation.", ex);
             }
-            return servizi;
+
+            return serviziPrenotati.AsEnumerable(); // Restituisce IEnumerable<ServiziPrenotazione>
         }
+
 
         // Metodo per aggiungere un servizio a una prenotazione
         public async Task<bool> AddServizioToPrenotazioneAsync(int idPrenotazione, int idServizio, DateTime dataServizio, int quantita, decimal prezzoUnitario)
@@ -208,7 +220,6 @@ namespace AlbergoApp.Services
                     command.Parameters.AddWithValue("@DataServizio", dataServizio);
                     command.Parameters.AddWithValue("@Quantita", quantita);
                     command.Parameters.AddWithValue("@PrezzoUnitario", prezzoUnitario);
-                    
 
                     var rowsAffected = await command.ExecuteNonQueryAsync();
                     return rowsAffected > 0;
@@ -244,6 +255,44 @@ namespace AlbergoApp.Services
                 // Log error
                 throw new ApplicationException("Database error occurred while removing the service from the reservation.", ex);
             }
+        }
+
+        // Metodo per ottenere tutti i servizi associati a una prenotazione
+        public async Task<IEnumerable<Servizio>> GetServiziByPrenotazioneIdAsync(int idPrenotazione)
+        {
+            var servizi = new List<Servizio>();
+
+            try
+            {
+                using (var connection = _databaseService.GetConnection())
+                {
+                    await connection.OpenAsync();
+                    var command = new SqlCommand(
+                        "SELECT s.* FROM Servizi s INNER JOIN ServiziPrenotazione sp ON s.IdServizio = sp.IdServizio WHERE sp.IdPrenotazione = @IdPrenotazione",
+                        connection);
+                    command.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            servizi.Add(new Servizio
+                            {
+                                IdServizio = (int)reader["IdServizio"],
+                                NomeServizio = reader["NomeServizio"].ToString(),
+                                Prezzo = (decimal)reader["Prezzo"]
+                            });
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log error
+                throw new ApplicationException("Database error occurred while retrieving services for the reservation.", ex);
+            }
+
+            return servizi;
         }
     }
 }

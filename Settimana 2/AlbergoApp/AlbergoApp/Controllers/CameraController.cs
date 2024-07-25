@@ -2,6 +2,7 @@
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
 {
@@ -14,14 +15,14 @@ namespace AlbergoApp.Controllers
             _cameraService = cameraService;
         }
 
-        // GET: Camera
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var camere = await _cameraService.GetAllCamereAsync();
             return View("IndexCamera", camere);
         }
 
-        // GET: Camera/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
@@ -32,13 +33,13 @@ namespace AlbergoApp.Controllers
             return View("DetailsCamera", camera);
         }
 
-        // GET: Camera/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View("CreateCamera");
         }
 
-        // POST: Camera/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Numero, Tipologia, Descrizione")] Camera camera)
@@ -57,7 +58,7 @@ namespace AlbergoApp.Controllers
             return View("CreateCamera", camera);
         }
 
-        // GET: Camera/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
@@ -96,7 +97,7 @@ namespace AlbergoApp.Controllers
             return View("EditCamera", camera);
         }
 
-        // GET: Camera/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var camera = await _cameraService.GetCameraByIdAsync(id);
