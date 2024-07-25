@@ -1,0 +1,42 @@
+﻿@model AlbergoApp.Models.Dipendente
+
+@{
+    ViewData["Title"] = "Elimina Dipendente";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Sei sicuro di voler eliminare questo dipendente?</h4>
+<hr />
+<div>
+    <h4>Dipendente</h4>
+    <dl class="row">
+        <dt class="col-sm-3">
+            Nome
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Nome
+        </dd>
+        <dt class="col-sm-3">
+            Cognome
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Cognome
+        </dd>
+        <dt class="col-sm-3">
+            Ruolo
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Ruolo
+        </dd>
+    </dl>
+</div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="IdDipendente" />
+    <div class="form-group">
+        <input type="submit" value="Elimina" class="btn btn-danger" />
+    </div>
+</form>
+<p>
+    <a asp-action="Index">Indietro</a>
+</p>

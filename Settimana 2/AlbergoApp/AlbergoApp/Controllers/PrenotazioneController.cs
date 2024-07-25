@@ -3,9 +3,7 @@ using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+
 
 namespace AlbergoApp.Controllers
 {

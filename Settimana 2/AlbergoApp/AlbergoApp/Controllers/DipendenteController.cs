@@ -2,7 +2,8 @@
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AlbergoApp.Controllers
 {
@@ -15,7 +16,7 @@ namespace AlbergoApp.Controllers
             _dipendenteService = dipendenteService;
         }
 
-        [Authorize(Policy ="AdminOnly")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var dipendenti = await _dipendenteService.GetAllDipendentiAsync();
@@ -39,14 +40,14 @@ namespace AlbergoApp.Controllers
             return View("CreateDipendente");
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome, Cognome, Ruolo")] Dipendente dipendente)
+        public async Task<IActionResult> Create([Bind("Username, PasswordHash, Nome, Cognome, Ruolo")] Dipendente dipendente)
         {
             if (ModelState.IsValid)
             {
-                await _dipendenteService.CreateDipendenteAsync(dipendente);
+                // Assume that CreateDipendenteAsync returns the Id of the newly created Dipendente
+                int id = await _dipendenteService.CreateDipendenteAsync(dipendente);
                 return RedirectToAction(nameof(Index));
             }
             return View("CreateDipendente", dipendente);
@@ -63,10 +64,9 @@ namespace AlbergoApp.Controllers
             return View("EditDipendente", dipendente);
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdDipendente, Nome, Cognome, Ruolo")] Dipendente dipendente)
+        public async Task<IActionResult> Edit(int id, [Bind("IdDipendente, Username, PasswordHash, Nome, Cognome, Ruolo")] Dipendente dipendente)
         {
             if (id != dipendente.IdDipendente)
             {
@@ -96,7 +96,6 @@ namespace AlbergoApp.Controllers
             return View("DeleteDipendente", dipendente);
         }
 
-        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

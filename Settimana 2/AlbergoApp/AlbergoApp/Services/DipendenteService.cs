@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 
@@ -18,11 +20,12 @@ namespace AlbergoApp.Services
             using (var connection = _databaseService.GetConnection())
             {
                 await connection.OpenAsync();
-                var command = new SqlCommand("INSERT INTO Dipendenti (Username, PasswordHash, Nome, Cognome) OUTPUT INSERTED.IdDipendente VALUES (@Username, @PasswordHash, @Nome, @Cognome)", connection);
-                command.Parameters.AddWithValue("@Username", dipendente.Username);
-                command.Parameters.AddWithValue("@PasswordHash", dipendente.PasswordHash);
-                command.Parameters.AddWithValue("@Nome", dipendente.Nome);
-                command.Parameters.AddWithValue("@Cognome", dipendente.Cognome);
+                var command = new SqlCommand("INSERT INTO Dipendenti (Username, PasswordHash, Nome, Cognome, Ruolo) OUTPUT INSERTED.IdDipendente VALUES (@Username, @PasswordHash, @Nome, @Cognome, @Ruolo)", connection);
+                command.Parameters.AddWithValue("@Username", (object)dipendente.Username ?? DBNull.Value);
+                command.Parameters.AddWithValue("@PasswordHash", (object)dipendente.PasswordHash ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Nome", (object)dipendente.Nome ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Cognome", (object)dipendente.Cognome ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Ruolo", (object)dipendente.Ruolo ?? DBNull.Value);
 
                 var result = await command.ExecuteScalarAsync();
                 return (int)result;
@@ -47,7 +50,8 @@ namespace AlbergoApp.Services
                             Username = reader["Username"].ToString(),
                             PasswordHash = reader["PasswordHash"].ToString(),
                             Nome = reader["Nome"].ToString(),
-                            Cognome = reader["Cognome"].ToString()
+                            Cognome = reader["Cognome"].ToString(),
+                            Ruolo = reader["Ruolo"].ToString()
                         };
                     }
                 }
@@ -74,7 +78,8 @@ namespace AlbergoApp.Services
                             Username = reader["Username"].ToString(),
                             PasswordHash = reader["PasswordHash"].ToString(),
                             Nome = reader["Nome"].ToString(),
-                            Cognome = reader["Cognome"].ToString()
+                            Cognome = reader["Cognome"].ToString(),
+                            Ruolo = reader["Ruolo"].ToString()
                         });
                     }
                 }
@@ -87,11 +92,12 @@ namespace AlbergoApp.Services
             using (var connection = _databaseService.GetConnection())
             {
                 await connection.OpenAsync();
-                var command = new SqlCommand("UPDATE Dipendenti SET Username = @Username, PasswordHash = @PasswordHash, Nome = @Nome, Cognome = @Cognome WHERE IdDipendente = @IdDipendente", connection);
-                command.Parameters.AddWithValue("@Username", dipendente.Username);
-                command.Parameters.AddWithValue("@PasswordHash", dipendente.PasswordHash);
-                command.Parameters.AddWithValue("@Nome", dipendente.Nome);
-                command.Parameters.AddWithValue("@Cognome", dipendente.Cognome);
+                var command = new SqlCommand("UPDATE Dipendenti SET Username = @Username, PasswordHash = @PasswordHash, Nome = @Nome, Cognome = @Cognome, Ruolo = @Ruolo WHERE IdDipendente = @IdDipendente", connection);
+                command.Parameters.AddWithValue("@Username", (object)dipendente.Username ?? DBNull.Value);
+                command.Parameters.AddWithValue("@PasswordHash", (object)dipendente.PasswordHash ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Nome", (object)dipendente.Nome ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Cognome", (object)dipendente.Cognome ?? DBNull.Value);
+                command.Parameters.AddWithValue("@Ruolo", (object)dipendente.Ruolo ?? DBNull.Value);
                 command.Parameters.AddWithValue("@IdDipendente", dipendente.IdDipendente);
 
                 var rowsAffected = await command.ExecuteNonQueryAsync();
@@ -130,7 +136,8 @@ namespace AlbergoApp.Services
                             Username = reader["Username"].ToString(),
                             PasswordHash = reader["PasswordHash"].ToString(),
                             Nome = reader["Nome"].ToString(),
-                            Cognome = reader["Cognome"].ToString()
+                            Cognome = reader["Cognome"].ToString(),
+                            Ruolo = reader["Ruolo"].ToString()
                         };
                     }
                 }
