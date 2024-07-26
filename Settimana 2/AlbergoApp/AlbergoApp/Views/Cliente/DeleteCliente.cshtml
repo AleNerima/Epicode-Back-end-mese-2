@@ -3,15 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Elimina Cliente</title>
+    <link rel="stylesheet" href="~/css/Cliente.css" />
 </head>
 <body>
-    <h1>Elimina Cliente</h1>
-    <h3>Sei sicuro di voler eliminare il cliente @Model.Nome @Model.Cognome?</h3>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdCliente" />
-        <button type="submit">Elimina</button>
-        <a href="@Url.Action("Index", "Cliente")">Annulla</a>
-    </form>
+    <div class="elimina-cliente-container">
+        <h1>Elimina Cliente</h1>
+        <h3>Sei sicuro di voler eliminare il cliente @Model.Nome @Model.Cognome?</h3>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IdCliente" />
+            <button type="submit">Elimina</button>
+            <a href="@Url.Action("Index", "Cliente")">Annulla</a>
+        </form>
+    </div>
 </body>
 </html>

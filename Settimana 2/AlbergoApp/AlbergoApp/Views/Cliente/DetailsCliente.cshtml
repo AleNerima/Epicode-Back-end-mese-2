@@ -3,38 +3,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Dettagli Cliente</title>
+    <link rel="stylesheet" href="~/css/Cliente.css" />
 </head>
 <body>
-    <h1>Dettagli Cliente</h1>
-    <dl>
-        <dt>Codice Fiscale</dt>
-        <dd>@Model.CodiceFiscale</dd>
+    <div class="dettagli-cliente-container">
+        <h1>Dettagli Cliente</h1>
+        <dl>
+            <dt>Codice Fiscale</dt>
+            <dd>@Model.CodiceFiscale</dd>
 
-        <dt>Nome</dt>
-        <dd>@Model.Nome</dd>
+            <dt>Nome</dt>
+            <dd>@Model.Nome</dd>
 
-        <dt>Cognome</dt>
-        <dd>@Model.Cognome</dd>
+            <dt>Cognome</dt>
+            <dd>@Model.Cognome</dd>
 
-        <dt>Email</dt>
-        <dd>@Model.Email</dd>
+            <dt>Email</dt>
+            <dd>@Model.Email</dd>
 
-        <dt>Telefono</dt>
-        <dd>@Model.Telefono</dd>
+            <dt>Telefono</dt>
+            <dd>@Model.Telefono</dd>
 
-        <dt>Cellulare</dt>
-        <dd>@Model.Cellulare</dd>
+            <dt>Cellulare</dt>
+            <dd>@Model.Cellulare</dd>
 
-        <dt>Città</dt>
-        <dd>@Model.Citta</dd>
+            <dt>Città</dt>
+            <dd>@Model.Citta</dd>
 
-        <dt>Provincia</dt>
-        <dd>@Model.Provincia</dd>
-    </dl>
-    <p>
-        <a href="@Url.Action("Edit", "Cliente", new { id = Model.IdCliente })">Modifica</a> |
-        <a href="@Url.Action("Index", "Cliente")">Indietro</a>
-    </p>
+            <dt>Provincia</dt>
+            <dd>@Model.Provincia</dd>
+        </dl>
+        <p>
+            <a href="@Url.Action("Edit", "Cliente", new { id = Model.IdCliente })">Modifica</a> 
+            <a href="@Url.Action("Index", "Cliente")">Indietro</a>
+        </p>
+    </div>
 </body>
 </html>

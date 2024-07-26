@@ -1,56 +1,66 @@
 ﻿@model AlbergoApp.Models.Cliente
 
+@{
+    ViewData["Title"] = "Modifica Cliente";
+}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Modifica Cliente</title>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Cliente.css" />
 </head>
 <body>
-    <h1>Modifica Cliente</h1>
-    <form asp-action="Edit">
-        <input type="hidden" asp-for="IdCliente" />
-        <div>
-            <label asp-for="CodiceFiscale"></label>
-            <input asp-for="CodiceFiscale" />
-            <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Nome"></label>
-            <input asp-for="Nome" />
-            <span asp-validation-for="Nome" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Cognome"></label>
-            <input asp-for="Cognome" />
-            <span asp-validation-for="Cognome" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Email"></label>
-            <input asp-for="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Telefono"></label>
-            <input asp-for="Telefono" />
-            <span asp-validation-for="Telefono" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Cellulare"></label>
-            <input asp-for="Cellulare" />
-            <span asp-validation-for="Cellulare" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Citta"></label>
-            <input asp-for="Citta" />
-            <span asp-validation-for="Citta" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Provincia"></label>
-            <input asp-for="Provincia" />
-            <span asp-validation-for="Provincia" class="text-danger"></span>
-        </div>
-        <button type="submit">Salva</button>
-        <a href="@Url.Action("Index", "Cliente")">Annulla</a>
-    </form>
+    <div class="modifica-cliente-container">
+        <h1>@ViewData["Title"]</h1>
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="IdCliente" />
+
+            <div class="form-group">
+                <label asp-for="CodiceFiscale"></label>
+                <input asp-for="CodiceFiscale" />
+                <span asp-validation-for="CodiceFiscale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nome"></label>
+                <input asp-for="Nome" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cognome"></label>
+                <input asp-for="Cognome" />
+                <span asp-validation-for="Cognome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono"></label>
+                <input asp-for="Telefono" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cellulare"></label>
+                <input asp-for="Cellulare" />
+                <span asp-validation-for="Cellulare" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Citta"></label>
+                <input asp-for="Citta" />
+                <span asp-validation-for="Citta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provincia"></label>
+                <input asp-for="Provincia" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </div>
+
+            <button type="submit">Salva</button>
+            <a href="@Url.Action("Index", "Cliente")">Annulla</a>
+        </form>
+    </div>
 </body>
 </html>

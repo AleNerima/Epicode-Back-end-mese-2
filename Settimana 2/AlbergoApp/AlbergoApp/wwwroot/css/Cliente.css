@@ -1,0 +1,332 @@
+﻿/* IndexClienti */
+
+/* Stile generale per la pagina di elenco clienti */
+.list-clienti-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+    /* Stile per il titolo */
+    .list-clienti-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Stile per il link di creazione */
+    .list-clienti-container p {
+        margin-bottom: 20px;
+    }
+
+    .list-clienti-container a.create-cliente-link {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .list-clienti-container a.create-cliente-link:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+/* Stile per la tabella */
+.list-clienti-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .list-clienti-table th, .list-clienti-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .list-clienti-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .list-clienti-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Stile per i link di azione */
+    .list-clienti-table a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 14px;
+    }
+
+        .list-clienti-table a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+/*EditCliente */
+
+/* Stile generale per il contenitore del form */
+.modifica-cliente-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+    /* Stile per il titolo della pagina */
+    .modifica-cliente-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Stile per il form */
+    .modifica-cliente-container form {
+        display: grid;
+        gap: 15px;
+    }
+
+    /* Stile per i gruppi di input */
+    .modifica-cliente-container .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modifica-cliente-container label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Stile per i campi di input */
+    .modifica-cliente-container input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    /* Stile per i messaggi di errore */
+    .modifica-cliente-container .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    /* Stile per i pulsanti */
+    .modifica-cliente-container button,
+    .modifica-cliente-container a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 5px;
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .modifica-cliente-container button {
+        background-color: #007bff;
+    }
+
+        .modifica-cliente-container button:hover {
+            background-color: #0056b3;
+        }
+
+    .modifica-cliente-container a {
+        background-color: #6c757d;
+        margin-left: 10px;
+    }
+
+        .modifica-cliente-container a:hover {
+            background-color: #5a6268;
+        }
+
+
+/* DettagliCliente */
+
+/* Stile generale per la pagina dei dettagli */
+.dettagli-cliente-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+    /* Stile per il titolo della pagina */
+    .dettagli-cliente-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Stile per i dettagli (dl) */
+    .dettagli-cliente-container dl {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Stile per le etichette dei dettagli (dt) */
+    .dettagli-cliente-container dt {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Stile per i valori dei dettagli (dd) */
+    .dettagli-cliente-container dd {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Stile per i link di azione */
+    .dettagli-cliente-container a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .dettagli-cliente-container a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+/* CreaCliente */
+
+/* Stile generale per la pagina di creazione */
+.crea-cliente-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    /* Stile per il titolo della pagina */
+    .crea-cliente-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Stile per i campi del modulo */
+    .crea-cliente-container .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* Stile per le etichette */
+    .crea-cliente-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    /* Stile per gli input */
+    .crea-cliente-container input {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Stile per i messaggi di validazione */
+    .crea-cliente-container .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+    }
+
+    /* Stile per i pulsanti */
+    .crea-cliente-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        cursor: pointer;
+    }
+
+        .crea-cliente-container button:hover {
+            background-color: #0056b3;
+        }
+
+    /* Stile per i link */
+    .crea-cliente-container a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .crea-cliente-container a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+/* EliminaCliente */
+
+/* Stile generale per la pagina di eliminazione */
+.elimina-cliente-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+    /* Stile per il titolo della pagina */
+    .elimina-cliente-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Stile per il messaggio di conferma */
+    .elimina-cliente-container h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Stile per il modulo */
+    .elimina-cliente-container form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Stile per il pulsante di eliminazione */
+    .elimina-cliente-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #dc3545;
+        border: none;
+        cursor: pointer;
+    }
+
+        .elimina-cliente-container button:hover {
+            background-color: #c82333;
+        }
+
+    /* Stile per i link */
+    .elimina-cliente-container a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .elimina-cliente-container a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
