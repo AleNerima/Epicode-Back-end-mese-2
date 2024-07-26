@@ -50,6 +50,7 @@
                         <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> |
                         <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> |
                         <a href="@Url.Action("Delete", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Elimina</a>
+                        <button onclick="checkout(@prenotazione.IdPrenotazione)">Checkout</button>
                     </td>
                 </tr>
             }
@@ -84,6 +85,23 @@
                         rows += '</tr>';
                     });
                     $('#prenotazioniTable tbody').html(rows);
+                }
+            });
+        }
+
+        function checkout(id) {
+            $.ajax({
+                url: '@Url.Action("Checkout", "Prenotazione")',
+                data: { id: id },
+                success: function (data) {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert('Dettagli Checkout:\n' + data.dettagli);
+                    }
+                },
+                error: function () {
+                    alert('Errore durante il checkout.');
                 }
             });
         }

@@ -222,7 +222,7 @@ namespace AlbergoApp.Controllers
             prenotazione.Cliente = await _clienteService.GetClienteByIdAsync(prenotazione.IdCliente);
             prenotazione.Camera = await _cameraService.GetCameraByIdAsync(prenotazione.IdCamera);
 
-            // Ottieni i servizi prenotati e converti in lista
+            // Ottieni i servizi prenotati e converte in lista
             var serviziPrenotati = (await _servizioService.GetServiziPrenotatiByPrenotazioneIdAsync(id)).ToList();
 
             var model = new PrenotazioneDettagliViewModel
@@ -238,7 +238,7 @@ namespace AlbergoApp.Controllers
         [Authorize]
         public async Task<IActionResult> GetAvailableCamere(DateTime startDate, DateTime endDate)
         {
-            // Verifica che le date siano valide
+            // Verifico che le date siano valide
             if (startDate >= endDate)
             {
                 return BadRequest("La data di inizio deve essere prima della data di fine.");
@@ -254,5 +254,39 @@ namespace AlbergoApp.Controllers
                 descrizione = camera.Descrizione
             }));
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Checkout(int id)
+        {
+            // Recupero la prenotazione e i servizi associati
+            var prenotazione = await _prenotazioneService.GetPrenotazioneByIdAsync(id);
+            if (prenotazione == null)
+            {
+                return Json(new { error = "Prenotazione non trovata" });
+            }
+
+            var serviziPrenotati = (await _servizioService.GetServiziPrenotatiByPrenotazioneIdAsync(id)).ToList();
+
+            // Calcolo il totale dei servizi
+            decimal totaleServizi = serviziPrenotati.Sum(s => s.Quantita * s.PrezzoUnitario);
+
+            // Calcolo il totale da pagare
+            decimal totale = prenotazione.Tariffa - prenotazione.CaparraConfirmatoria + totaleServizi;
+
+            // Preparo i dettagli per la visualizzazione
+            var dettagli = serviziPrenotati.Select(s =>
+                $"{s.Servizio.NomeServizio}: {s.Quantita} x {s.PrezzoUnitario.ToString("C")} = {(s.Quantita * s.PrezzoUnitario).ToString("C")}"
+            ).ToList();
+            dettagli.Insert(0, $"Tariffa: {prenotazione.Tariffa.ToString("C")}");
+            dettagli.Insert(1, $"Caparra Confirmatoria: {prenotazione.CaparraConfirmatoria.ToString("C")}");
+            dettagli.Add($"Totale Servizi: {totaleServizi.ToString("C")}");
+            dettagli.Add($"Totale da Pagare: {totale.ToString("C")}");
+
+            // Restituisce i dati come JSON
+            return Json(new { totale = totale.ToString("C"), dettagli = string.Join("\n", dettagli) });
+        }
+
+
     }
 }
