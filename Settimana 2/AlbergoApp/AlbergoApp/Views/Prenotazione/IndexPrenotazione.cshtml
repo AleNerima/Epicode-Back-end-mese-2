@@ -1,22 +1,25 @@
 ﻿@model IEnumerable<AlbergoApp.Models.Prenotazione>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Elenco Prenotazioni</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
+@{
+    Layout = "_Layout"; // Usa il layout definito
+    ViewData["Title"] = "Elenco Prenotazioni"; // Imposta il titolo della pagina
+}
+
+@section Styles {
+    <link href="~/css/Prenotazione.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="prenotazioni-container">
     <h1>Elenco Prenotazioni</h1>
 
-   
-    <input type="text" id="searchQuery" placeholder="Cerca per codice fiscale, camera, data..." />
-    <button onclick="search()">Cerca</button>
+    <div class="search-box">
+        <input type="text" id="searchQuery" placeholder="Cerca per codice fiscale, camera, data..." />
+        <button onclick="search()">Cerca</button>
+    </div>
 
-    <table id="prenotazioniTable">
+    <table id="prenotazioniTable" class="table table-striped">
         <thead>
-            <tr>
-                <th>ID</th>
+            <tr>                
                 <th>Numero Prenotazione</th>
                 <th>Cliente</th>
                 <th>Camera</th>
@@ -26,19 +29,18 @@
                 <th>Tariffa</th>
                 <th>Tipo Soggiorno</th>
                 <th>Stato</th>
-                <th>Azioni</th>
+                <th>Servizi Aggiunti</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var prenotazione in Model)
             {
-                <tr>
-                    <td>@prenotazione.IdPrenotazione</td>
+                <tr>                    
                     <td>@prenotazione.NumeroProgressivo</td>
                     <td>@prenotazione.Cliente?.CodiceFiscale</td>
                     <td>@prenotazione.Camera?.Numero</td>
                     <td>@prenotazione.DataPrenotazione.ToShortDateString()</td>
-                    <td>@prenotazione.PeriodoSoggiornoDal.ToShortDateString() - @prenotazione.PeriodoSoggiornoAl.ToShortDateString()</td>
+                    <td> Dal @prenotazione.PeriodoSoggiornoDal.ToShortDateString() Al @prenotazione.PeriodoSoggiornoAl.ToShortDateString()</td>
                     <td>@prenotazione.CaparraConfirmatoria.ToString("C")</td>
                     <td>@prenotazione.Tariffa.ToString("C")</td>
                     <td>@prenotazione.TipoSoggiorno</td>
@@ -47,8 +49,8 @@
                         <a href="@Url.Action("DettagliServizi", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Visualizza Servizi</a>
                     </td>
                     <td>
-                        <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> |
-                        <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> |
+                        <a href="@Url.Action("Details", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Dettagli</a> 
+                        <a href="@Url.Action("Edit", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Modifica</a> 
                         <a href="@Url.Action("Delete", "Prenotazione", new { id = prenotazione.IdPrenotazione })">Elimina</a>
                         <button onclick="checkout(@prenotazione.IdPrenotazione)">Checkout</button>
                     </td>
@@ -57,8 +59,10 @@
         </tbody>
     </table>
 
-    <a href="@Url.Action("Create", "Prenotazione")">Aggiungi Prenotazione</a>
+    <a href="@Url.Action("Create", "Prenotazione")" class="btn btn-primary">Aggiungi Prenotazione</a>
+</div>
 
+@section Scripts {
     <script>
         function search() {
             var query = $('#searchQuery').val();
@@ -70,7 +74,7 @@
                     var rows = '';
                     $.each(data, function (i, prenotazione) {
                         rows += '<tr>';
-                        rows += '<td>' + prenotazione.idPrenotazione + '</td>';
+                        
                         rows += '<td>' + prenotazione.numeroProgressivo + '</td>';
                         rows += '<td>' + prenotazione.codiceFiscaleCliente + '</td>';
                         rows += '<td>' + prenotazione.numeroCamera + '</td>';
@@ -81,7 +85,7 @@
                         rows += '<td>' + prenotazione.tipoSoggiorno + '</td>';
                         rows += '<td>' + prenotazione.stato + '</td>';
                         rows += '<td><a href="/Prenotazione/DettagliServizi/' + prenotazione.idPrenotazione + '">Visualizza Servizi</a></td>';
-                        rows += '<td><a href="/Prenotazione/Details/' + prenotazione.idPrenotazione + '">Dettagli</a> | <a href="/Prenotazione/Edit/' + prenotazione.idPrenotazione + '">Modifica</a> | <a href="/Prenotazione/Delete/' + prenotazione.idPrenotazione + '">Elimina</a></td>';
+                        rows += '<td><a href="/Prenotazione/Details/' + prenotazione.idPrenotazione + '">Dettagli</a>  <a href="/Prenotazione/Edit/' + prenotazione.idPrenotazione + '">Modifica</a>  <a href="/Prenotazione/Delete/' + prenotazione.idPrenotazione + '">Elimina</a></td>';
                         rows += '</tr>';
                     });
                     $('#prenotazioniTable tbody').html(rows);
@@ -106,5 +110,4 @@
             });
         }
     </script>
-</body>
-</html>
+}

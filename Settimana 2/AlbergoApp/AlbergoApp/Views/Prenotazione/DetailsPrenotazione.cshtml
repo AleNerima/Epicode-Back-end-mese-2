@@ -3,31 +3,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Dettagli Prenotazione</title>
+    <link rel="stylesheet" href="~/css/Prenotazione.css" />
 </head>
 <body>
-    <h1>Dettagli Prenotazione</h1>
-    <dl>
-        <dt>ID</dt>
-        <dd>@Model.IdPrenotazione</dd>
-        <dt>Cliente</dt>
-        <dd>@Model.Cliente?.CodiceFiscale</dd>
-        <dt>Camera</dt>
-        <dd>@Model.Camera?.Numero</dd>
-        <dt>Data Prenotazione</dt>
-        <dd>@Model.DataPrenotazione.ToShortDateString()</dd>
-        <dt>Periodo Soggiorno</dt>
-        <dd>@Model.PeriodoSoggiornoDal.ToShortDateString() - @Model.PeriodoSoggiornoAl.ToShortDateString()</dd>
-        <dt>Caparra</dt>
-        <dd>@Model.CaparraConfirmatoria.ToString("C")</dd>
-        <dt>Tariffa</dt>
-        <dd>@Model.Tariffa.ToString("C")</dd>
-        <dt>Tipo Soggiorno</dt>
-        <dd>@Model.TipoSoggiorno</dd>
-        <dt>Stato</dt>
-        <dd>@Model.Stato</dd>
-    </dl>
-    <a href="@Url.Action("Edit", "Prenotazione", new { id = Model.IdPrenotazione })">Modifica</a> |
-    <a href="@Url.Action("Index", "Prenotazione")">Indietro</a>
+    <div class="details-container">
+        <h1>Dettagli Prenotazione</h1>
+        <dl>
+            <dt>ID</dt>
+            <dd>@Model.IdPrenotazione</dd>
+            <dt>Cliente</dt>
+            <dd>@Model.Cliente?.CodiceFiscale</dd>
+            <dt>Camera</dt>
+            <dd>@Model.Camera?.Numero</dd>
+            <dt>Data Prenotazione</dt>
+            <dd>@Model.DataPrenotazione.ToShortDateString()</dd>
+            <dt>Periodo Soggiorno</dt>
+            <dd>@Model.PeriodoSoggiornoDal.ToShortDateString() - @Model.PeriodoSoggiornoAl.ToShortDateString()</dd>
+            <dt>Caparra</dt>
+            <dd>@Model.CaparraConfirmatoria.ToString("C")</dd>
+            <dt>Tariffa</dt>
+            <dd>@Model.Tariffa.ToString("C")</dd>
+            <dt>Tipo Soggiorno</dt>
+            <dd>@Model.TipoSoggiorno</dd>
+            <dt>Stato</dt>
+            <dd>@Model.Stato</dd>
+        </dl>
+        <a href="@Url.Action("Edit", "Prenotazione", new { id = Model.IdPrenotazione })">Modifica</a>
+        <a href="@Url.Action("Index", "Prenotazione")">Indietro</a>
+    </div>
 </body>
 </html>

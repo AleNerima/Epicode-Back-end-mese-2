@@ -1,0 +1,506 @@
+﻿/* Stili generali per la pagina delle prenotazioni */
+.prenotazioni-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .prenotazioni-container h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2em;
+    }
+
+    /* Barra di ricerca */
+    .prenotazioni-container .search-box {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+        .prenotazioni-container .search-box input[type="text"] {
+            padding: 12px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .prenotazioni-container .search-box button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+            .prenotazioni-container .search-box button:hover {
+                background-color: #0056b3;
+            }
+
+    /* Tabella delle prenotazioni */
+    .prenotazioni-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .prenotazioni-container table, .prenotazioni-container th, .prenotazioni-container td {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .prenotazioni-container th, .prenotazioni-container td {
+        padding: 12px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .prenotazioni-container th {
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .prenotazioni-container tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    
+
+    /* Link e pulsanti nella tabella */
+    .prenotazioni-container a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .prenotazioni-container a:hover {
+            text-decoration: underline;
+        }
+
+    .prenotazioni-container button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28a745;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .prenotazioni-container button:hover {
+            background-color: #218838;
+        }
+
+    /* Pulsante "Aggiungi Prenotazione" */
+    .prenotazioni-container .btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .prenotazioni-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+/* PrenotazioneEdit*/
+
+/* Contenitore principale */
+.edit-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .edit-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+/* Stili per i campi del modulo */
+.edit-form-group {
+    margin-bottom: 15px;
+}
+
+.edit-control-label {
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+    .edit-form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+/* Stili per i messaggi di errore di validazione */
+.edit-text-danger {
+    color: #dc3545;
+    font-size: 0.875em;
+}
+
+/* Pulsanti */
+.edit-btn {
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.edit-btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .edit-btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.edit-btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+    .edit-btn-secondary:hover {
+        background-color: #5a6268;
+    }
+/* PrenotazioneDettagliServizi */
+
+/* Contenitore principale */
+.dettagli-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .dettagli-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Sezioni di dettagli */
+    .dettagli-container h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+        color: #007bff;
+        font-size: 1.5em;
+    }
+
+    /* Stili per il description list */
+    .dettagli-container dl {
+        margin: 0;
+        padding: 0;
+    }
+
+    .dettagli-container dt {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .dettagli-container dd {
+        margin-bottom: 10px;
+    }
+
+    /* Stili per la tabella dei servizi */
+    .dettagli-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .dettagli-container table th,
+        .dettagli-container table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .dettagli-container table th {
+            background-color: #f4f4f4;
+        }
+
+        .dettagli-container table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .dettagli-container table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Pulsante per tornare all'elenco prenotazioni */
+    .dettagli-container .btn {
+        margin-top: 20px;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        display: block;
+        width: 100%;
+    }
+
+    .dettagli-container .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+        .dettagli-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+/* PrenotazioneDetails*/
+
+/* Contenitore principale */
+.details-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .details-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Stili per il description list (dl) */
+    .details-container dl {
+        margin: 0;
+        padding: 0;
+    }
+
+    .details-container dt {
+        font-weight: bold;
+        color: #555;
+        margin-top: 10px;
+    }
+
+    .details-container dd {
+        margin-bottom: 15px;
+    }
+
+    /* Stili per i link */
+    .details-container a {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .details-container a:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .details-container a:last-child {
+            background-color: #6c757d;
+        }
+
+            .details-container a:last-child:hover {
+                background-color: #5a6268;
+            }
+/* PrenotazioneCreate*/
+
+/* Contenitore principale */
+.create-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .create-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Stili per il form */
+    .create-container .form-group {
+        margin-bottom: 15px;
+    }
+
+        .create-container .form-group label {
+            font-weight: bold;
+        }
+
+        .create-container .form-group .form-control {
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-container .form-group .text-danger {
+            font-size: 0.875em;
+        }
+
+    /* Stili per i bottoni */
+    .create-container .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+    }
+
+    .create-container .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+    }
+
+        .create-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .create-container .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: #fff;
+        margin-left: 10px;
+    }
+
+        .create-container .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    /* Stili per la selezione della camera */
+    .create-container .form-group select {
+        cursor: pointer;
+    }
+
+    /* Stili per i messaggi di validazione */
+    .create-container .text-danger {
+        color: #dc3545;
+        font-size: 0.875em;
+    }
+
+    /* Stili per il calendario */
+    .create-container input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+/* PrenotazioneDelete*/
+
+/* Contenitore principale */
+.delete-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .delete-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Stile per il messaggio di conferma */
+    .delete-container h3 {
+        color: #dc3545; 
+        margin-bottom: 15px;
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    /* Stile per i dettagli della prenotazione */
+    .delete-container p {
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+        .delete-container p strong {
+            font-weight: bold;
+        }
+
+    /* Stili per i bottoni */
+    .delete-container button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #dc3545; 
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+        .delete-container button[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+    .delete-container a {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .delete-container a:hover {
+            background-color: #5a6268;
+        }

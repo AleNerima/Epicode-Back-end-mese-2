@@ -1,56 +1,68 @@
 ﻿@model AlbergoApp.Models.PrenotazioneDettagliViewModel
 
-@{
-    ViewData["Title"] = "Dettagli Servizi della Prenotazione";
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Prenotazione.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <div class="dettagli-container mt-4">
+        <h1>@ViewData["Title"]</h1>
 
-<h1>@ViewData["Title"]</h1>
+        <h2>Prenotazione</h2>
+        <dl class="row">
+            <dt class="col-sm-3">Numero Prenotazione</dt>
+            <dd class="col-sm-9">@Model.Prenotazione.NumeroProgressivo</dd>
 
-<h2>Prenotazione</h2>
-<dl class="row">
-    <dt class="col-sm-3">Numero Progressivo</dt>
-    <dd class="col-sm-9">@Model.Prenotazione.NumeroProgressivo</dd>
+            <dt class="col-sm-3">Codice Fiscale Cliente</dt>
+            <dd class="col-sm-9">@Model.Prenotazione.Cliente.CodiceFiscale</dd>
 
-    <dt class="col-sm-3">Cliente</dt>
-    <dd class="col-sm-9">@Model.Prenotazione.Cliente.CodiceFiscale</dd>
+            <dt class="col-sm-3">Camera</dt>
+            <dd class="col-sm-9">@Model.Prenotazione.Camera.Numero</dd>
 
-    <dt class="col-sm-3">Camera</dt>
-    <dd class="col-sm-9">@Model.Prenotazione.Camera.Numero</dd>
+            <dt class="col-sm-3">Data Prenotazione</dt>
+            <dd class="col-sm-9">@Model.Prenotazione.DataPrenotazione.ToShortDateString()</dd>
+        </dl>
 
-    <dt class="col-sm-3">Data Prenotazione</dt>
-    <dd class="col-sm-9">@Model.Prenotazione.DataPrenotazione.ToShortDateString()</dd>
-</dl>
+        <h2>Servizi Prenotati</h2>
+        @if (Model.ServiziPrenotati != null && Model.ServiziPrenotati.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome Servizio</th>
+                        <th>Data Servizio</th>
+                        <th>Quantità</th>
+                        <th>Prezzo Unitario</th>
+                        <th>Prezzo Totale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var servizio in Model.ServiziPrenotati)
+                    {
+                        <tr>
+                            <td>@servizio.Servizio?.NomeServizio</td>
+                            <td>@servizio.DataServizio.ToShortDateString()</td>
+                            <td>@servizio.Quantita</td>
+                            <td>@servizio.PrezzoUnitario.ToString("C")</td>
+                            <td>@(servizio.PrezzoUnitario * servizio.Quantita) &#8364</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Nessun servizio prenotato.</p>
+        }
 
-<h2>Servizi Prenotati</h2>
-@if (Model.ServiziPrenotati != null && Model.ServiziPrenotati.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nome Servizio</th>
-                <th>Data Servizio</th>
-                <th>Quantità</th>
-                <th>Prezzo Unitario</th>
-                <th>Prezzo Totale</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var servizio in Model.ServiziPrenotati)
-            {
-                <tr>
-                    <td>@servizio.Servizio?.NomeServizio</td>
-                    <td>@servizio.DataServizio.ToShortDateString()</td>
-                    <td>@servizio.Quantita</td>
-                    <td>@servizio.PrezzoUnitario.ToString("C")</td>
-                    <td>@(servizio.PrezzoUnitario * servizio.Quantita) &#8364</td> <!-- Calcolo del Prezzo Totale -->
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Nessun servizio prenotato.</p>
-}
-
-<a asp-action="Index" class="btn btn-primary">Torna all'elenco prenotazioni</a>
+        <a asp-action="Index" class="btn btn-primary">Torna all'elenco prenotazioni</a>
+    </div>
+</body>
+</html>

@@ -6,72 +6,74 @@
     <meta charset="utf-8" />
     <title>Modifica Prenotazione</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Prenotazione.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
-    <div class="container mt-4">
+    <div class="edit-container mt-4">
         <h1>Modifica Prenotazione</h1>
         <form asp-action="Edit">
             <input type="hidden" asp-for="IdPrenotazione" />
-            <div class="form-group">
-                <label asp-for="IdCliente" class="control-label"></label>
-                <select asp-for="IdCliente" asp-items="ViewBag.Clienti" class="form-control"></select>
-                <span asp-validation-for="IdCliente" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="IdCliente" class="edit-control-label">Codice Fiscale Cliente</label>
+                <select asp-for="IdCliente" asp-items="ViewBag.Clienti" class="edit-form-control"></select>
+                <span asp-validation-for="IdCliente" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IdCamera" class="control-label"></label>
-                <select asp-for="IdCamera" asp-items="ViewBag.Camere" class="form-control"></select>
-                <span asp-validation-for="IdCamera" class="text-danger"></span>
+          
+            <div class="edit-form-group">
+                <label asp-for="DataPrenotazione" class="edit-control-label"></label>
+                <input asp-for="DataPrenotazione" class="edit-form-control" type="date" />
+                <span asp-validation-for="DataPrenotazione" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DataPrenotazione" class="control-label"></label>
-                <input asp-for="DataPrenotazione" class="form-control" type="date" />
-                <span asp-validation-for="DataPrenotazione" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="NumeroProgressivo" class="edit-control-label">Numero prenotazione</label>
+                <input asp-for="NumeroProgressivo" class="edit-form-control" />
+                <span asp-validation-for="NumeroProgressivo" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NumeroProgressivo" class="control-label"></label>
-                <input asp-for="NumeroProgressivo" class="form-control" />
-                <span asp-validation-for="NumeroProgressivo" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="Anno" class="edit-control-label"></label>
+                <input asp-for="Anno" class="edit-form-control" />
+                <span asp-validation-for="Anno" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Anno" class="control-label"></label>
-                <input asp-for="Anno" class="form-control" />
-                <span asp-validation-for="Anno" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="PeriodoSoggiornoDal" class="edit-control-label"></label>
+                <input asp-for="PeriodoSoggiornoDal" class="edit-form-control" type="date" />
+                <span asp-validation-for="PeriodoSoggiornoDal" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PeriodoSoggiornoDal" class="control-label"></label>
-                <input asp-for="PeriodoSoggiornoDal" class="form-control" type="date" />
-                <span asp-validation-for="PeriodoSoggiornoDal" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="PeriodoSoggiornoAl" class="edit-control-label"></label>
+                <input asp-for="PeriodoSoggiornoAl" class="edit-form-control" type="date" />
+                <span asp-validation-for="PeriodoSoggiornoAl" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PeriodoSoggiornoAl" class="control-label"></label>
-                <input asp-for="PeriodoSoggiornoAl" class="form-control" type="date" />
-                <span asp-validation-for="PeriodoSoggiornoAl" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="IdCamera" class="edit-control-label">Numero Camera</label>
+                <select asp-for="IdCamera" asp-items="ViewBag.Camere" class="edit-form-control"></select>
+                <span asp-validation-for="IdCamera" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CaparraConfirmatoria" class="control-label"></label>
-                <input asp-for="CaparraConfirmatoria" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="CaparraConfirmatoria" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="CaparraConfirmatoria" class="edit-control-label"></label>
+                <input asp-for="CaparraConfirmatoria" class="edit-form-control" type="number" step="0.01" />
+                <span asp-validation-for="CaparraConfirmatoria" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Tariffa" class="control-label"></label>
-                <input asp-for="Tariffa" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="Tariffa" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="Tariffa" class="edit-control-label"></label>
+                <input asp-for="Tariffa" class="edit-form-control" type="number" step="0.01" />
+                <span asp-validation-for="Tariffa" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoSoggiorno" class="control-label"></label>
-                <select asp-for="TipoSoggiorno" asp-items="ViewBag.TipoSoggiorno" class="form-control"></select>
-                <span asp-validation-for="TipoSoggiorno" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="TipoSoggiorno" class="edit-control-label"></label>
+                <select asp-for="TipoSoggiorno" asp-items="ViewBag.TipoSoggiorno" class="edit-form-control"></select>
+                <span asp-validation-for="TipoSoggiorno" class="edit-text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Stato" class="control-label"></label>
-                <select asp-for="Stato" asp-items="ViewBag.Stato" class="form-control"></select>
-                <span asp-validation-for="Stato" class="text-danger"></span>
+            <div class="edit-form-group">
+                <label asp-for="Stato" class="edit-control-label"></label>
+                <select asp-for="Stato" asp-items="ViewBag.Stato" class="edit-form-control"></select>
+                <span asp-validation-for="Stato" class="edit-text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Salva</button>
-            <a class="btn btn-secondary" href="@Url.Action("Index", "Prenotazione")">Annulla</a>
+            <button type="submit" class="edit-btn edit-btn-primary">Salva</button>
+            <a class="edit-btn edit-btn-secondary text-decoration-none" href="@Url.Action("Index", "Prenotazione")">Annulla</a>
         </form>
     </div>
 </body>

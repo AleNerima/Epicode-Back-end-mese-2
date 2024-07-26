@@ -46,7 +46,7 @@ namespace AlbergoApp.Controllers
                 codiceFiscaleCliente = prenotazione.Cliente?.CodiceFiscale,
                 numeroCamera = prenotazione.Camera?.Numero,
                 dataPrenotazione = prenotazione.DataPrenotazione.ToShortDateString(),
-                periodoSoggiorno = prenotazione.PeriodoSoggiornoDal.ToShortDateString() + " - " + prenotazione.PeriodoSoggiornoAl.ToShortDateString(),
+                periodoSoggiorno = "Dal" + prenotazione.PeriodoSoggiornoDal.ToShortDateString() + " Al " + prenotazione.PeriodoSoggiornoAl.ToShortDateString(),
                 caparraConfirmatoria = prenotazione.CaparraConfirmatoria.ToString("C"),
                 tariffa = prenotazione.Tariffa.ToString("C"),
                 tipoSoggiorno = prenotazione.TipoSoggiorno,
