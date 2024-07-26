@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Numero Prenotazione</th>
                 <th>Cliente</th>
                 <th>Camera</th>
                 <th>Data Prenotazione</th>
@@ -33,6 +34,7 @@
             {
                 <tr>
                     <td>@prenotazione.IdPrenotazione</td>
+                    <td>@prenotazione.NumeroProgressivo</td>
                     <td>@prenotazione.Cliente?.CodiceFiscale</td>
                     <td>@prenotazione.Camera?.Numero</td>
                     <td>@prenotazione.DataPrenotazione.ToShortDateString()</td>
@@ -68,6 +70,7 @@
                     $.each(data, function (i, prenotazione) {
                         rows += '<tr>';
                         rows += '<td>' + prenotazione.idPrenotazione + '</td>';
+                        rows += '<td>' + prenotazione.numeroProgressivo + '</td>';
                         rows += '<td>' + prenotazione.codiceFiscaleCliente + '</td>';
                         rows += '<td>' + prenotazione.numeroCamera + '</td>';
                         rows += '<td>' + prenotazione.dataPrenotazione + '</td>';

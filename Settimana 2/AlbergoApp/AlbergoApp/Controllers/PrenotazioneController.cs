@@ -42,6 +42,7 @@ namespace AlbergoApp.Controllers
             return Json(results.Select(prenotazione => new
             {
                 idPrenotazione = prenotazione.IdPrenotazione,
+                numeroProgressivo= prenotazione.NumeroProgressivo,
                 codiceFiscaleCliente = prenotazione.Cliente?.CodiceFiscale,
                 numeroCamera = prenotazione.Camera?.Numero,
                 dataPrenotazione = prenotazione.DataPrenotazione.ToShortDateString(),
