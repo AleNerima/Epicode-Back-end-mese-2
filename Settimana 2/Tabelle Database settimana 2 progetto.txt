@@ -1,72 +1,85 @@
 -------- Tabella dei Dipendenti: per la gestione del login ----------------
 
-CREATE TABLE Dipendenti (
-    idDipendente INT IDENTITY(1,1) PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    passwordHash VARCHAR(255) NOT NULL,
-    nome VARCHAR(50),
-    cognome VARCHAR(50)
+CREATE TABLE [dbo].[Dipendenti] (
+    [idDipendente] INT           IDENTITY (1, 1) NOT NULL,
+    [username]     VARCHAR (50)  NOT NULL,
+    [passwordHash] VARCHAR (255) NOT NULL,
+    [nome]         VARCHAR (50)  NULL,
+    [cognome]      VARCHAR (50)  NULL,
+    [ruolo]        VARCHAR (50)  NULL,
+    PRIMARY KEY CLUSTERED ([idDipendente] ASC),
+    UNIQUE NONCLUSTERED ([username] ASC)
 );
-
 ----------------------- Tabella dei Clienti: utilizza una chiave primaria numerica --------------------
-CREATE TABLE Clienti (
-    idCliente INT IDENTITY(1,1) PRIMARY KEY,
-    codiceFiscale VARCHAR(16) UNIQUE NOT NULL,
-    cognome VARCHAR(50),
-    nome VARCHAR(50),
-    citta VARCHAR(50),
-    provincia VARCHAR(50),
-    email VARCHAR(100),
-    telefono VARCHAR(20),
-    cellulare VARCHAR(20)
+CREATE TABLE [dbo].[Clienti] (
+    [idCliente]     INT           IDENTITY (1, 1) NOT NULL,
+    [codiceFiscale] VARCHAR (16)  NOT NULL,
+    [cognome]       VARCHAR (50)  NULL,
+    [nome]          VARCHAR (50)  NULL,
+    [citta]         VARCHAR (50)  NULL,
+    [provincia]     VARCHAR (50)  NULL,
+    [email]         VARCHAR (100) NULL,
+    [telefono]      VARCHAR (20)  NULL,
+    [cellulare]     VARCHAR (20)  NULL,
+    PRIMARY KEY CLUSTERED ([idCliente] ASC),
+    UNIQUE NONCLUSTERED ([codiceFiscale] ASC)
 );
 
 ------------------- Tabella delle Camere: la chiave primaria è un identificatore numerico univoco --------------
 
-CREATE TABLE Camere (
-    idCamera INT IDENTITY(1,1) PRIMARY KEY,
-    numero INT UNIQUE NOT NULL,
-    descrizione TEXT,
-    tipologia VARCHAR(20) CHECK (tipologia IN ('singola', 'doppia'))
+CREATE TABLE [dbo].[Camere] (
+    [idCamera]    INT          IDENTITY (1, 1) NOT NULL,
+    [numero]      INT          NOT NULL,
+    [descrizione] TEXT         NULL,
+    [tipologia]   VARCHAR (20) NULL,
+    PRIMARY KEY CLUSTERED ([idCamera] ASC),
+    UNIQUE NONCLUSTERED ([numero] ASC),
+    CHECK ([tipologia]='doppia' OR [tipologia]='singola')
 );
 
 --------------- Tabella delle Prenotazioni: chiavi esterne per Clienti (relazione uno a molti) e Camere (relazione 1 a 1) ------------
 
-CREATE TABLE Prenotazioni (
-    idPrenotazione INT IDENTITY(1,1) PRIMARY KEY,
-    idCliente INT,
-    idCamera INT,
-    dataPrenotazione DATE,
-    numeroProgressivo INT,
-    anno INT,
-    periodoSoggiornoDal DATE,
-    periodoSoggiornoAl DATE,
-    caparraConfirmatoria DECIMAL(10, 2),
-    tariffa DECIMAL(10, 2),
-    tipoSoggiorno VARCHAR(50) CHECK (tipoSoggiorno IN ('mezza pensione', 'pensione completa', 'pernottamento con prima colazione')),
-    stato VARCHAR(20) CHECK (stato IN ('confermata', 'cancellata', 'completata')),
-    FOREIGN KEY (idCliente) REFERENCES Clienti(idCliente),
-    FOREIGN KEY (idCamera) REFERENCES Camere(idCamera)
+CREATE TABLE [dbo].[Prenotazioni] (
+    [idPrenotazione]       INT             IDENTITY (1, 1) NOT NULL,
+    [idCliente]            INT             NULL,
+    [idCamera]             INT             NULL,
+    [dataPrenotazione]     DATE            NULL,
+    [numeroProgressivo]    INT             NULL,
+    [anno]                 INT             NULL,
+    [periodoSoggiornoDal]  DATE            NULL,
+    [periodoSoggiornoAl]   DATE            NULL,
+    [caparraConfirmatoria] DECIMAL (10, 2) NULL,
+    [tariffa]              DECIMAL (10, 2) NULL,
+    [tipoSoggiorno]        VARCHAR (50)    NULL,
+    [stato]                VARCHAR (20)    NULL,
+    PRIMARY KEY CLUSTERED ([idPrenotazione] ASC),
+    FOREIGN KEY ([idCliente]) REFERENCES [dbo].[Clienti] ([idCliente]),
+    FOREIGN KEY ([idCamera]) REFERENCES [dbo].[Camere] ([idCamera]),
+    CHECK ([tipoSoggiorno]='pernottamento con prima colazione' OR [tipoSoggiorno]='pensione completa' OR [tipoSoggiorno]='mezza pensione'),
+    CHECK ([stato]='completata' OR [stato]='cancellata' OR [stato]='confermata')
 );
+
 
 ---------------------- Tabella dei Servizi -----------------------
 
-CREATE TABLE Servizi (
-    idServizio INT IDENTITY(1,1) PRIMARY KEY,
-    nomeServizio VARCHAR(100),
-    prezzo DECIMAL(10, 2)
+CREATE TABLE [dbo].[Servizi] (
+    [idServizio]   INT             IDENTITY (1, 1) NOT NULL,
+    [nomeServizio] VARCHAR (100)   NULL,
+    [prezzo]       DECIMAL (10, 2) NULL,
+    PRIMARY KEY CLUSTERED ([idServizio] ASC)
 );
+
 
 ----------------------------- Tabella Servizi Prenotazioni: relazione tra Prenotazioni e Servizi -----------------
 
-CREATE TABLE ServiziPrenotazione (
-    idServiziPrenotazione INT IDENTITY(1,1) PRIMARY KEY,
-    idPrenotazione INT,
-    idServizio INT,
-    dataServizio DATE,
-    quantita INT,
-    prezzoUnitario DECIMAL(10, 2),
-    prezzoTotale DECIMAL(10, 2),
-    FOREIGN KEY (idPrenotazione) REFERENCES Prenotazioni(idPrenotazione),
-    FOREIGN KEY (idServizio) REFERENCES Servizi(idServizio)
+CREATE TABLE [dbo].[ServiziPrenotazione] (
+    [idServiziPrenotazione] INT             IDENTITY (1, 1) NOT NULL,
+    [idPrenotazione]        INT             NULL,
+    [idServizio]            INT             NULL,
+    [dataServizio]          DATE            NULL,
+    [quantita]              INT             NULL,
+    [prezzoUnitario]        DECIMAL (10, 2) NULL,
+    PRIMARY KEY CLUSTERED ([idServiziPrenotazione] ASC),
+    FOREIGN KEY ([idPrenotazione]) REFERENCES [dbo].[Prenotazioni] ([idPrenotazione]),
+    FOREIGN KEY ([idServizio]) REFERENCES [dbo].[Servizi] ([idServizio])
 );
