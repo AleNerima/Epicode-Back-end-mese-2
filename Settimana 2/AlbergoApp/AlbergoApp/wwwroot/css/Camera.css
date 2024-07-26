@@ -1,0 +1,358 @@
+﻿/* CameraIndex/
+
+/* Contenitore principale */
+.camere-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .camere-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Stile per il link "Aggiungi Nuova Camera" */
+    .camere-container p a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff; /* Blu Bootstrap */
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+        .camere-container p a:hover {
+            background-color: #0056b3; /* Blu scuro per hover */
+        }
+
+    /* Stile per la tabella */
+    .camere-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .camere-container table th, .camere-container table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .camere-container table th {
+            background-color: #f8f9fa; /* Colore di sfondo per intestazione */
+            color: #333;
+            font-weight: bold;
+        }
+
+        .camere-container table tbody tr:hover {
+            background-color: #f1f1f1; /* Colore di sfondo per la riga al passaggio del mouse */
+        }
+
+        /* Stile per i link nella tabella */
+        .camere-container table a {
+            color: #007bff; /* Colore blu per i link */
+            text-decoration: none;
+        }
+
+            .camere-container table a:hover {
+                text-decoration: underline;
+            }
+
+/* CameraEdit*/
+
+/* Contenitore principale */
+.modifica-camera-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    /* Intestazione della pagina */
+    .modifica-camera-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    /* Stile per il modulo */
+    .modifica-camera-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modifica-camera-container .form-group {
+        margin-bottom: 15px;
+    }
+
+    .modifica-camera-container label {
+        font-weight: bold;
+    }
+
+    .modifica-camera-container input[type="text"],
+    .modifica-camera-container input[type="number"],
+    .modifica-camera-container select,
+    .modifica-camera-container textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .modifica-camera-container input[readonly] {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+    }
+
+    .modifica-camera-container .form-control {
+        margin-bottom: 10px;
+    }
+
+    .modifica-camera-container .btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .modifica-camera-container .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+    }
+
+        .modifica-camera-container .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .modifica-camera-container a {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+    }
+
+        .modifica-camera-container a:hover {
+            text-decoration: underline;
+        }
+
+/* DetailsCamera */
+
+/* Stile generale per la pagina dei dettagli della camera */
+.details-camera-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Stile per i dettagli (dl) */
+.details-camera-dl {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Stile per le etichette dei dettagli (dt) */
+.details-camera-dt {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Stile per i valori dei dettagli (dd) */
+.details-camera-dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Stile per i link di azione */
+.details-camera-a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    .details-camera-a:hover {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+
+/* Stile per i pulsanti */
+.details-camera-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.details-camera-btn-primary {
+    background-color: #007bff;
+}
+
+    .details-camera-btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.details-camera-btn-secondary {
+    background-color: #6c757d;
+}
+
+    .details-camera-btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+.details-camera-btn-container {
+    margin-top: 20px;
+}
+/* DeleteCamera */
+
+/* Stile generale per la pagina di eliminazione della camera */
+.delete-camera-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Stile per i dettagli della camera (dl) */
+.delete-camera-dl {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Stile per le etichette dei dettagli (dt) */
+.delete-camera-dt {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Stile per i valori dei dettagli (dd) */
+.delete-camera-dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Stile per i pulsanti */
+.delete-camera-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.delete-camera-btn-submit {
+    background-color: #dc3545; 
+}
+
+    .delete-camera-btn-submit:hover {
+        background-color: #c82333;
+    }
+
+.delete-camera-btn-cancel {
+    background-color: #6c757d; 
+}
+
+    .delete-camera-btn-cancel:hover {
+        background-color: #5a6268;
+    }
+
+.delete-camera-btn-container {
+    margin-top: 20px;
+}
+/* CreateCamera */
+
+/* Stile generale per la pagina di creazione della camera */
+.create-camera-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Stile per il modulo */
+.create-camera-form {
+    display: flex;
+    flex-direction: column;
+}
+
+    /* Stile per i gruppi di form */
+    .create-camera-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* Stile per le etichette */
+    .create-camera-form label {
+        font-weight: bold;
+    }
+
+    /* Stile per i campi di input e textarea */
+    .create-camera-form .form-control {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    /* Stile per i messaggi di errore */
+    .create-camera-form .text-danger {
+        color: #dc3545;
+        font-size: 0.875em;
+    }
+
+/* Stile per i pulsanti */
+.create-camera-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.create-camera-btn-submit {
+    background-color: #007bff;
+}
+
+    .create-camera-btn-submit:hover {
+        background-color: #0056b3;
+    }
+
+/* Stile per il link Indietro */
+.create-camera-back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+    .create-camera-back-link:hover {
+        text-decoration: underline;
+    }
+
+

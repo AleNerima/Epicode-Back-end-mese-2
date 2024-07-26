@@ -3,25 +3,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Elimina Camera</title>
+    <link rel="stylesheet" href="~/css/Camera.css" />
 </head>
 <body>
-    <h1>Elimina Camera</h1>
-    <h3>Sei sicuro di voler eliminare questa camera?</h3>
-    <div>
-        <dl>
-            <dt>Numero:</dt>
-            <dd>@Model.Numero</dd>
-            <dt>Tipologia:</dt>
-            <dd>@Model.Tipologia</dd>
-            <dt>Descrizione:</dt>
-            <dd>@Model.Descrizione</dd>
-        </dl>
+    <div class="delete-camera-container">
+        <h1>Elimina Camera</h1>
+        <h3>Sei sicuro di voler eliminare questa camera?</h3>
+        <div>
+            <dl class="delete-camera-dl">
+                <dt class="delete-camera-dt">Numero:</dt>
+                <dd class="delete-camera-dd">@Model.Numero</dd>
+
+                <dt class="delete-camera-dt">Tipologia:</dt>
+                <dd class="delete-camera-dd">@Model.Tipologia</dd>
+
+                <dt class="delete-camera-dt">Descrizione:</dt>
+                <dd class="delete-camera-dd">@Model.Descrizione</dd>
+            </dl>
+        </div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IdCamera" />
+            <div class="delete-camera-btn-container">
+                <button type="submit" class="delete-camera-btn delete-camera-btn-submit">Elimina</button>
+                <a href="@Url.Action("Index", "Camera")" class="delete-camera-btn delete-camera-btn-cancel">Annulla</a>
+            </div>
+        </form>
     </div>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdCamera" />
-        <button type="submit">Elimina</button>
-        <a href="@Url.Action("Index", "Camera")">Annulla</a>
-    </form>
 </body>
 </html>

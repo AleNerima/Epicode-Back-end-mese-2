@@ -4,35 +4,48 @@
     ViewData["Title"] = "Modifica Camera";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Camera.css" />
+</head>
+<body>
+    <div class="modifica-camera-container">
+        <h1>@ViewData["Title"]</h1>
 
-<form asp-action="Edit">
-    <input type="hidden" asp-for="IdCamera" />
-    <div class="form-group">
-        <label asp-for="Numero" class="control-label"></label>
-        <input asp-for="Numero" class="form-control" readonly />
-        <span asp-validation-for="Numero" class="text-danger"></span>
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="IdCamera" />
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+                <input asp-for="Numero" class="form-control" readonly />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Tipologia" class="control-label"></label>
+                <select asp-for="Tipologia" class="form-control">
+                    <option value="">Seleziona Tipologia</option>
+                    <option value="doppia">Doppia</option>
+                    <option value="singola">Singola</option>
+                </select>
+                <span asp-validation-for="Tipologia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descrizione" class="control-label"></label>
+                <textarea asp-for="Descrizione" class="form-control"></textarea>
+                <span asp-validation-for="Descrizione" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <a href="@Url.Action("Index")">Indietro</a>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Tipologia" class="control-label"></label>
-        <select asp-for="Tipologia" class="form-control">
-            <option value="">Seleziona Tipologia</option>
-            <option value="doppia">Doppia</option>
-            <option value="singola">Singola</option>
-        </select>
-        <span asp-validation-for="Tipologia" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Descrizione" class="control-label"></label>
-        <textarea asp-for="Descrizione" class="form-control"></textarea>
-        <span asp-validation-for="Descrizione" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <input type="submit" value="Salva" class="btn btn-primary" />
-    </div>
-</form>
-
-<a href="@Url.Action("Index")">Indietro</a>
+</body>
+</html>

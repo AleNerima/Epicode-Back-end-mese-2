@@ -3,21 +3,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Dettagli Camera</title>
+    <link rel="stylesheet" href="~/css/Camera.css" />
 </head>
 <body>
-    <h1>Dettagli Camera</h1>
-    <dl>
-        <dt>Numero:</dt>
-        <dd>@Model.Numero</dd>
-        <dt>Tipologia:</dt>
-        <dd>@Model.Tipologia</dd>
-        <dt>Descrizione:</dt>
-        <dd>@Model.Descrizione</dd>
-    </dl>
-    <p>
-        <a href="@Url.Action("Edit", "Camera", new { id = Model.IdCamera })">Modifica</a> |
-        <a href="@Url.Action("Index", "Camera")">Indietro</a>
-    </p>
+    <div class="details-camera-container">
+        <h1>Dettagli Camera</h1>
+        <dl class="details-camera-dl">
+            <dt class="details-camera-dt">Numero:</dt>
+            <dd class="details-camera-dd">@Model.Numero</dd>
+
+            <dt class="details-camera-dt">Tipologia:</dt>
+            <dd class="details-camera-dd">@Model.Tipologia</dd>
+
+            <dt class="details-camera-dt">Descrizione:</dt>
+            <dd class="details-camera-dd">@Model.Descrizione</dd>
+        </dl>
+        <div class="details-camera-btn-container">
+            <a href="@Url.Action("Edit", "Camera", new { id = Model.IdCamera })" class="details-camera-btn details-camera-btn-primary">Modifica</a>
+            <a href="@Url.Action("Index", "Camera")" class="details-camera-btn details-camera-btn-secondary">Indietro</a>
+        </div>
+    </div>
 </body>
 </html>

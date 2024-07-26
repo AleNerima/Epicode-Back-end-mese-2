@@ -3,35 +3,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Camere</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Camera.css" />
 </head>
 <body>
-    <h1>Camere</h1>
-    <p>
-        <a href="@Url.Action("Create", "Camera")">Aggiungi Nuova Camera</a>
-    </p>
-    <table>
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Tipologia</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var camera in Model)
-            {
+    <div class="camere-container">
+        <h1>Camere</h1>
+        <p>
+            <a href="@Url.Action("Create", "Camera")">Aggiungi Nuova Camera</a>
+        </p>
+        <table>
+            <thead>
                 <tr>
-                    <td>@camera.Numero</td>
-                    <td>@camera.Tipologia</td>
-                    <td>
-                        <a href="@Url.Action("Details", "Camera", new { id = camera.IdCamera })">Dettagli</a> |
-                        <a href="@Url.Action("Edit", "Camera", new { id = camera.IdCamera })">Modifica</a> |
-                        <a href="@Url.Action("Delete", "Camera", new { id = camera.IdCamera })">Elimina</a>
-                    </td>
+                    <th>Numero</th>
+                    <th>Tipologia</th>
+                    <th>Azioni</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var camera in Model)
+                {
+                    <tr>
+                        <td>@camera.Numero</td>
+                        <td>@camera.Tipologia</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Camera", new { id = camera.IdCamera })">Dettagli</a> 
+                            <a href="@Url.Action("Edit", "Camera", new { id = camera.IdCamera })">Modifica</a> 
+                            <a href="@Url.Action("Delete", "Camera", new { id = camera.IdCamera })">Elimina</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
