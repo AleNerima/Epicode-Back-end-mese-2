@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 
@@ -16,7 +13,6 @@ namespace AlbergoApp.Services
             _databaseService = databaseService;
         }
 
-        // Metodo per creare un nuovo servizio
         public async Task<int> CreateServizioAsync(Servizio servizio)
         {
             try
@@ -35,13 +31,11 @@ namespace AlbergoApp.Services
                 }
             }
             catch (SqlException ex)
-            {
-                // Log error
+            {                
                 throw new ApplicationException("Database error occurred while creating the service.", ex);
             }
         }
-
-        // Metodo per ottenere un servizio per ID
+                
         public async Task<Servizio?> GetServizioByIdAsync(int idServizio)
         {
             try
@@ -68,13 +62,13 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
+                
                 throw new ApplicationException("Database error occurred while retrieving the service.", ex);
             }
             return null;
         }
 
-        // Metodo per ottenere tutti i servizi
+        
         public async Task<IEnumerable<Servizio>> GetAllServiziAsync()
         {
             var servizi = new List<Servizio>();
@@ -102,13 +96,13 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
+                
                 throw new ApplicationException("Database error occurred while retrieving all services.", ex);
             }
             return servizi;
         }
 
-        // Metodo per aggiornare un servizio
+        
         public async Task<bool> UpdateServizioAsync(Servizio servizio)
         {
             try
@@ -129,12 +123,12 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
+                
                 throw new ApplicationException("Database error occurred while updating the service.", ex);
             }
         }
 
-        // Metodo per eliminare un servizio
+        
         public async Task<bool> DeleteServizioAsync(int idServizio)
         {
             try
@@ -151,7 +145,7 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
+                
                 throw new ApplicationException("Database error occurred while deleting the service.", ex);
             }
         }
@@ -168,9 +162,9 @@ namespace AlbergoApp.Services
                     await connection.OpenAsync();
                     var command = new SqlCommand(
                         @"SELECT sp.*, s.NomeServizio
-                  FROM ServiziPrenotazione sp
-                  INNER JOIN Servizi s ON sp.IdServizio = s.IdServizio
-                  WHERE sp.IdPrenotazione = @IdPrenotazione",
+                        FROM ServiziPrenotazione sp
+                        INNER JOIN Servizi s ON sp.IdServizio = s.IdServizio
+                        WHERE sp.IdPrenotazione = @IdPrenotazione",
                         connection);
                     command.Parameters.AddWithValue("@IdPrenotazione", prenotazioneId);
 
@@ -196,8 +190,8 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
-                throw new ApplicationException("Database error occurred while retrieving booked services for the reservation.", ex);
+                
+                throw new ApplicationException("Errore Database", ex);
             }
 
             return serviziPrenotati.AsEnumerable(); // Restituisce IEnumerable<ServiziPrenotazione>
@@ -226,9 +220,8 @@ namespace AlbergoApp.Services
                 }
             }
             catch (SqlException ex)
-            {
-                // Log error
-                throw new ApplicationException("Database error occurred while adding the service to the reservation.", ex);
+            {                
+                throw new ApplicationException("Errore Database", ex);
             }
         }
 
@@ -251,8 +244,7 @@ namespace AlbergoApp.Services
                 }
             }
             catch (SqlException ex)
-            {
-                // Log error
+            {                
                 throw new ApplicationException("Database error occurred while removing the service from the reservation.", ex);
             }
         }
@@ -288,7 +280,7 @@ namespace AlbergoApp.Services
             }
             catch (SqlException ex)
             {
-                // Log error
+               
                 throw new ApplicationException("Database error occurred while retrieving services for the reservation.", ex);
             }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
@@ -69,7 +68,7 @@ namespace AlbergoApp.Controllers
             return View("EditCamera", camera);
         }
 
-        // POST: Camera/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdCamera, Numero, Tipologia, Descrizione")] Camera camera)
@@ -79,7 +78,7 @@ namespace AlbergoApp.Controllers
                 return NotFound();
             }
 
-            // Validazione per il campo Tipologia
+           
             if (camera.Tipologia != "doppia" && camera.Tipologia != "singola")
             {
                 ModelState.AddModelError("Tipologia", "La tipologia deve essere 'doppia' o 'singola'.");
@@ -108,7 +107,7 @@ namespace AlbergoApp.Controllers
             return View("DeleteCamera", camera);
         }
 
-        // POST: Camera/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

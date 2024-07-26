@@ -2,8 +2,7 @@
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+
 
 namespace AlbergoApp.Controllers
 {
@@ -46,7 +45,7 @@ namespace AlbergoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Assume that CreateDipendenteAsync returns the Id of the newly created Dipendente
+                
                 int id = await _dipendenteService.CreateDipendenteAsync(dipendente);
                 return RedirectToAction(nameof(Index));
             }

@@ -24,13 +24,13 @@
         padding: 10px 20px;
         font-size: 16px;
         color: #fff;
-        background-color: #007bff; /* Blu Bootstrap */
+        background-color: #007bff; 
         border-radius: 4px;
         text-decoration: none;
     }
 
         .camere-container p a:hover {
-            background-color: #0056b3; /* Blu scuro per hover */
+            background-color: #0056b3; 
         }
 
     /* Stile per la tabella */
@@ -47,18 +47,18 @@
         }
 
         .camere-container table th {
-            background-color: #f8f9fa; /* Colore di sfondo per intestazione */
+            background-color: #f8f9fa; 
             color: #333;
             font-weight: bold;
         }
 
         .camere-container table tbody tr:hover {
-            background-color: #f1f1f1; /* Colore di sfondo per la riga al passaggio del mouse */
+            background-color: #f1f1f1; 
         }
 
         /* Stile per i link nella tabella */
         .camere-container table a {
-            color: #007bff; /* Colore blu per i link */
+            color: #007bff; 
             text-decoration: none;
         }
 

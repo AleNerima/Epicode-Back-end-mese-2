@@ -235,10 +235,5 @@ namespace AlbergoApp.Services
             return prenotazioni;
         }
 
-
-
-
-
-
     }
 }

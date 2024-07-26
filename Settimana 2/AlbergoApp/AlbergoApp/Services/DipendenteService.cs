@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
 

@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<AlbergoApp.Models.Prenotazione>
 
 @{
-    Layout = "_Layout"; // Usa il layout definito
-    ViewData["Title"] = "Elenco Prenotazioni"; // Imposta il titolo della pagina
+    Layout = "_Layout";
+    ViewData["Title"] = "Elenco Prenotazioni"; 
 }
 
 @section Styles {
@@ -64,6 +64,7 @@
 
 @section Scripts {
     <script>
+        //gestione della barra di ricerca
         function search() {
             var query = $('#searchQuery').val();
 
@@ -92,7 +93,7 @@
                 }
             });
         }
-
+        //gestione funzione di checkout
         function checkout(id) {
             $.ajax({
                 url: '@Url.Action("Checkout", "Prenotazione")',

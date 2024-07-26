@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlbergoApp.Models;
 using AlbergoApp.Services.Interfaces;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AlbergoApp.Controllers
@@ -128,7 +126,7 @@ namespace AlbergoApp.Controllers
                 PrezzoTotale = servizio.Prezzo
             };
 
-            // Ottieni tutte le prenotazioni disponibili e passale alla vista tramite ViewBag
+            // Ottiene tutte le prenotazioni disponibili e vengono passate alla vista tramite ViewBag
             ViewBag.Prenotazioni = await _prenotazioneService.GetAllPrenotazioniAsync();
 
             return View("AddToPrenotazione", model);

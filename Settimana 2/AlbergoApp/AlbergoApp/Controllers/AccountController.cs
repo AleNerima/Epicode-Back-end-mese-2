@@ -28,7 +28,7 @@ namespace AlbergoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Ottieni il ruolo dell'utente dal servizio
+                // Ottiene il ruolo dell'utente dal servizio
                 if (_accountService.ValidateUser(model.Username, model.Password, out string role))
                 {
                     // Crea i claims per l'utente

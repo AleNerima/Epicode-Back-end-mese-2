@@ -34,6 +34,7 @@ namespace AlbergoApp.Controllers
             return View("IndexPrenotazione", prenotazioni);
         }
 
+        // Gestisce la barra di ricerca delle prenotazioni. Questa azione restituisce i risultati della ricerca in formato JSON.
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Search(string query)
@@ -222,7 +223,7 @@ namespace AlbergoApp.Controllers
             prenotazione.Cliente = await _clienteService.GetClienteByIdAsync(prenotazione.IdCliente);
             prenotazione.Camera = await _cameraService.GetCameraByIdAsync(prenotazione.IdCamera);
 
-            // Ottieni i servizi prenotati e converte in lista
+            // Ottiene i servizi prenotati e converte in lista
             var serviziPrenotati = (await _servizioService.GetServiziPrenotatiByPrenotazioneIdAsync(id)).ToList();
 
             var model = new PrenotazioneDettagliViewModel
@@ -268,10 +269,10 @@ namespace AlbergoApp.Controllers
 
             var serviziPrenotati = (await _servizioService.GetServiziPrenotatiByPrenotazioneIdAsync(id)).ToList();
 
-            // Calcolo il totale dei servizi
+            // Calcola il totale dei servizi
             decimal totaleServizi = serviziPrenotati.Sum(s => s.Quantita * s.PrezzoUnitario);
 
-            // Calcolo il totale da pagare
+            // Calcola il totale da pagare
             decimal totale = prenotazione.Tariffa - prenotazione.CaparraConfirmatoria + totaleServizi;
 
             // Preparo i dettagli per la visualizzazione
