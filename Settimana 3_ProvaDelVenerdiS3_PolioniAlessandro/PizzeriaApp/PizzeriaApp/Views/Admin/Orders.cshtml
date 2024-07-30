@@ -1,0 +1,38 @@
+﻿@model PizzeriaApp.Models.Order[]
+
+@{
+    ViewBag.Title = "Gestione Ordini";
+}
+
+<h2>Gestione Ordini</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Ordine</th>
+            <th>Data Ordine</th>
+            <th>Indirizzo di Spedizione</th>
+            <th>Note</th>
+            <th>Stato</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.OrderDate</td>
+                <td>@order.IndirizzoSpedizione</td>
+                <td>@order.Note</td>
+                <td>@(order.IsCompleted ? "Completato" : "In Attesa")</td>
+                <td>
+                    <form asp-action="MarkOrderAsCompleted" method="post" class="d-inline">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <input type="submit" value="Segna come Completato" class="btn btn-success" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

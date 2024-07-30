@@ -1,0 +1,35 @@
+﻿@model PizzeriaApp.Models.Order
+@{
+    var products = ViewBag.Products as PizzeriaApp.Models.Product[];
+}
+
+<h2>Dettagli Ordine</h2>
+
+<div>
+    <p><strong>ID Ordine:</strong> @Model.Id</p>
+    <p><strong>Data Ordine:</strong> @Model.OrderDate</p>
+    <p><strong>Indirizzo di Spedizione:</strong> @Model.IndirizzoSpedizione</p>
+    <p><strong>Note:</strong> @Model.Note</p>
+
+    <h3>Dettagli Articoli</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome Prodotto</th>
+                <th>Quantità</th>
+                <th>Prezzo Totale</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+                <tr>
+                    <td>@product?.Nome</td>
+                    <td>@item.Quantità</td>
+                    <td>@(item.Quantità * product?.Prezzo).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

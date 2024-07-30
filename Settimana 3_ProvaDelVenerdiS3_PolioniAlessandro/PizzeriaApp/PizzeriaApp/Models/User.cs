@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace PizzeriaApp.Models
 {
-    public class User
+    public class User 
     {
         [Key]
         public int Id { get; set; }  

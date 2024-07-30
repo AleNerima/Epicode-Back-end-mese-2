@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PizzeriaApp.Models.Product>
+
+@{
+    ViewBag.Title = "Gestione Prodotti";
+}
+
+<h2>Gestione Prodotti</h2>
+
+<a href="@Url.Action("AddProduct", "Admin")" class="btn btn-primary">Aggiungi Nuovo Prodotto</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo</th>
+            <th>Tempo di Consegna</th>
+            <th>Ingredienti</th>
+            <th>Foto</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Nome</td>
+                    <td>@product.Prezzo.ToString("C")</td>
+                    <td>@product.TempoConsegna min</td>
+                    <td>@product.Ingredienti</td>
+                    <td><img src="data:image/png;base64,@product.Foto" alt="Immagine prodotto" style="width:100px;height:auto;" /></td>
+                    <td>
+                        <a href="@Url.Action("UpdateProduct", "Admin", new { id = product.Id })" class="btn btn-warning">Modifica</a>
+                        <form asp-action="DeleteProduct" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@product.Id" />
+                            <input type="submit" value="Elimina" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">Nessun prodotto disponibile</td>
+            </tr>
+        }
+    </tbody>
+</table>

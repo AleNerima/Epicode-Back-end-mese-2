@@ -20,6 +20,8 @@ namespace PizzeriaApp.Models
         [Required]
         public string IndirizzoSpedizione { get; set; }
 
+        public bool IsCompleted { get; set; }
+
         public virtual User User { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
     }

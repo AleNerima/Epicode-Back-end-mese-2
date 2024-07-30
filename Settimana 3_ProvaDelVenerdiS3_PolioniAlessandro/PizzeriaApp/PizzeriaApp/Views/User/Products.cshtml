@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PizzeriaApp.Models.Product>
+
+<h2>Prodotti</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo</th>
+            <th>Tempo di Consegna</th>
+            <th>Ingredienti</th>
+            <th>Foto</th>
+            <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Nome</td>
+                <td>@product.Prezzo.ToString("C")</td>
+                <td>@product.TempoConsegna minuti</td>
+                <td>@product.Ingredienti</td>
+                <td><img src="data:image;base64,@product.Foto" alt="@product.Nome" width="100" /></td>
+                <td>
+                    <!-- Action buttons here -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
