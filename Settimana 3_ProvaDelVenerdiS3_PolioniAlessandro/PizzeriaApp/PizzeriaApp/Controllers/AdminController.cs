@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzeriaApp.Services.Interfaces;
 using PizzeriaApp.Models;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace PizzeriaApp.Controllers
 {
@@ -54,7 +52,6 @@ namespace PizzeriaApp.Controllers
             return View();
         }
 
-        // GET: /Admin/UpdateProduct/{id}
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int id)
         {
@@ -63,6 +60,7 @@ namespace PizzeriaApp.Controllers
             {
                 return NotFound();
             }
+
             return View(product);
         }
 
@@ -70,44 +68,28 @@ namespace PizzeriaApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProduct(int id, IFormFile Foto, string Nome, decimal Prezzo, int TempoConsegna, string Ingredienti)
         {
-            if (!ModelState.IsValid)
+            // Recupera il prodotto esistente
+            var existingProduct = await _adminService.GetProductByIdAsync(id);
+            if (existingProduct == null)
             {
-                // Recupera il prodotto esistente se ModelState non è valido
-                var product = await _adminService.GetProductByIdAsync(id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-
-                // Popola la vista con i dati del prodotto
-                product.Nome = Nome;
-                product.Prezzo = Prezzo;
-                product.TempoConsegna = TempoConsegna;
-                product.Ingredienti = Ingredienti;
-
-                return View(product);
+                return NotFound();
             }
 
-            if (Foto == null || Foto.Length == 0)
-            {
-                ModelState.AddModelError("Foto", "L'immagine è obbligatoria.");
-                // Se non è stato fornito un file immagine, recupera il prodotto esistente e mostra errori di validazione
-                var product = await _adminService.GetProductByIdAsync(id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
+            // Mantieni l'immagine esistente se non è stato caricato un nuovo file
+            string fotoBase64 = existingProduct.Foto;
 
-                return View(product);
+            if (Foto != null && Foto.Length > 0)
+            {
+                // Converti il nuovo file in Base64
+                fotoBase64 = await _imageService.ConvertImageToBase64Async(Foto);
             }
 
-            // Converte l'immagine in Base64
-            string fotoBase64 = await _imageService.ConvertImageToBase64Async(Foto);
-
-            // Aggiorna il prodotto
+            // Aggiorna il prodotto con l'immagine esistente o nuova
             await _adminService.UpdateProductAsync(id, Nome, fotoBase64, Prezzo, TempoConsegna, Ingredienti);
             return RedirectToAction("Products");
         }
+
+
 
 
 

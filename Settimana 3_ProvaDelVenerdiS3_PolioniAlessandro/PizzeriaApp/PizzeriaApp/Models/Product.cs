@@ -11,7 +11,7 @@ namespace PizzeriaApp.Models
         [StringLength(100, ErrorMessage = "Il nome del prodotto non può superare i 100 caratteri.")]
         public string Nome { get; set; }
 
-        [Required]
+        
         public string Foto { get; set; }
 
         [Range(0.01, 10000.00, ErrorMessage = "Il prezzo deve essere compreso tra 0.01 e 10000.")]

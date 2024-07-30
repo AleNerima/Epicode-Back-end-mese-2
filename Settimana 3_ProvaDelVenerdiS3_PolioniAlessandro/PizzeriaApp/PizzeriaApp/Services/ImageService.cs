@@ -1,4 +1,8 @@
-﻿using PizzeriaApp.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using PizzeriaApp.Services.Interfaces;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PizzeriaApp.Services
 {
@@ -13,7 +17,6 @@ namespace PizzeriaApp.Services
 
             try
             {
-                // Utilizza MemoryStream in un blocco using per garantire una corretta gestione delle risorse
                 using (var memoryStream = new MemoryStream())
                 {
                     await imageFile.CopyToAsync(memoryStream);
@@ -23,8 +26,27 @@ namespace PizzeriaApp.Services
             }
             catch (Exception ex)
             {
-                // Gestione eccezione 
                 throw new InvalidOperationException("Error converting image to Base64.", ex);
+            }
+        }
+
+        public async Task<IFormFile> ConvertBase64ToFileAsync(string base64String, string fileName)
+        {
+            if (string.IsNullOrEmpty(base64String))
+            {
+                throw new ArgumentException("Base64 string cannot be null or empty.", nameof(base64String));
+            }
+
+            try
+            {
+                byte[] fileBytes = Convert.FromBase64String(base64String);
+                var stream = new MemoryStream(fileBytes);
+                var file = new FormFile(stream, 0, fileBytes.Length, "file", fileName);
+                return await Task.FromResult(file);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error converting Base64 to file.", ex);
             }
         }
     }
