@@ -10,7 +10,6 @@
             <th>Tempo di Consegna</th>
             <th>Ingredienti</th>
             <th>Foto</th>
-            <th>Azione</th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +21,8 @@
                 <td>@product.TempoConsegna minuti</td>
                 <td>@product.Ingredienti</td>
                 <td><img src="data:image;base64,@product.Foto" alt="@product.Nome" width="100" /></td>
-                <td>
-                    <!-- Action buttons here -->
-                </td>
             </tr>
         }
     </tbody>
 </table>
+<a href="@Url.Action("CreateOrder", "User")" class="btn btn-primary">Crea Ordine</a>

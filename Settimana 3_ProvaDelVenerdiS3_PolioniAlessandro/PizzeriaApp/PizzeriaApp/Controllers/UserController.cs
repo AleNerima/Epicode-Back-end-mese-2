@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PizzeriaApp.Models;
 using PizzeriaApp.Services.Interfaces;
+using PizzeriaApp.Models;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PizzeriaApp.Controllers
 {
@@ -27,69 +26,120 @@ namespace PizzeriaApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateOrder()
         {
-            var products = await _userService.GetProductsAsync();
-            return View(products);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateOrder(int[] productIds, int[] quantities, string indirizzoSpedizione, string note)
-        {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
+            if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            // Controlla che gli array di prodotti e quantità non siano vuoti e abbiano la stessa lunghezza
+            var products = await _userService.GetProductsAsync();
+            var model = new CreateOrderViewModel
+            {
+                Products = products
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateOrder(
+            string indirizzoSpedizione,
+            string note,
+            int[] productIds,
+            int[] quantities)
+        {
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Debug: Stampa tutti i claims
+            Console.WriteLine("Claims dell'utente:");
+            foreach (var claim in HttpContext.User.Claims)
+            {
+                Console.WriteLine($"{claim.Type}: {claim.Value}");
+            }
+
+            // Debug: Log dell'ID dell'utente
+            Console.WriteLine($"User ID: {userId}");
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                Console.WriteLine("User ID non trovato. Utente non autenticato.");
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!int.TryParse(userId, out int userIdInt))
+            {
+                Console.WriteLine("User ID non valido. Impossibile convertire in int.");
+                return RedirectToAction("Login", "Account");
+            }
+
             if (productIds == null || quantities == null || productIds.Length != quantities.Length)
             {
-                ModelState.AddModelError("", "Gli ID dei prodotti e le quantità devono essere validi e corrispondere.");
+                ModelState.AddModelError("", "Dati invalidi per i prodotti o le quantità.");
                 var products = await _userService.GetProductsAsync();
-                return View("CreateOrder", products);
+                var model = new CreateOrderViewModel
+                {
+                    Products = products
+                };
+                return View(model);
             }
 
             try
             {
-                var order = await _userService.CreateOrderAsync(productIds, quantities, indirizzoSpedizione, note, userId.Value);
+                var order = await _userService.CreateOrderAsync(userIdInt, note, indirizzoSpedizione);
+
+                if (order == null)
+                {
+                    Console.WriteLine("Impossibile creare l'ordine.");
+                    ModelState.AddModelError("", "Impossibile creare l'ordine.");
+                    var products = await _userService.GetProductsAsync();
+                    var model = new CreateOrderViewModel
+                    {
+                        Products = products
+                    };
+                    return View(model);
+                }
+
+                Console.WriteLine($"Ordine creato con ID: {order.Id}");
+
+                for (int i = 0; i < productIds.Length; i++)
+                {
+                    if (quantities[i] > 0)
+                    {
+                        await _userService.AddOrderItemAsync(order.Id, productIds[i], quantities[i]);
+                    }
+                }
+
                 return RedirectToAction("OrderSummary", new { orderId = order.Id });
-            }
-            catch (ArgumentException ex)
-            {
-                // Gestione degli errori
-                ModelState.AddModelError("", ex.Message);
-                var products = await _userService.GetProductsAsync();
-                return View("CreateOrder", products);
             }
             catch (Exception ex)
             {
-                // Gestione degli errori generali
+                Console.WriteLine($"Errore durante la creazione dell'ordine: {ex.Message}");
                 ModelState.AddModelError("", "Si è verificato un errore durante la creazione dell'ordine.");
                 var products = await _userService.GetProductsAsync();
-                return View("CreateOrder", products);
+                var model = new CreateOrderViewModel
+                {
+                    Products = products
+                };
+                return View(model);
             }
         }
 
         public async Task<IActionResult> OrderSummary(int orderId)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
+            var order = await _userService.GetOrderByIdAsync(orderId);
+            if (order == null)
             {
-                return RedirectToAction("Login", "Account");
+                return NotFound(); // O una vista di errore personalizzata
             }
 
-            var orders = await _userService.GetUserOrdersAsync(userId.Value);
-            var orderDetail = orders.FirstOrDefault(o => o.Id == orderId);
-
-            if (orderDetail == null)
+            var orderItems = await _userService.GetOrderItemsByOrderIdAsync(orderId);
+            var model = new OrderSummaryViewModel
             {
-                return NotFound();
-            }
+                Order = order,
+                OrderItems = orderItems
+            };
 
-            // Passare i prodotti alla vista per mostrare i dettagli
-            var products = await _userService.GetProductsAsync();
-            ViewBag.Products = products;
-
-            return View(orderDetail);
+            return View(model);
         }
     }
 }

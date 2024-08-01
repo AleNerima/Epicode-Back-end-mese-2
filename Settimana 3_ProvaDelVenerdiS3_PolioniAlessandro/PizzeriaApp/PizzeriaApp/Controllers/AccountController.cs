@@ -96,16 +96,23 @@ namespace PizzeriaApp.Controllers
 
             if (user != null)
             {
+                // Log per debug
+                Console.WriteLine($"User ID: {user.Id}"); // Verifica che l'ID sia corretto
+
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Name, user.Nome),
-                    new Claim(ClaimTypes.Role, user.Role)
-                };
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Aggiungi l'ID dell'utente come claim
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.Nome),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties
+                {
+                    IsPersistent = model.RememberMe // Gestisci il cookie persistente se l'utente ha selezionato "Ricordami"
+                });
 
                 return RedirectToAction("Index", "Home");
             }
@@ -113,6 +120,8 @@ namespace PizzeriaApp.Controllers
             ModelState.AddModelError("", "Invalid login attempt.");
             return View(model);
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,37 +1,28 @@
-﻿@model IEnumerable<PizzeriaApp.Models.Product>
+﻿@model PizzeriaApp.Models.CreateOrderViewModel
 
-@{
-    ViewData["Title"] = "Crea Ordine";
-}
-
-<h1>Crea Ordine</h1>
-
-<!-- Mostra eventuali errori di validazione -->
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <p>@error.ErrorMessage</p>
-        }
-    </div>
-}
+<h2>Crea Ordine</h2>
 
 <form asp-action="CreateOrder" method="post">
     <div class="form-group">
-        <h2>Seleziona Prodotti</h2>
+        <label for="IndirizzoSpedizione">Indirizzo di Spedizione</label>
+        <input id="IndirizzoSpedizione" name="indirizzoSpedizione" class="form-control" />
+    </div>
 
-        @if (Model != null && Model.Any())
+    <div class="form-group">
+        <label for="Note">Note</label>
+        <textarea id="Note" name="note" class="form-control"></textarea>
+    </div>
+
+    <h3>Seleziona Prodotti e Quantità</h3>
+    <div class="form-group">
+        @if (Model.Products != null && Model.Products.Any())
         {
-            for (int i = 0; i < Model.Count(); i++)
+            for (var i = 0; i < Model.Products.Count; i++)
             {
-                var product = Model.ElementAt(i);
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="productIds" value="@product.Id" id="product_@product.Id" />
-                    <label class="form-check-label" for="product_@product.Id">
-                        @product.Nome - @product.Prezzo.ToString("C")
-                    </label>
-                    <input type="number" class="form-control" name="quantities" min="1" placeholder="Quantità" />
+                <div>
+                    <label>@Model.Products[i].Nome</label>
+                    <input type="hidden" name="productIds[@i]" value="@Model.Products[i].Id" />
+                    <input type="number" name="quantities[@i]" min="1" max="100" class="form-control" placeholder="Quantità" />
                 </div>
             }
         }
@@ -41,15 +32,5 @@
         }
     </div>
 
-    <div class="form-group">
-        <label for="indirizzoSpedizione">Indirizzo di Spedizione</label>
-        <input type="text" class="form-control" id="indirizzoSpedizione" name="indirizzoSpedizione" required />
-    </div>
-
-    <div class="form-group">
-        <label for="note">Note</label>
-        <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Crea Ordine</button>
+    <button type="submit" class="btn btn-primary">Procedi</button>
 </form>

@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PizzeriaApp.Data;
+﻿using PizzeriaApp.Data;
 using PizzeriaApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 public class AuthService : IAuthService
@@ -24,7 +24,7 @@ public class AuthService : IAuthService
         };
 
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(); // Salva l'utente per generare un ID
 
         return user;
     }

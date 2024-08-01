@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Aggiunge i servizi di autenticazione 
+// Aggiunge i servizi di autenticazione e autorizzazione
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
@@ -48,7 +48,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Configura la pipeline delle richieste 
+// Configura la pipeline delle richieste
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
