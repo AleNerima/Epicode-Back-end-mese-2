@@ -21,26 +21,70 @@ namespace PizzeriaApp.Services
 
         public async Task<Order> CreateOrderAsync(int[] productIds, int[] quantities, string indirizzoSpedizione, string note, int userId)
         {
-            var orderItems = productIds.Select((productId, index) => new OrderItem
+            if (productIds == null || quantities == null || productIds.Length != quantities.Length)
             {
-                ProductId = productId,
-                Quantità = quantities[index]
-            }).ToList();
+                throw new ArgumentException("Il numero di ID prodotto deve corrispondere al numero di quantità.");
+            }
+
+            var products = await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToDictionaryAsync(p => p.Id);
+
+            var orderItems = new List<OrderItem>();
+
+            for (int i = 0; i < productIds.Length; i++)
+            {
+                var productId = productIds[i];
+                var quantity = quantities[i];
+
+                if (quantity <= 0)
+                {
+                    throw new ArgumentException("La quantità deve essere maggiore di zero.");
+                }
+
+                if (!products.TryGetValue(productId, out var product))
+                {
+                    throw new ArgumentException($"Il prodotto con ID {productId} non esiste.");
+                }
+
+                var orderItem = new OrderItem
+                {
+                    ProductId = productId,
+                    Quantità = quantity
+                };
+
+                orderItems.Add(orderItem);
+            }
 
             var order = new Order
             {
                 UserId = userId,
-                OrderDate = DateTime.Now,
+                OrderDate = DateTime.UtcNow,
                 Note = note,
                 IndirizzoSpedizione = indirizzoSpedizione,
+                IsCompleted = false,
                 OrderItems = orderItems
             };
 
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    _context.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
 
             return order;
         }
+
+
 
         public async Task<Order[]> GetUserOrdersAsync(int userId)
         {

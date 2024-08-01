@@ -37,6 +37,15 @@ builder.Services.AddAuthorization(options =>
 // Aggiunge i servizi MVC
 builder.Services.AddControllersWithViews();
 
+// Configura i servizi di sessione
+builder.Services.AddDistributedMemoryCache(); // Usa una cache in memoria per la sessione
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Timeout della sessione
+    options.Cookie.HttpOnly = true; // Cookie solo HTTP
+    options.Cookie.IsEssential = true; // Cookie essenziale per il funzionamento dell'app
+});
+
 var app = builder.Build();
 
 // Configura la pipeline delle richieste 
@@ -53,6 +62,9 @@ app.UseRouting();
 
 app.UseAuthentication(); // Middleware di autenticazione
 app.UseAuthorization();  // Middleware di autorizzazione
+
+// Aggiungi il middleware della sessione
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

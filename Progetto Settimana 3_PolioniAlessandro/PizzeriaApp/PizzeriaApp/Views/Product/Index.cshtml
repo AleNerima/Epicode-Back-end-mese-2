@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PizzeriaApp.Models.Prodotto>
+
+<h2>Products</h2>
+
+<a href="@Url.Action("Create", "Product")" class="btn btn-primary">Add New Product</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Delivery Time</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Nome</td>
+                <td>@product.Prezzo</td>
+                <td>@product.TempoConsegna minutes</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(product.FotoBase64))
+                    {
+                        <img src="data:image/jpeg;base64,@product.FotoBase64" alt="@product.Nome" style="max-width: 100px; max-height: 100px;" />
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Product", new { id = product.ProdottoId })">Details</a>
+                    <a href="@Url.Action("Edit", "Product", new { id = product.ProdottoId })">Edit</a>
+                    <a href="@Url.Action("Delete", "Product", new { id = product.ProdottoId })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

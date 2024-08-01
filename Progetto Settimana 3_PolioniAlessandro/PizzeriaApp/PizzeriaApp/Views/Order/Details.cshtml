@@ -1,0 +1,35 @@
+﻿@model PizzeriaApp.Models.Ordine
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h2>Order Details</h2>
+
+<div>
+    <h4>Order ID: @Model.OrdineId</h4>
+    <p>Email: @Model.Utente.Email</p>
+    <p>Address: @Model.IndirizzoSpedizione</p>
+    <p>Notes: @Model.Note</p>
+    <p>Status: @(Model.Evaso ? "Completed" : "Pending")</p>
+    <h4>Items</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DettagliOrdine)
+            {
+                <tr>
+                    <td>@item.Prodotto.Nome</td>
+                    <td>@item.Quantita</td>
+                    <td>@(item.Prodotto.Prezzo * item.Quantita)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

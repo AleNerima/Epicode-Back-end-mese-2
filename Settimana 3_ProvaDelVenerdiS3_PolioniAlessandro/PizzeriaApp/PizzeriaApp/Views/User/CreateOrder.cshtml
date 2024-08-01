@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PizzeriaApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Crea Ordine";
+}
+
+<h1>Crea Ordine</h1>
+
+<!-- Mostra eventuali errori di validazione -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form asp-action="CreateOrder" method="post">
+    <div class="form-group">
+        <h2>Seleziona Prodotti</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            for (int i = 0; i < Model.Count(); i++)
+            {
+                var product = Model.ElementAt(i);
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="productIds" value="@product.Id" id="product_@product.Id" />
+                    <label class="form-check-label" for="product_@product.Id">
+                        @product.Nome - @product.Prezzo.ToString("C")
+                    </label>
+                    <input type="number" class="form-control" name="quantities" min="1" placeholder="Quantità" />
+                </div>
+            }
+        }
+        else
+        {
+            <p>Nessun prodotto disponibile.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="indirizzoSpedizione">Indirizzo di Spedizione</label>
+        <input type="text" class="form-control" id="indirizzoSpedizione" name="indirizzoSpedizione" required />
+    </div>
+
+    <div class="form-group">
+        <label for="note">Note</label>
+        <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crea Ordine</button>
+</form>
