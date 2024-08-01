@@ -4,6 +4,7 @@ using PizzeriaApp.Services.Interfaces;
 using PizzeriaApp.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PizzeriaApp.Controllers
 {
@@ -26,17 +27,11 @@ namespace PizzeriaApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateOrder()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             var products = await _userService.GetProductsAsync();
             var model = new CreateOrderViewModel
             {
                 Products = products
             };
-
             return View(model);
         }
 
@@ -50,31 +45,33 @@ namespace PizzeriaApp.Controllers
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Debug: Stampa tutti i claims
-            Console.WriteLine("Claims dell'utente:");
-            foreach (var claim in HttpContext.User.Claims)
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int userIdInt))
             {
-                Console.WriteLine($"{claim.Type}: {claim.Value}");
-            }
-
-            // Debug: Log dell'ID dell'utente
-            Console.WriteLine($"User ID: {userId}");
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                Console.WriteLine("User ID non trovato. Utente non autenticato.");
+                ModelState.AddModelError("", "Utente non autenticato o ID utente non valido.");
                 return RedirectToAction("Login", "Account");
             }
 
-            if (!int.TryParse(userId, out int userIdInt))
-            {
-                Console.WriteLine("User ID non valido. Impossibile convertire in int.");
-                return RedirectToAction("Login", "Account");
-            }
-
+            // Verifica che gli array dei prodotti e delle quantità siano validi
             if (productIds == null || quantities == null || productIds.Length != quantities.Length)
             {
                 ModelState.AddModelError("", "Dati invalidi per i prodotti o le quantità.");
+                var products = await _userService.GetProductsAsync();
+                var model = new CreateOrderViewModel
+                {
+                    Products = products
+                };
+                return View(model);
+            }
+
+            // Rimuovi i prodotti con quantità non positiva
+            var validItems = productIds
+                .Select((id, index) => new { ProductId = id, Quantity = quantities[index] })
+                .Where(item => item.Quantity > 0)
+                .ToList();
+
+            if (!validItems.Any())
+            {
+                ModelState.AddModelError("", "Devi selezionare almeno un prodotto con una quantità positiva.");
                 var products = await _userService.GetProductsAsync();
                 var model = new CreateOrderViewModel
                 {
@@ -89,7 +86,6 @@ namespace PizzeriaApp.Controllers
 
                 if (order == null)
                 {
-                    Console.WriteLine("Impossibile creare l'ordine.");
                     ModelState.AddModelError("", "Impossibile creare l'ordine.");
                     var products = await _userService.GetProductsAsync();
                     var model = new CreateOrderViewModel
@@ -99,22 +95,16 @@ namespace PizzeriaApp.Controllers
                     return View(model);
                 }
 
-                Console.WriteLine($"Ordine creato con ID: {order.Id}");
-
-                for (int i = 0; i < productIds.Length; i++)
+                foreach (var item in validItems)
                 {
-                    if (quantities[i] > 0)
-                    {
-                        await _userService.AddOrderItemAsync(order.Id, productIds[i], quantities[i]);
-                    }
+                    await _userService.AddOrderItemAsync(order.Id, item.ProductId, item.Quantity);
                 }
 
                 return RedirectToAction("OrderSummary", new { orderId = order.Id });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Errore durante la creazione dell'ordine: {ex.Message}");
-                ModelState.AddModelError("", "Si è verificato un errore durante la creazione dell'ordine.");
+                ModelState.AddModelError("", $"Errore durante la creazione dell'ordine: {ex.Message}");
                 var products = await _userService.GetProductsAsync();
                 var model = new CreateOrderViewModel
                 {
@@ -133,13 +123,58 @@ namespace PizzeriaApp.Controllers
             }
 
             var orderItems = await _userService.GetOrderItemsByOrderIdAsync(orderId);
+            var orderItemViewModels = orderItems.Select(item => new OrderItemViewModel
+            {
+                Product = item.Product,
+                Quantità = item.Quantità
+            }).ToList();
+
             var model = new OrderSummaryViewModel
             {
                 Order = order,
-                OrderItems = orderItems
+                OrderItems = orderItemViewModels // Assicurati che OrderItems sia del tipo corretto
             };
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTotalPrice(int orderId)
+        {
+            if (orderId <= 0)
+            {
+                return BadRequest("ID dell'ordine non valido.");
+            }
+
+            try
+            {
+                // Recupera gli articoli dell'ordine
+                var orderItems = await _userService.GetOrderItemsByOrderIdAsync(orderId);
+
+                if (orderItems == null || !orderItems.Any())
+                {
+                    return BadRequest("Ordine non trovato.");
+                }
+
+                // Calcola il prezzo totale
+                var totalPrice = orderItems.Sum(item => item.Product.Prezzo * item.Quantità);
+
+                // Restituisce il prezzo totale come JSON
+                return Json(new { totalPrice });
+            }
+            catch (Exception ex)
+            {
+                // Log dell'errore
+                Console.WriteLine($"Errore: {ex.Message}");
+                return StatusCode(500, "Errore interno del server.");
+            }
+        }
+
+
+
+
+
+
     }
 }
+

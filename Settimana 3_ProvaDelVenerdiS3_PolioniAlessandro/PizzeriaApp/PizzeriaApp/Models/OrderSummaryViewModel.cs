@@ -3,6 +3,6 @@
     public class OrderSummaryViewModel
     {
         public Order Order { get; set; }
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public List<OrderItemViewModel> OrderItems { get; set; } // Modifica questa proprietà
     }
 }

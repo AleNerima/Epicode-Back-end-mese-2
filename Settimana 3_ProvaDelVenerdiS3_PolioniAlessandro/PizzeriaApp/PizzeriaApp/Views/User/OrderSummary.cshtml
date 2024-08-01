@@ -11,7 +11,42 @@
     @foreach (var item in Model.OrderItems)
     {
         <li>
-            Prodotto: @item.Product.Nome - Quantità: @item.Quantità
+            Prodotto: @item.Product.Nome - Quantità: @item.Quantità (Prezzo Unitario: @item.Product.Prezzo.ToString("F2") €)
         </li>
     }
 </ul>
+
+<p>Prezzo Totale: <span id="totalPrice">0.00</span> €</p>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var orderId = @Model.Order.Id; // ID dell'ordine
+
+            function calculateTotalPrice() {
+                console.log("Order ID:", orderId); // Log dell'ID dell'ordine
+                $.ajax({
+                    url: '@Url.Action("GetTotalPrice", "User")', // Nome del controller e del metodo
+                    type: 'GET',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        if (response && response.totalPrice !== undefined) {
+                            $('#totalPrice').text(response.totalPrice.toFixed(2) + ' €');
+                        } else {
+                            $('#totalPrice').text('Errore nel calcolo del prezzo.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Errore AJAX:", status, error);
+                        $('#totalPrice').text('Errore nella chiamata AJAX.');
+                    }
+                });
+            }
+
+            // Calcola il prezzo totale al caricamento della pagina
+            calculateTotalPrice();
+        });
+
+    </script>
+}

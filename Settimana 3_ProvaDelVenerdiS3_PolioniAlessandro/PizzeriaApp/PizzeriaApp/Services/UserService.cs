@@ -78,6 +78,23 @@ namespace PizzeriaApp.Services
             await _context.SaveChangesAsync();
         }
 
-      
+        public async Task<IEnumerable<OrderItem>> GetOrderItemsByUserIdAsync(int userId)
+        {
+            return await _context.OrderItems
+                .Where(oi => oi.Order.UserId == userId)
+                .Include(oi => oi.Product) // Assicurati di includere i dati del prodotto se necessario
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems) // Assicurati di includere gli elementi dell'ordine
+                    .ThenInclude(oi => oi.Product) // Assicurati di includere i dati del prodotto
+                .ToListAsync();
+        }
+
+
     }
 }

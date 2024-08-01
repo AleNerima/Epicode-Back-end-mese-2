@@ -20,10 +20,22 @@
             for (var i = 0; i < Model.Products.Count; i++)
             {
                 <div>
-                    <label>@Model.Products[i].Nome</label>
-                    <input type="hidden" name="productIds[@i]" value="@Model.Products[i].Id" />
-                    <input type="number" name="quantities[@i]" min="1" max="100" class="form-control" placeholder="Quantità" />
+                    <label>
+                        <input type="checkbox" name="productIds" value="@Model.Products[i].Id" />
+                        @Model.Products[i].Nome
+                    </label>
+                    <div class="form-group" style="display: none;" id="quantity-container-@Model.Products[i].Id">
+                        <label for="quantity-@Model.Products[i].Id">Quantità</label>
+                        <input type="number" id="quantity-@Model.Products[i].Id" name="quantities" min="1" max="100" class="form-control" placeholder="Quantità" />
+                    </div>
                 </div>
+
+                <script>
+                    document.querySelector(`input[value='@Model.Products[i].Id']`).addEventListener('change', function () {
+                        var quantityContainer = document.getElementById('quantity-container-@Model.Products[i].Id');
+                        quantityContainer.style.display = this.checked ? 'block' : 'none';
+                    });
+                </script>
             }
         }
         else
