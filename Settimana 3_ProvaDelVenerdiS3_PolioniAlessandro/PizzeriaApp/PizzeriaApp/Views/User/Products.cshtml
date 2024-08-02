@@ -1,28 +1,25 @@
 ﻿@model IEnumerable<PizzeriaApp.Models.Product>
 
-<h2>Prodotti</h2>
+<h2 class="mb-5 text-center">Prodotti</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Prezzo</th>
-            <th>Tempo di Consegna</th>
-            <th>Ingredienti</th>
-            <th>Foto</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
         @foreach (var product in Model)
         {
-            <tr>
-                <td>@product.Nome</td>
-                <td>@product.Prezzo.ToString("C")</td>
-                <td>@product.TempoConsegna minuti</td>
-                <td>@product.Ingredienti</td>
-                <td><img src="data:image;base64,@product.Foto" alt="@product.Nome" width="100" /></td>
-            </tr>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="data:image;base64,@product.Foto" class="card-img-top h-50" alt="@product.Nome" style="height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Nome</h5>
+                        <p class="card-text">
+                            <strong>Prezzo:</strong> @product.Prezzo.ToString("C")<br />
+                            <strong>Tempo di Consegna:</strong> @product.TempoConsegna minuti<br />
+                            <strong>Ingredienti:</strong> @product.Ingredienti
+                        </p>
+                        <a href="@Url.Action("CreateOrder", "User")" class="btn btn-primary">Crea Ordine</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
-<a href="@Url.Action("CreateOrder", "User")" class="btn btn-primary">Crea Ordine</a>
+    </div>
+</div>

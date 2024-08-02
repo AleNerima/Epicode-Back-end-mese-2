@@ -1,43 +1,47 @@
 ﻿@model IEnumerable<dynamic>
 
-<h1>I miei ordini</h1>
+<h1 class="mb-4">I miei ordini</h1>
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID Ordine</th>
-                <th>Data Ordine</th>
-                <th>Indirizzo di Spedizione</th>
-                <th>Note</th>
-                <th>Stato</th>
-                <th>Dettagli Ordine</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-                <tr>
-                    <td>@order.Id</td>
-                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@order.IndirizzoSpedizione</td>
-                    <td>@order.Note</td>
-                    <td>@order.Status</td>
-                    <td>
-                        <ul>
-                            @foreach (var item in order.Items)
-                            {
-                                <li>@item.Nome - Quantità: @item.Quantità</li>
-                            }
-                        </ul>
-                    </td>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>                    
+                    <th>Data Ordine</th>
+                    <th>Indirizzo di Spedizione</th>
+                    <th>Note</th>
+                    <th>Stato</th>
+                    <th>Dettagli Ordine</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>                        
+                        <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@order.IndirizzoSpedizione</td>
+                        <td>@order.Note</td>
+                        <td>@order.Status</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                @foreach (var item in order.Items)
+                                {
+                                    <li>
+                                        <span class="font-weight-bold">@item.Nome:</span> Quantità: @item.Quantità
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <p>Nessun ordine trovato per la data corrente.</p>
+    <div class="alert alert-warning" role="alert">
+        Nessun ordine trovato per la data corrente.
+    </div>
 }
