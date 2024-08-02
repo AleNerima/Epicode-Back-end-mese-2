@@ -18,6 +18,7 @@ namespace PizzeriaApp.Services.Interfaces
 
         Task<IEnumerable<OrderGroupByDateViewModel>> GetCompletedOrdersGroupedByDateAsync();
 
+        Task<IEnumerable<OrderItemDto>> GetAllOrderDetailsAsync();
         Task<IEnumerable<Order>> GetOrdersByDateAsync(DateTime date);
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzeriaApp.Services.Interfaces;
 using PizzeriaApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzeriaApp.Controllers
 {
@@ -104,11 +105,21 @@ namespace PizzeriaApp.Controllers
         }
 
         // GET: /Admin/OrdersInPreparation
+        // GET: /Admin/OrdersInPreparation
         public async Task<IActionResult> OrdersInPreparation()
         {
             var orders = await _adminService.GetOrdersInPreparationAsync();
-            return View(orders);
+            var orderDetails = await _adminService.GetAllOrderDetailsAsync();
+
+            var model = orders.Select(order => new
+            {
+                Order = order,
+                Details = orderDetails.Where(od => od.OrderId == order.Id).ToList()
+            });
+
+            return View(model);
         }
+
 
         // POST: /Admin/MarkOrderAsCompleted
         [HttpPost]
@@ -119,6 +130,7 @@ namespace PizzeriaApp.Controllers
             return RedirectToAction("OrdersInPreparation");
         }
 
+      
         [HttpGet]
         public async Task<IActionResult> GetOrdersByDate(string date)
         {
@@ -144,6 +156,8 @@ namespace PizzeriaApp.Controllers
 
             return BadRequest("Data non valida.");
         }
+
+
 
 
         public async Task<IActionResult> CompletedOrders()

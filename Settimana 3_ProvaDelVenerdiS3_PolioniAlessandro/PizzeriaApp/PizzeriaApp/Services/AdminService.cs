@@ -93,6 +93,19 @@ namespace PizzeriaApp.Services
             }
         }
 
+        public async Task<IEnumerable<OrderItemDto>> GetAllOrderDetailsAsync()
+        {
+            return await _context.OrderItems
+                .Include(oi => oi.Product)
+                .Select(oi => new OrderItemDto
+                {
+                    OrderId = oi.OrderId,
+                    ProductName = oi.Product.Nome,
+                    Quantity = oi.Quantità
+                })
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<OrderGroupByDateViewModel>> GetCompletedOrdersGroupedByDateAsync()
         {
             var orders = await _context.Orders
@@ -114,6 +127,8 @@ namespace PizzeriaApp.Services
 
             return groupedOrders;
         }
+        
+
 
         public async Task<IEnumerable<Order>> GetOrdersByDateAsync(DateTime date)
         {

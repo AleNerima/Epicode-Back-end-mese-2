@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PizzeriaApp.Models.Order>
+﻿@model IEnumerable<dynamic>
 
 <h1>Ordini in Preparazione</h1>
 
@@ -9,23 +9,54 @@
             <th>Data Ordine</th>
             <th>Indirizzo di Spedizione</th>
             <th>Note</th>
+            <th>Dettagli Ordine</th>
             <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model)
+        @foreach (var item in Model)
         {
+            var order = item.Order;
+            var details = item.Details;
+
             <tr>
                 <td>@order.Id</td>
                 <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@order.IndirizzoSpedizione</td>
                 <td>@order.Note</td>
                 <td>
-                    <form asp-action="MarkOrderAsCompleted" method="post" asp-route-orderId="@order.Id">
-                        <button type="submit" class="btn btn-success">Segna come Completato</button>
-                    </form>
+                    <button class="btn btn-info" onclick="toggleOrderDetails(@order.Id)">Vedi Ordine</button>
+                    <div id="order-details-@order.Id" class="order-details" style="display: none;">
+                        <ul>
+                            @foreach (var detail in details)
+                            {
+                                <li>@detail.ProductName - Quantità: @detail.Quantity</li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    @using (Html.BeginForm("MarkOrderAsCompleted", "Admin", new { orderId = item.Order.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-success">Marca come Completato</button>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        function toggleOrderDetails(orderId) {
+            var detailsDiv = document.getElementById('order-details-' + orderId);
+
+            if (detailsDiv.style.display === 'none') {
+                detailsDiv.style.display = 'block';
+            } else {
+                detailsDiv.style.display = 'none';
+            }
+        }
+    </script>
+}
