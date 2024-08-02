@@ -1,8 +1,45 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Benvenuti alla Pizzeria App";
+    var isAuthenticated = User.Identity.IsAuthenticated; // Verifica se l'utente è autenticato
+    var menuUrl = "/"; // URL predefinito
+
+    if (isAuthenticated)
+    {
+        // Controlla i ruoli dell'utente
+        if (User.IsInRole("Admin"))
+        {
+            menuUrl = Url.Action("Products", "Admin"); // URL per gli amministratori
+        }
+        else
+        {
+            menuUrl = Url.Action("Products", "User"); // URL per gli utenti normali
+        }
+    }
+    else
+    {
+        menuUrl = Url.Action("Login", "Account"); // URL per il login
+    }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/home.css"> <!-- Include il file CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="body-home">
+    <div class="welcome-section">
+        
+            <h1 class="display-4">Benvenuti alla Pizzeria App!</h1>
+            <p class="lead">Siamo felici di averti con noi. Scopri il nostro menu e lasciati tentare dalle nostre deliziose pizze.</p>
+            <a href="@menuUrl" class="btn btn-primary btn-lg">Scopri il Menu</a>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

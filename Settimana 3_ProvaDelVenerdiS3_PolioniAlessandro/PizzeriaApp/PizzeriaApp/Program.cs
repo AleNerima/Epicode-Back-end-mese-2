@@ -63,7 +63,7 @@ app.UseRouting();
 app.UseAuthentication(); // Middleware di autenticazione
 app.UseAuthorization();  // Middleware di autorizzazione
 
-// Aggiungi il middleware della sessione
+// middleware della sessione
 app.UseSession();
 
 app.MapControllerRoute(

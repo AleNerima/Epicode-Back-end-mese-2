@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PizzeriaApp.Models;
-using PizzeriaApp.Services.Interfaces;
+
 
 namespace PizzeriaApp.Controllers
 {
@@ -100,12 +100,12 @@ namespace PizzeriaApp.Controllers
                 Console.WriteLine($"User ID: {user.Id}"); // Verifica che l'ID sia corretto
 
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Aggiungi l'ID dell'utente come claim
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Name, user.Nome),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Aggiunge l'ID dell'utente come claim
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Nome),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

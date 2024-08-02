@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-warning border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzeriaApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,7 +24,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-
+                            
                             @if (User.IsInRole("Admin"))
                             {
                                 <!-- Links per Admin -->
@@ -32,10 +32,10 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Products">Prodotti</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OrdersInPreparation">ordini</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="OrdersInPreparation">Ordini da Preparare</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CompletedOrders">ordini</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CompletedOrders">Ordini Completati</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="RegisterAdmin">Registra nuovo Admin</a>
@@ -44,11 +44,12 @@
                             @if (User.IsInRole("User"))
                             {
                                 <!-- Links per User -->
+                                
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateOrder">Ordina</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Products">Prodotti</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Products">I tuoi prodotti</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateOrder">Ordina</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyOrders">I miei ordini</a>
@@ -68,7 +69,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Registrati</a>
                             </li>
                         }
                     </ul>
@@ -82,7 +83,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer bg-warning text-white text-center">
         <div class="container">
             &copy; 2024 - PizzeriaApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
