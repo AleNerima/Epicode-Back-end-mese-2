@@ -4,19 +4,19 @@
     ViewBag.Title = "Gestione Prodotti";
 }
 
-<h2>Gestione Prodotti</h2>
+<h2 class="mb-4">Gestione Prodotti</h2>
 
-<a href="@Url.Action("AddProduct", "Admin")" class="btn btn-primary">Aggiungi Nuovo Prodotto</a>
+<a href="@Url.Action("AddProduct", "Admin")" class="btn btn-primary mb-3">Aggiungi Nuovo Prodotto</a>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>Nome</th>
             <th>Prezzo</th>
             <th>Tempo di Consegna</th>
             <th>Ingredienti</th>
             <th>Foto</th>
-            <th>Azioni</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,12 +29,14 @@
                     <td>@product.Prezzo.ToString("C")</td>
                     <td>@product.TempoConsegna min</td>
                     <td>@product.Ingredienti</td>
-                    <td><img src="data:image/png;base64,@product.Foto" alt="Immagine prodotto" style="width:100px;height:auto;" /></td>
                     <td>
-                        <a href="@Url.Action("UpdateProduct", "Admin", new { id = product.Id })" class="btn btn-warning">Modifica</a>
+                        <img src="data:image/png;base64,@product.Foto" alt="Immagine prodotto" style="width:100px;height:auto;" />
+                    </td>
+                    <td>
+                        <a href="@Url.Action("UpdateProduct", "Admin", new { id = product.Id })" class="btn btn-warning btn-sm">Modifica</a>
                         <form asp-action="DeleteProduct" method="post" class="d-inline">
                             <input type="hidden" name="id" value="@product.Id" />
-                            <input type="submit" value="Elimina" class="btn btn-danger" />
+                            <input type="submit" value="Elimina" class="btn btn-danger btn-sm" />
                         </form>
                     </td>
                 </tr>

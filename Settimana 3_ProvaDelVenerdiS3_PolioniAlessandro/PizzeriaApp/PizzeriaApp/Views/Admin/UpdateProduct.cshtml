@@ -4,37 +4,42 @@
     ViewBag.Title = "Modifica Prodotto";
 }
 
-<h2>Modifica Prodotto</h2>
+<h2 class="mb-4">Modifica Prodotto</h2>
 
-<form asp-action="UpdateProduct" method="post" enctype="multipart/form-data">
+<form asp-action="UpdateProduct" method="post" enctype="multipart/form-data" class="container">
     <input type="hidden" name="id" value="@Model.Id" />
 
-    <div class="form-group">
-        <label for="Nome">Nome</label>
+    <div class="form-group mb-3">
+        <label for="Nome" class="form-label">Nome</label>
         <input type="text" id="Nome" name="Nome" value="@Model.Nome" class="form-control" required />
     </div>
-    <div class="form-group">
-        <label for="Foto">Foto</label>
+
+    <div class="form-group mb-3">
+        <label for="Foto" class="form-label">Foto</label>
         <input type="file" id="Foto" name="Foto" class="form-control" />
         @if (!string.IsNullOrEmpty(Model.Foto))
         {
-            <div>
-                <img src="data:image/png;base64,@Model.Foto" alt="Immagine prodotto" style="width:100px;height:auto;" />
-                <p>Se non vuoi cambiare l'immagine, lascia il campo immagine vuoto.</p>
+            <div class="mt-2">
+                <img src="data:image/png;base64,@Model.Foto" alt="Immagine prodotto" class="img-fluid" style="max-width: 100px; height: auto;" />
+                <p class="mt-2">Se non vuoi cambiare l'immagine, lascia il campo immagine vuoto.</p>
             </div>
         }
     </div>
-    <div class="form-group">
-        <label for="Prezzo">Prezzo</label>
+
+    <div class="form-group mb-3">
+        <label for="Prezzo" class="form-label">Prezzo</label>
         <input type="number" id="Prezzo" name="Prezzo" value="@Model.Prezzo" class="form-control" required step="0.01" />
     </div>
-    <div class="form-group">
-        <label for="TempoConsegna">Tempo di Consegna (min)</label>
+
+    <div class="form-group mb-3">
+        <label for="TempoConsegna" class="form-label">Tempo di Consegna (min)</label>
         <input type="number" id="TempoConsegna" name="TempoConsegna" value="@Model.TempoConsegna" class="form-control" required />
     </div>
-    <div class="form-group">
-        <label for="Ingredienti">Ingredienti</label>
-        <textarea id="Ingredienti" name="Ingredienti" class="form-control">@Model.Ingredienti</textarea>
+
+    <div class="form-group mb-3">
+        <label for="Ingredienti" class="form-label">Ingredienti</label>
+        <textarea id="Ingredienti" name="Ingredienti" class="form-control" rows="4">@Model.Ingredienti</textarea>
     </div>
+
     <button type="submit" class="btn btn-primary">Aggiorna Prodotto</button>
 </form>

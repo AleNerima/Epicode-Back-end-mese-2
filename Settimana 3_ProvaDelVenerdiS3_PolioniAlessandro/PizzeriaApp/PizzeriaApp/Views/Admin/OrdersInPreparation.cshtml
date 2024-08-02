@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<dynamic>
 
-<h1>Ordini in Preparazione</h1>
+<h1 class="mb-4">Ordini in Preparazione</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
             <th>ID Ordine</th>
             <th>Data Ordine</th>
@@ -25,21 +25,23 @@
                 <td>@order.IndirizzoSpedizione</td>
                 <td>@order.Note</td>
                 <td>
-                    <button class="btn btn-info" onclick="toggleOrderDetails(@order.Id)">Vedi Ordine</button>
-                    <div id="order-details-@order.Id" class="order-details" style="display: none;">
-                        <ul>
+                    <button class="btn btn-info btn-sm" data-bs-toggle="collapse" data-bs-target="#order-details-@order.Id">
+                        Vedi Ordine
+                    </button>
+                    <div id="order-details-@order.Id" class="collapse mt-2">
+                        <ul class="list-group">
                             @foreach (var detail in details)
                             {
-                                <li>@detail.ProductName - Quantità: @detail.Quantity</li>
+                                <li class="list-group-item">@detail.ProductName - Quantità: @detail.Quantity</li>
                             }
                         </ul>
                     </div>
                 </td>
                 <td>
-                    @using (Html.BeginForm("MarkOrderAsCompleted", "Admin", new { orderId = item.Order.Id }, FormMethod.Post))
+                    @using (Html.BeginForm("MarkOrderAsCompleted", "Admin", new { orderId = order.Id }, FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-success">Marca come Completato</button>
+                        <button type="submit" class="btn btn-success btn-sm">Marca come Completato</button>
                     }
                 </td>
             </tr>
@@ -48,15 +50,5 @@
 </table>
 
 @section Scripts {
-    <script>
-        function toggleOrderDetails(orderId) {
-            var detailsDiv = document.getElementById('order-details-' + orderId);
-
-            if (detailsDiv.style.display === 'none') {
-                detailsDiv.style.display = 'block';
-            } else {
-                detailsDiv.style.display = 'none';
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 }
