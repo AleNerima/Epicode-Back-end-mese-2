@@ -1,0 +1,58 @@
+﻿@model IEnumerable<PizzeriaApp.Models.OrderGroupByDateViewModel>
+
+<h1>Ordini Completati</h1>
+
+<div id="ordersContainer">
+    @foreach (var group in Model)
+    {
+        <div class="order-group" data-date="@group.Date.ToString("yyyy-MM-dd")">
+            <h2>
+                <a href="#" class="toggle-details" data-date="@group.Date.ToString("yyyy-MM-dd")">
+                    @group.Date.ToString("dd/MM/yyyy")
+                </a>
+            </h2>
+            <p>Incasso Totale: <span class="total-revenue">@group.TotalRevenue.ToString("C")</span></p>
+            <div class="order-details" style="display: none;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID Ordine</th>
+                            <th>Data Ordine</th>
+                            <th>Indirizzo di Spedizione</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in group.Orders)
+                        {
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@order.IndirizzoSpedizione</td>
+                                <td>@order.Note</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".toggle-details").click(function (e) {
+            e.preventDefault();
+            var date = $(this).data("date");
+            var detailsContainer = $(this).closest(".order-group").find(".order-details");
+
+            if (detailsContainer.is(":visible")) {
+                detailsContainer.slideUp();
+            } else {
+                // Mostra i dettagli e carica i dati se non sono già stati caricati
+                detailsContainer.slideDown();
+            }
+        });
+    });
+</script>

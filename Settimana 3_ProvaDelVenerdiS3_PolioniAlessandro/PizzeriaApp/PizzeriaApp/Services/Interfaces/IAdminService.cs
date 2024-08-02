@@ -13,5 +13,11 @@ namespace PizzeriaApp.Services.Interfaces
         Task DeleteProductAsync(int id);
         Task<IEnumerable<Order>> GetAllOrdersAsync();
         Task MarkOrderAsCompletedAsync(int orderId);
+
+        Task<IEnumerable<Order>> GetOrdersInPreparationAsync();
+
+        Task<IEnumerable<OrderGroupByDateViewModel>> GetCompletedOrdersGroupedByDateAsync();
+
+        Task<IEnumerable<Order>> GetOrdersByDateAsync(DateTime date);
     }
 }

@@ -103,10 +103,10 @@ namespace PizzeriaApp.Controllers
             return RedirectToAction("Products");
         }
 
-        // GET: /Admin/Orders
-        public async Task<IActionResult> Orders()
+        // GET: /Admin/OrdersInPreparation
+        public async Task<IActionResult> OrdersInPreparation()
         {
-            var orders = await _adminService.GetAllOrdersAsync();
+            var orders = await _adminService.GetOrdersInPreparationAsync();
             return View(orders);
         }
 
@@ -116,7 +116,40 @@ namespace PizzeriaApp.Controllers
         public async Task<IActionResult> MarkOrderAsCompleted(int orderId)
         {
             await _adminService.MarkOrderAsCompletedAsync(orderId);
-            return RedirectToAction("Orders");
+            return RedirectToAction("OrdersInPreparation");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersByDate(string date)
+        {
+            if (DateTime.TryParse(date, out DateTime parsedDate))
+            {
+                var orders = await _adminService.GetOrdersByDateAsync(parsedDate);
+                var totalRevenue = orders.Sum(o => o.OrderItems.Sum(oi => oi.Product.Prezzo * oi.Quantità));
+
+                var model = new
+                {
+                    Orders = orders.Select(o => new
+                    {
+                        o.Id,
+                        o.OrderDate,
+                        o.IndirizzoSpedizione,
+                        o.Note
+                    }).ToList(),
+                    TotalRevenue = totalRevenue
+                };
+
+                return Json(model);
+            }
+
+            return BadRequest("Data non valida.");
+        }
+
+
+        public async Task<IActionResult> CompletedOrders()
+        {
+            var orders = await _adminService.GetCompletedOrdersGroupedByDateAsync();
+            return View(orders);
         }
     }
 }
