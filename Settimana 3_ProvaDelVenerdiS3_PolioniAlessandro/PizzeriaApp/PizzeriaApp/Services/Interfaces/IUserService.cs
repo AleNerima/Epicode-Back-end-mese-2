@@ -16,5 +16,7 @@ namespace PizzeriaApp.Services.Interfaces
         Task<IEnumerable<OrderItem>> GetOrderItemsByOrderIdAsync(int orderId);
         Task<IEnumerable<OrderItem>> GetOrderItemsByUserIdAsync(int userId);
 
+        Task<IEnumerable<Order>> GetUserOrdersAsync(int userId);
+
     }
 }

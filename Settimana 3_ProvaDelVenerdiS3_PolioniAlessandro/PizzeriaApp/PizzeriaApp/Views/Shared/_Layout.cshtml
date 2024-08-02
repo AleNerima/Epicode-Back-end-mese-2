@@ -27,7 +27,7 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <!-- Links for Admin users -->
+                                <!-- Links per Admin -->
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Products">Prodotti</a>
                                 </li>
@@ -43,11 +43,15 @@
                             }
                             @if (User.IsInRole("User"))
                             {
+                                <!-- Links per User -->
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateOrder">Ordina</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Products">I tuoi prodotti</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyOrders">I miei ordini</a>
                                 </li>
                             }
                             

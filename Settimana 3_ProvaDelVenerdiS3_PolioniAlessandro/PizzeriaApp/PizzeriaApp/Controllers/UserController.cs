@@ -170,6 +170,39 @@ namespace PizzeriaApp.Controllers
             }
         }
 
+        public async Task<IActionResult> MyOrders()
+        {
+            // Recupera l'ID utente dai claim
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+            {
+                // Gestisci il caso in cui l'ID utente non è disponibile (es. utente non autenticato)
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Recupera gli ordini dell'utente
+            var orders = await _userService.GetUserOrdersAsync(userId);
+
+            var currentDate = DateTime.Now.Date;
+            var filteredOrders = orders
+                .Where(o => o.OrderDate.Date == currentDate)
+                .Select(o => new
+                {
+                    o.Id,
+                    o.OrderDate,
+                    o.IndirizzoSpedizione,
+                    o.Note,
+                    Status = o.IsCompleted ? "In Consegna" : "In Preparazione",
+                    Items = o.OrderItems.Select(oi => new
+                    {
+                        oi.Product.Nome,
+                        oi.Quantità
+                    }).ToList()
+                }).ToList();
+
+            return View(filteredOrders);
+        }
+
 
 
 

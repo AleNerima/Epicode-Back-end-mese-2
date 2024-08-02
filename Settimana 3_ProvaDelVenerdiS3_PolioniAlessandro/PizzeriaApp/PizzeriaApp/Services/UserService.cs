@@ -95,6 +95,17 @@ namespace PizzeriaApp.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetUserOrdersAsync(int userId)
+        {
+            return await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Where(o => o.OrderDate.Date >= DateTime.Now.Date) // Filtra per la data odierna o futura
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .ToListAsync();
+        }
+
+
 
     }
 }
