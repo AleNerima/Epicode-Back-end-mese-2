@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PizzeriaApp.Services.Interfaces;
 using PizzeriaApp.Models;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Linq;
+
 
 namespace PizzeriaApp.Controllers
 {
@@ -63,7 +62,7 @@ namespace PizzeriaApp.Controllers
                 return View(model);
             }
 
-            // Rimuovi i prodotti con quantità non positiva
+            // Rimuove i prodotti con quantità non positiva
             var validItems = productIds
                 .Select((id, index) => new { ProductId = id, Quantity = quantities[index] })
                 .Where(item => item.Quantity > 0)
@@ -119,7 +118,7 @@ namespace PizzeriaApp.Controllers
             var order = await _userService.GetOrderByIdAsync(orderId);
             if (order == null)
             {
-                return NotFound(); // O una vista di errore personalizzata
+                return NotFound(); 
             }
 
             var orderItems = await _userService.GetOrderItemsByOrderIdAsync(orderId);
@@ -132,7 +131,7 @@ namespace PizzeriaApp.Controllers
             var model = new OrderSummaryViewModel
             {
                 Order = order,
-                OrderItems = orderItemViewModels // Assicurati che OrderItems sia del tipo corretto
+                OrderItems = orderItemViewModels 
             };
 
             return View(model);
@@ -163,8 +162,7 @@ namespace PizzeriaApp.Controllers
                 return Json(new { totalPrice });
             }
             catch (Exception ex)
-            {
-                // Log dell'errore
+            {                
                 Console.WriteLine($"Errore: {ex.Message}");
                 return StatusCode(500, "Errore interno del server.");
             }
@@ -176,7 +174,7 @@ namespace PizzeriaApp.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
             {
-                // Gestisci il caso in cui l'ID utente non è disponibile (es. utente non autenticato)
+                // Gestisce il caso in cui l'ID utente non è disponibile 
                 return RedirectToAction("Login", "Account");
             }
 
@@ -202,11 +200,6 @@ namespace PizzeriaApp.Controllers
 
             return View(filteredOrders);
         }
-
-
-
-
-
 
     }
 }

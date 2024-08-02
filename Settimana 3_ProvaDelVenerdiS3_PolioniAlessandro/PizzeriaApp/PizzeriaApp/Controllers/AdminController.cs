@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PizzeriaApp.Services.Interfaces;
-using PizzeriaApp.Models;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace PizzeriaApp.Controllers
 {
@@ -17,22 +16,19 @@ namespace PizzeriaApp.Controllers
             _adminService = adminService;
             _imageService = imageService;
         }
-
-        // GET: /Admin/Products
+                
         public async Task<IActionResult> Products()
         {
             var products = await _adminService.GetAllProductsAsync();
             return View(products);
         }
-
-        // GET: /Admin/AddProduct
+                
         [HttpGet]
         public IActionResult AddProduct()
         {
             return View();
         }
-
-        // POST: /Admin/AddProduct
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProduct(IFormFile Foto, string Nome, decimal Prezzo, int TempoConsegna, string Ingredienti)
@@ -76,12 +72,12 @@ namespace PizzeriaApp.Controllers
                 return NotFound();
             }
 
-            // Mantieni l'immagine esistente se non è stato caricato un nuovo file
+            // Mantiene l'immagine esistente se non è stato caricato un nuovo file
             string fotoBase64 = existingProduct.Foto;
 
             if (Foto != null && Foto.Length > 0)
             {
-                // Converti il nuovo file in Base64
+                // Converte il nuovo file in Base64
                 fotoBase64 = await _imageService.ConvertImageToBase64Async(Foto);
             }
 
@@ -92,10 +88,6 @@ namespace PizzeriaApp.Controllers
 
 
 
-
-
-
-        // POST: /Admin/DeleteProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProduct(int id)
@@ -104,8 +96,7 @@ namespace PizzeriaApp.Controllers
             return RedirectToAction("Products");
         }
 
-        // GET: /Admin/OrdersInPreparation
-        // GET: /Admin/OrdersInPreparation
+        
         public async Task<IActionResult> OrdersInPreparation()
         {
             var orders = await _adminService.GetOrdersInPreparationAsync();
@@ -120,8 +111,7 @@ namespace PizzeriaApp.Controllers
             return View(model);
         }
 
-
-        // POST: /Admin/MarkOrderAsCompleted
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MarkOrderAsCompleted(int orderId)
@@ -156,8 +146,6 @@ namespace PizzeriaApp.Controllers
 
             return BadRequest("Data non valida.");
         }
-
-
 
 
         public async Task<IActionResult> CompletedOrders()
